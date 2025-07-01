@@ -1,0 +1,30 @@
+{
+  "level": 1,
+  "mode": "Versus",
+  "tileCount": 7,
+  "startTiles": [
+    [0, 0],      
+    [6, 0]      
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "jumpMode": "single",
+      "startColor": "purple",
+      "targetColor": "red"
+    },
+    {
+      "round": 2,
+      "jumpMode": "single",
+      "startColor": "orange",
+      "targetColor": "gold"
+    },
+    {
+      "round": 3,
+      "jumpMode": "double",
+      "startColor": "blue",
+      "intermediateColor": "green",
+      "targetColor": "purple"
+    }
+  ]
+}

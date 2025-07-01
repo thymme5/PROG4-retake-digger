@@ -1,0 +1,27 @@
+{
+  "level": 1,
+  "mode": "Solo",
+  "tileCount": 7,
+  "startTile": [0, 0],
+  "rounds": [
+    {
+      "round": 1,
+      "jumpMode": "single",
+      "startColor": "purple",
+      "targetColor": "red"
+    },
+    {
+      "round": 2,
+      "jumpMode": "double",
+      "startColor": "orange",
+      "intermediateColor": "green",
+      "targetColor": "gold"
+    },
+    {
+      "round": 3,
+      "jumpMode": "toggle",
+      "startColor": "blue",
+      "targetColor": "purple"
+    }
+  ]
+}

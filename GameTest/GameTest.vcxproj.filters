@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{3108d809-3fff-4faf-a959-8ab176a64912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Coily">
+      <UniqueIdentifier>{26a4767c-6ceb-45c2-92ed-9cdba7bd8ce2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Coily\States">
+      <UniqueIdentifier>{c8881497-dea1-44cc-b3dd-b42fb8f6011e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Coily\States\EggState">
+      <UniqueIdentifier>{801837a9-e2e8-4911-8d01-12c535cc0df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Coily\States\TransformingState">
+      <UniqueIdentifier>{a60d431b-f313-4f23-81ad-e47eba1445a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Coily\States\ChasingState">
+      <UniqueIdentifier>{e2b61196-4ace-4fc6-ad64-19b167337ac2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Coily\States\DeadState">
+      <UniqueIdentifier>{0306ec7f-b57a-42f3-8b37-766228ed44b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Level">
+      <UniqueIdentifier>{2417b65d-0e20-45e3-9c26-e8314dd57a6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Level\TileComponent">
+      <UniqueIdentifier>{d70e4844-cc36-4e79-9d8f-6cc562c7243e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Qbert">
+      <UniqueIdentifier>{ec6de505-445a-400f-8612-1f646f667ff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components">
+      <UniqueIdentifier>{5a67706d-b9b5-45f1-9d32-7191b2862869}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\MoveComponent">
+      <UniqueIdentifier>{70b1a7bb-eb75-4ff2-9b3c-0527c42a9059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\GameUIComponent">
+      <UniqueIdentifier>{23239a7a-d3b4-4500-bc02-a84e0669852f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Sound">
+      <UniqueIdentifier>{7decaafe-5336-4a83-8d4c-4375bbae689b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Level\ColorMap">
+      <UniqueIdentifier>{7eac6d3e-6b1c-4e08-a493-436af7ed11a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay">
+      <UniqueIdentifier>{9427a2c4-a5bb-407a-9c77-1a73986d4020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay\GameplayManager">
+      <UniqueIdentifier>{df7308fd-7771-4af2-828e-2cec7d6e458f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay\GameplayManager\States">
+      <UniqueIdentifier>{4564f25e-9ab5-4cc4-b94f-941d61d8ad8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay\GameplayManager\States\PlayingState">
+      <UniqueIdentifier>{d606111f-99e0-44e5-abb3-5600aa273433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay\GameplayManager\States\RoundCompleteState">
+      <UniqueIdentifier>{24acf590-71bc-4fef-8a9e-ef6f68cbf55b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{925a5e55-d357-4008-8ce0-822d8d64ceef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode">
+      <UniqueIdentifier>{22c70aa0-6793-4dea-9d82-d85d7fee03e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\SinglePlayerMode">
+      <UniqueIdentifier>{ee855862-e20d-43f3-a40f-38ad51258766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\CoopMode">
+      <UniqueIdentifier>{a3f49624-3f32-47e9-ba26-8160675f0b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModeManager">
+      <UniqueIdentifier>{4eb65f4e-5ec8-4169-b12e-69f0af694d18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\PlayerConfig">
+      <UniqueIdentifier>{4196248d-c934-4efe-8489-7c0beb723cab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneBuilder">
+      <UniqueIdentifier>{1a80dde7-1850-492e-952e-218678320bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\MainMenuUIComponent">
+      <UniqueIdentifier>{45b4ebe0-377a-4d7a-92b4-c679f8326ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\MainMenu">
+      <UniqueIdentifier>{bf4d4da1-d67a-42e0-81db-51e4a433015d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\InputBindingHelper">
+      <UniqueIdentifier>{4c900370-2859-4b24-b444-494d555ea6b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\HighScore">
+      <UniqueIdentifier>{3afdf041-8fe9-435d-99f9-a444de71d546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameOverMenu">
+      <UniqueIdentifier>{ea3c9f09-3b51-4704-9429-1b42c7010596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\VictoryScreen">
+      <UniqueIdentifier>{08bb5ca4-ed5b-46c9-9706-b1587ee086a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\SinglePlayerMode\VersusMode">
+      <UniqueIdentifier>{a35eceac-86fa-47fe-bd62-d0cc96f2a3b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components\EdgeEnemyComponent">
+      <UniqueIdentifier>{207feed1-bd34-43c0-a62e-276dc0907e22}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyComponent.cpp">
+      <Filter>Game\Coily</Filter>
+    </ClCompile>
+    <ClCompile Include="EggState.cpp">
+      <Filter>Game\Coily\States\EggState</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformingState.cpp">
+      <Filter>Game\Coily\States\TransformingState</Filter>
+    </ClCompile>
+    <ClCompile Include="TileComponent.cpp">
+      <Filter>Game\Level\TileComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelBuilder.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="QbertMoveComponent.cpp">
+      <Filter>Game\Components\MoveComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUIComponent.cpp">
+      <Filter>Game\Components\GameUIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="ChasingState.cpp">
+      <Filter>Game\Coily\States\ChasingState</Filter>
+    </ClCompile>
+    <ClCompile Include="QbertSoundLibrary.cpp">
+      <Filter>Game\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorMap.cpp">
+      <Filter>Game\Level\ColorMap</Filter>
+    </ClCompile>
+    <ClCompile Include="GameplayManagerComponent.cpp">
+      <Filter>Gameplay\GameplayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="RoundCompleteState.cpp">
+      <Filter>Gameplay\GameplayManager\States\RoundCompleteState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayingState.cpp">
+      <Filter>Gameplay\GameplayManager\States\PlayingState</Filter>
+    </ClCompile>
+    <ClCompile Include="GameplayState.cpp">
+      <Filter>Gameplay\GameplayManager\States</Filter>
+    </ClCompile>
+    <ClCompile Include="FinishRoundCommand.h">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="SinglePlayerMode.cpp">
+      <Filter>GameMode\SinglePlayerMode</Filter>
+    </ClCompile>
+    <ClCompile Include="CoopMode.cpp">
+      <Filter>GameMode\CoopMode</Filter>
+    </ClCompile>
+    <ClCompile Include="VersusMode.cpp">
+      <Filter>GameMode\SinglePlayerMode\VersusMode</Filter>
+    </ClCompile>
+    <ClCompile Include="GameModeManager.cpp">
+      <Filter>GameMode\GameModeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerConfig.cpp">
+      <Filter>GameMode\PlayerConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="QbertSceneBuilder.cpp">
+      <Filter>SceneBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuUIComponent.cpp">
+      <Filter>Game\Components\MainMenuUIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>GameMode\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="InputBindingHelper.cpp">
+      <Filter>Game\InputBindingHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreMenu.cpp">
+      <Filter>GameMode\HighScore</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverMenu.cpp">
+      <Filter>GameMode\GameOverMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreManager.cpp">
+      <Filter>GameMode\HighScore</Filter>
+    </ClCompile>
+    <ClCompile Include="VictoryScreen.cpp">
+      <Filter>GameMode\VictoryScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="EdgeEnemyComponent.cpp">
+      <Filter>Game\Components\EdgeEnemyComponent</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CoilyComponent.h">
+      <Filter>Game\Coily</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyState.h">
+      <Filter>Game\Coily\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EggState.h">
+      <Filter>Game\Coily\States\EggState</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformingState.h">
+      <Filter>Game\Coily\States\TransformingState</Filter>
+    </ClInclude>
+    <ClInclude Include="TileComponent.h">
+      <Filter>Game\Level\TileComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelBuilder.h">
+      <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertMoveComponent.h">
+      <Filter>Game\Components\MoveComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUIComponent.h">
+      <Filter>Game\Components\GameUIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ChasingState.h">
+      <Filter>Game\Coily\States\ChasingState</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertSoundLibrary.h">
+      <Filter>Game\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorMap.h">
+      <Filter>Game\Level\ColorMap</Filter>
+    </ClInclude>
+    <ClInclude Include="GameplayManagerComponent.h">
+      <Filter>Gameplay\GameplayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="RoundCompleteState.h">
+      <Filter>Gameplay\GameplayManager\States\RoundCompleteState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayingState.h">
+      <Filter>Gameplay\GameplayManager\States\PlayingState</Filter>
+    </ClInclude>
+    <ClInclude Include="GameplayState.h">
+      <Filter>Gameplay\GameplayManager\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="SinglePlayerMode.h">
+      <Filter>GameMode\SinglePlayerMode</Filter>
+    </ClInclude>
+    <ClInclude Include="CoopMode.h">
+      <Filter>GameMode\CoopMode</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusMode.h">
+      <Filter>GameMode\SinglePlayerMode\VersusMode</Filter>
+    </ClInclude>
+    <ClInclude Include="GameModeManager.h">
+      <Filter>GameMode\GameModeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerConfig.h">
+      <Filter>GameMode\PlayerConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertSceneBuilder.h">
+      <Filter>SceneBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuUIComponent.h">
+      <Filter>Game\Components\MainMenuUIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveMenuArrow.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>GameMode\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterGameMode.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="InputBindingHelper.h">
+      <Filter>Game\InputBindingHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScoreMenu.h">
+      <Filter>GameMode\HighScore</Filter>
+    </ClInclude>
+    <ClInclude Include="BackToMenuCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverMenu.h">
+      <Filter>GameMode\GameOverMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScoreManager.h">
+      <Filter>GameMode\HighScore</Filter>
+    </ClInclude>
+    <ClInclude Include="VictoryScreen.h">
+      <Filter>GameMode\VictoryScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeEnemyComponent.h">
+      <Filter>Game\Components\EdgeEnemyComponent</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
+  </ItemGroup>
+</Project>
