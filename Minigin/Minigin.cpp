@@ -94,9 +94,6 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	const float fixedTimeStep = 1.0f / 60.0f; //60fps
-	float lag = 0.0f;
-
 	auto lastTime = std::chrono::high_resolution_clock::now();
 
 	bool doContinue = true;
@@ -105,15 +102,10 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		auto currentTime = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<float> elapsed = currentTime - lastTime;
 		lastTime = currentTime;
-		lag += elapsed.count();
 
 		doContinue = input.ProcessInput();
 
-		while (lag >= fixedTimeStep)
-		{
-			sceneManager.Update();
-			lag -= fixedTimeStep;
-		}
+		sceneManager.Update();
 		renderer.Render();
 		sceneManager.Cleanup();
 	}

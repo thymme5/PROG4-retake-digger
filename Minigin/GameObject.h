@@ -10,6 +10,11 @@
 #include "ImGuiComponent.h"
 #include "Observer.h"
 
+//TODO: renderlayers to components
+//TODO: Fix transform issues
+//TODO: dirty flag may not be implemented properly
+//TODO: every gameobject is a subject now 
+
 enum class RenderLayer
 {
     Background = 0,
