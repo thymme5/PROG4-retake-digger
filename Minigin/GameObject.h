@@ -8,20 +8,6 @@
 #include "Transform.h"
 #include "Component.h"
 #include "ImGuiComponent.h"
-#include "Observer.h"
-
-//TODO: renderlayers to components
-//TODO: Fix transform issues
-//TODO: dirty flag may not be implemented properly
-//TODO: every gameobject is a subject now 
-
-enum class RenderLayer
-{
-    Background = 0,
-    Tiles = 1,
-    Characters = 2,
-    UI = 3
-};
 
 namespace dae
 {
@@ -43,22 +29,14 @@ namespace dae
         glm::vec3 GetWorldPosition();
         void UpdateWorldPosition();
 
-        Transform GetTransform() const;
+        Transform& GetTransform();
 
         void SetParent(GameObject* parent);
         GameObject* GetParent() const noexcept;
         GameObject* GetChildAt(int index);
         int GetChildCount() const noexcept;
 
-        void SetRenderLayer(RenderLayer layer) { m_RenderLayer = layer; }
-        RenderLayer GetRenderLayer() const { return m_RenderLayer; }
-
-        // Observer pattern
-        void AddObserver(Observer* pObserver);
-        void RemoveObserver(Observer* pObserver);
-        void NotifyObservers(Event event);
-
-        // Component management
+        // component management
         template <typename T, typename... Args>
         T* AddComponent(Args&&... args)
         {
@@ -104,7 +82,8 @@ namespace dae
             }
             return false;
         }
-        //gets specific child with component
+
+        // search for a child with a specific component
         template<typename T>
         GameObject* FindChildWithComponent()
         {
@@ -117,19 +96,10 @@ namespace dae
         }
 
     private:
-        RenderLayer m_RenderLayer{ RenderLayer::Tiles };
-
-        Transform m_transform{};
-        glm::vec3 m_LocalPosition{ 0.f };
-        glm::vec3 m_WorldPosition{ 0.f };
-
-        bool m_positionIsDirty{ true };
-
-        std::vector<std::unique_ptr<Component>> m_Components;
+        Transform m_transform;
 
         GameObject* m_Parent{ nullptr };
         std::vector<GameObject*> m_Children;
-
-        std::vector<Observer*> m_Observers;
+        std::vector<std::unique_ptr<Component>> m_Components;
     };
 }

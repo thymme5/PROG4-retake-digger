@@ -1,19 +1,35 @@
 #pragma once
-
-#include "glm.hpp"
+#include <glm.hpp>
 
 namespace dae
 {
-	class Transform final
-	{
-	public:
-		const glm::vec3& GetPosition() const { return m_position; }
-		void SetPosition(float x, float y, float z);
+    class GameObject;
 
-		const glm::vec3& GetRotation() const { return m_rotationAngles; }
-		void SetRotation(const glm::vec3& rotation) { m_rotationAngles = rotation; }
-	private:
-		glm::vec3 m_position;
-		glm::vec3 m_rotationAngles; //rot angles in pitch yaw & roll
-	};
+    class Transform final
+    {
+    public:
+        explicit Transform(GameObject* parent);
+
+        void SetParent(GameObject* parent);
+
+        const glm::vec3& GetLocalPosition() const;
+        void SetLocalPosition(float x, float y, float z);
+        void SetLocalPosition(const glm::vec3& pos);
+
+        const glm::vec3& GetWorldPosition();
+
+        void Rotate(float z);
+        void Translate(float x, float y, float z);
+
+        void UpdateWorldPosition();
+        void SetDirty();
+
+    private:
+        GameObject* m_pParent{ nullptr };
+
+        glm::vec3 m_WorldPosition{ 0.0f };
+        glm::vec3 m_LocalPosition{ 0.0f };
+
+        bool m_IsPositionDirty{ true };
+    };
 }
