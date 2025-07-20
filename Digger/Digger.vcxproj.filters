@@ -13,10 +13,54 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="GameMode">
+      <UniqueIdentifier>{85c1dfcb-4740-4474-94ff-fd5a7875b986}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModeManager">
+      <UniqueIdentifier>{9fed587b-2e9d-4862-bed3-6894853209c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\MainMenu">
+      <UniqueIdentifier>{d3406167-3063-4e4c-9832-2d6daf88279c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelBuilder">
+      <UniqueIdentifier>{d47751af-65aa-4cc1-85bb-06d380fd7b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiggerSceneBuilder">
+      <UniqueIdentifier>{6889a5fd-1f09-40b5-8b4d-3775002c2e7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameModeManager.cpp">
+      <Filter>GameMode\GameModeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>GameMode\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelBuilder.cpp">
+      <Filter>LevelBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="DiggerSceneBuilder.cpp">
+      <Filter>DiggerSceneBuilder</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameModeManager.h">
+      <Filter>GameMode\GameModeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>GameMode\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelBuilder.h">
+      <Filter>LevelBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="DiggerSceneBuilder.h">
+      <Filter>DiggerSceneBuilder</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

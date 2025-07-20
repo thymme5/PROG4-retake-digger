@@ -48,10 +48,11 @@ void dae::Transform::UpdateWorldPosition()
     }
     else
     {
-        m_WorldPosition = m_pParent->GetWorldPosition() + m_LocalPosition;
-    }
+        //TODO: dirty flag is positioned incorrect, but will crash otherwise due to recursion
 
-    m_IsPositionDirty = false;
+        m_IsPositionDirty = false;
+        m_WorldPosition = m_pParent->GetTransform().GetWorldPosition() + m_LocalPosition;
+    }
 }
 
 void dae::Transform::SetDirty()

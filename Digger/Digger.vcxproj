@@ -117,6 +117,9 @@
       <AdditionalDependencies>xinput.lib;minigin.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Minigin;$(SolutionDir)3rdParty/;$(OutputPath);$(SolutionDir)3rdParty\nlhomann;C:\Program Files (x86)\Visual Leak Detector\lib\Win64;$(SolutionDir)3rdParty\SDL2_mixer\lib\$(Platform);$(SolutionDir)3rdParty\SDL2_ttf\lib\$(Platform);$(SolutionDir)3rdParty\SDL2_image\lib\$(Platform);$(SolutionDir)3rdParty\SDL2\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /E /Y /I "$(SolutionDir)Data" "$(OutDir)Data"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -137,7 +140,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DiggerSceneBuilder.cpp" />
+    <ClCompile Include="GameModeManager.cpp" />
+    <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DiggerSceneBuilder.h" />
+    <ClInclude Include="GameMode.h" />
+    <ClInclude Include="GameModeManager.h" />
+    <ClInclude Include="LevelBuilder.h" />
+    <ClInclude Include="MainMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

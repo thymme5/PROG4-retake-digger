@@ -1,5 +1,7 @@
 #pragma once
 
+// While the implementation of GameMode isn't a perfect example of the state machine pattern, I enjoy it's simplicity and chose to re-use it.
+
 class GameMode
 {
 public:

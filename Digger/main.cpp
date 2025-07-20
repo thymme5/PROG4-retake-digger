@@ -13,11 +13,18 @@
 
 #include "SoundService.h"
 #include "ResourceManager.h"
-
+#include "LevelBuilder.h"
+#include "DiggerSceneBuilder.h"
 #include <filesystem>
+#include <sstream>
 
 void load()
 {
+	std::stringstream ss;
+	ss << dae::ResourceManager::GetInstance().GetDataPath().string() << "levels/level01test.txt";
+	std::string levelPath = ss.str();
+
+	DiggerSceneBuilder::CreateSinglePlayerScene(dae::SceneManager::GetInstance().CreateScene("mainscene"), levelPath);
 }
 int main(int, char* [])
 {
