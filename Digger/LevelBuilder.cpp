@@ -3,8 +3,11 @@
 #include "Scene.h"
 #include <fstream>
 #include <iostream>
+#include <nlohmann/json.hpp>
+#include <TextComponent.h>
+using json = nlohmann::json;
 
-constexpr int TILE_SIZE = 16;
+constexpr int TILE_SIZE = 48;
 
 void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 {
@@ -15,31 +18,95 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
         return;
     }
 
-    std::string line;
-    int row = 0;
-
-    while (std::getline(file, line))
+    json levelJson;
+    try
     {
-        for (int col = 0; col < static_cast<int>(line.size()); ++col)
-        {
-            std::pair<int, int> gridPos{ col, row };
-            char tile = line[col];
+        file >> levelJson;
+    }
+    catch (const json::parse_error& e)
+    {
+        std::cerr << "JSON parse error in " << path << ": " << e.what() << '\n';
+        return;
+    }
 
-            switch (tile)
+    int width = levelJson.value("width", 0);
+    int height = levelJson.value("height", 0);
+
+    std::vector<std::vector<bool>> dugOut(height, std::vector<bool>(width, false));
+
+    std::string mode = levelJson.value("mode", "Single");
+
+    // === Tunnels ===
+    if (levelJson.contains("tunnels"))
+    {
+        for (const auto& pos : levelJson["tunnels"])
+        {
+            int col = pos[0];
+            int row = pos[1];
+            if (row < height && col < width)
+                dugOut[row][col] = true;
+        }
+    }
+
+    // === Emeralds ===
+    if (levelJson.contains("emeralds"))
+    {
+        for (const auto& pos : levelJson["emeralds"])
+        {
+            SpawnEmerald(scene, { pos[0], pos[1] });
+            dugOut[pos[1]][pos[0]] = true;
+        }
+    }
+
+    // === Gold Bags ===
+    if (levelJson.contains("goldBags"))
+    {
+        for (const auto& pos : levelJson["goldBags"])
+        {
+            SpawnGoldBag(scene, { pos[0], pos[1] });
+            dugOut[pos[1]][pos[0]] = true;
+        }
+    }
+
+    // === Player ===
+    if (levelJson.contains("playerSpawns") && !levelJson["playerSpawns"].empty())
+    {
+        int col = levelJson["playerSpawns"][0][0];
+        int row = levelJson["playerSpawns"][0][1];
+        SpawnPlayer(scene, { col, row });
+        dugOut[row][col] = true;
+    }
+
+    // === Enemies ===
+    if (levelJson.contains("enemies"))
+    {
+        for (const auto& enemy : levelJson["enemies"])
+        {
+            std::string type = enemy.value("type", "Nobbin");
+            auto pos = enemy["pos"];
+            int col = pos[0];
+            int row = pos[1];
+
+            if (type == "Nobbin")
+                SpawnNobbin(scene, { col, row });
+            else if (type == "Hobbin")
+                SpawnHobbin(scene, { col, row });
+
+            dugOut[row][col] = true;
+        }
+    }
+
+    // === Dirt Generation ===
+    for (int row = 0; row < height; ++row)
+    {
+        for (int col = 0; col < width; ++col)
+        {
+            //Spawns dirt everywhere except where has been dug out
+            if (!dugOut[row][col])
             {
-            case '#': SpawnWall(scene, gridPos); break;
-            case 'E': SpawnEmerald(scene, gridPos); break;
-            case 'G': SpawnGoldBag(scene, gridPos); break;
-            case 'P': SpawnPlayer(scene, gridPos); break;
-            case 'N': SpawnNobbin(scene, gridPos); break;
-            case 'H': SpawnHobbin(scene, gridPos); break;
-            case '.': /* Empty tunnel, no spawn needed */ break;
-            default:
-                std::cerr << "Unknown tile character: " << tile << " at (" << col << ", " << row << ")\n";
-                break;
+                SpawnDirt(scene, { col, row });
             }
         }
-        ++row;
     }
 }
 
@@ -47,15 +114,14 @@ std::shared_ptr<dae::GameObject> LevelBuilder::CreateBasicGO(dae::Scene& scene, 
 {
     auto go = std::make_shared<dae::GameObject>();
     go->SetPosition(gridPos.first * TILE_SIZE, gridPos.second * TILE_SIZE);
-
     go->AddComponent<dae::TextureComponent>(*go, texturePath, 1.f, 0);
 
     scene.Add(go);
     return go;
 }
-void LevelBuilder::SpawnWall(dae::Scene& scene, std::pair<int, int> gridPos)
+void LevelBuilder::SpawnDirt(dae::Scene& scene, std::pair<int, int> gridPos)
 {
-    //auto go = CreateBasicGO(scene, gridPos, "Wall.png");
+    auto go = CreateBasicGO(scene, gridPos, "dirt.png");
     // go->AddComponent<WallComponent>(*go);
 }
 

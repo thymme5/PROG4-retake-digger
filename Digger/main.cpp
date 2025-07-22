@@ -20,11 +20,14 @@
 
 void load()
 {
+
+	//TODO: clean this up and put everything in it's proper place
 	std::stringstream ss;
-	ss << dae::ResourceManager::GetInstance().GetDataPath().string() << "levels/level01test.txt";
+	ss << dae::ResourceManager::GetInstance().GetDataPath().string() << "levels/Level01Solo.json";
 	std::string levelPath = ss.str();
 
 	DiggerSceneBuilder::CreateSinglePlayerScene(dae::SceneManager::GetInstance().CreateScene("mainscene"), levelPath);
+	//DiggerSceneBuilder::CreateDebugScene(dae::SceneManager::GetInstance().CreateScene("mainscene"));
 }
 int main(int, char* [])
 {

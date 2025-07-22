@@ -16,7 +16,7 @@ public:
 	static void LoadLevelFromFile(const std::string& path, dae::Scene& scene);
 private:
     static std::shared_ptr<dae::GameObject> CreateBasicGO(dae::Scene& scene, std::pair<int, int> gridPos, const std::string& texturePath);
-    static void SpawnWall(dae::Scene& scene, std::pair<int, int> gridPos);
+    static void SpawnDirt(dae::Scene& scene, std::pair<int, int> gridPos);
     static void SpawnEmerald(dae::Scene& scene, std::pair<int, int> gridPos);
     static void SpawnGoldBag(dae::Scene& scene, std::pair<int, int> gridPos);
     static void SpawnPlayer(dae::Scene& scene, std::pair<int, int> gridPos);

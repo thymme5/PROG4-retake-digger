@@ -1,27 +1,19 @@
 {
-  "level": 1,
-  "mode": "Solo",
-  "tileCount": 7,
-  "startTile": [0, 0],
-  "rounds": [
-    {
-      "round": 1,
-      "jumpMode": "single",
-      "startColor": "purple",
-      "targetColor": "red"
-    },
-    {
-      "round": 2,
-      "jumpMode": "double",
-      "startColor": "orange",
-      "intermediateColor": "green",
-      "targetColor": "gold"
-    },
-    {
-      "round": 3,
-      "jumpMode": "toggle",
-      "startColor": "blue",
-      "targetColor": "purple"
-    }
-  ]
-}
+    "width": 20,
+    "height": 12,
+    "mode": "Single",
+    "playerSpawns": [[1, 0]],
+    "emeralds": [],
+    "goldBags": [],
+    "enemies": [],
+    "tunnels": [
+      [1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6],
+      [2, 6],
+      [2, 7], [2, 8],
+      [3, 8], [4, 8], [5, 8], [6, 8],
+      [6, 9], [6, 10], [7, 10], [8, 10], [9, 10], [10, 10], [11, 10], [12, 10], [13, 10],
+      [13, 9], [13, 8], [13, 7], [13, 6], [13, 5], [13, 4], [13, 3], [13, 2], [13, 1], [13, 0],
+      [13, 0], [14, 0], [15, 0], [16, 0], [17, 0], [18, 0]
+    ]
+  }
+  
