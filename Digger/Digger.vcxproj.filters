@@ -37,6 +37,24 @@
     <Filter Include="Tiles\TileManager">
       <UniqueIdentifier>{fb499c40-56ce-4c0e-812c-06c39b58a99c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{26ff99b6-5b36-450e-8226-711e20037d32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\PlayerComponent">
+      <UniqueIdentifier>{9d51a133-bf97-4a44-b644-7b1ffa987b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\States">
+      <UniqueIdentifier>{6c2dca24-872b-48d9-822e-1494e4b63431}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\States\AliveState">
+      <UniqueIdentifier>{bc38caac-6e6e-4cc2-9715-c461ff6cb5fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\States\DeadState">
+      <UniqueIdentifier>{1d48ceaf-85a4-4402-b4f7-f5b40d2afc34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\MoveCommand">
+      <UniqueIdentifier>{0317e76e-bc86-4615-a279-bad089c5b212}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,6 +78,15 @@
     <ClCompile Include="TileComponent.cpp">
       <Filter>Tiles\TileComponent</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Player\PlayerComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="AliveState.cpp">
+      <Filter>Player\States\AliveState</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadState.cpp">
+      <Filter>Player\States\DeadState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameModeManager.h">
@@ -82,6 +109,21 @@
     </ClInclude>
     <ClInclude Include="TileManager.h">
       <Filter>Tiles\TileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>Player\PlayerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="AliveState.h">
+      <Filter>Player\States\AliveState</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadState.h">
+      <Filter>Player\States\DeadState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Player\States</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Player\MoveCommand</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

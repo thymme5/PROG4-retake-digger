@@ -140,20 +140,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AliveState.cpp" />
+    <ClCompile Include="DeadState.cpp" />
     <ClCompile Include="DiggerSceneBuilder.cpp" />
     <ClCompile Include="GameModeManager.cpp" />
     <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AliveState.h" />
+    <ClInclude Include="DeadState.h" />
     <ClInclude Include="DiggerSceneBuilder.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="GameModeManager.h" />
     <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileManager.h" />
   </ItemGroup>

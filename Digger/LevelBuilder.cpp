@@ -7,6 +7,9 @@
 #include <TextComponent.h>
 #include "TileComponent.h"
 #include "TileManager.h"
+#include "SubjectComponent.h"
+#include "PlayerComponent.h"
+#include "AliveState.h"
 
 using json = nlohmann::json;
 
@@ -117,7 +120,8 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
         auto playerGO = std::make_shared<dae::GameObject>();
         playerGO->SetPosition(col * TILE_SIZE, row * TILE_SIZE);
         playerGO->AddComponent<dae::TextureComponent>(*playerGO, "digger.png", 1.f, 0);
-        // playerGO->AddComponent<PlayerComponent>(*playerGO);
+		playerGO->AddComponent<dae::SubjectComponent>(*playerGO);
+        playerGO->AddComponent<PlayerComponent>(*playerGO, row, col)->SetState(std::make_unique<AliveState>());
 
         scene.Add(playerGO);
     }

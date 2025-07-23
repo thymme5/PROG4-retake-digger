@@ -7,7 +7,13 @@ namespace dae
     class SubjectComponent final : public Component, public Subject
     {
     public:
-        SubjectComponent() = default;
+        SubjectComponent(GameObject& owner)
+            : Component(owner)
+        {
+        }
         ~SubjectComponent() override = default;
+
+        void Update() override {};
+        void Render() const override {};
     };
 }
