@@ -28,6 +28,15 @@
     <Filter Include="DiggerSceneBuilder">
       <UniqueIdentifier>{6889a5fd-1f09-40b5-8b4d-3775002c2e7f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tiles">
+      <UniqueIdentifier>{19925b18-7ab9-4da6-bd96-b9e4680924be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tiles\TileComponent">
+      <UniqueIdentifier>{b32fea0d-5834-43fb-88d8-54a2182a917d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tiles\TileManager">
+      <UniqueIdentifier>{fb499c40-56ce-4c0e-812c-06c39b58a99c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,6 +54,12 @@
     <ClCompile Include="DiggerSceneBuilder.cpp">
       <Filter>DiggerSceneBuilder</Filter>
     </ClCompile>
+    <ClCompile Include="TileManager.cpp">
+      <Filter>Tiles\TileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TileComponent.cpp">
+      <Filter>Tiles\TileComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameModeManager.h">
@@ -61,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="DiggerSceneBuilder.h">
       <Filter>DiggerSceneBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="TileComponent.h">
+      <Filter>Tiles\TileComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="TileManager.h">
+      <Filter>Tiles\TileManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

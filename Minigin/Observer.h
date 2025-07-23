@@ -7,12 +7,17 @@ namespace dae
 	enum class Event
 	{
 		PlayerDied,
-		PlayerLandedOnTile,
-		TileStateChanged,
-		PlayerWonGame,
-		roundComplete,
-		LevelComplete,
-		CoilyHitPlayer
+		PlayerDugTile,
+		TileDug,
+		TileContainsEmerald,
+		TileContainsGoldBag,
+		GoldBagDropped,
+		EmeraldCollected,
+		EnemySpawned,
+		PlayerSpawned,
+		PlayerCollectedAllEmeralds,
+		PlayerReachedExit,
+		LevelCompleted,
 	};
 
 	class Observer
