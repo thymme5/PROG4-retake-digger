@@ -49,7 +49,7 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
         for (int col = 0; col < width; ++col)
         {
             auto tileGO = std::make_shared<dae::GameObject>();
-            tileGO->SetPosition(col * TILE_SIZE, row * TILE_SIZE);
+            tileGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
 
             auto tileComp = tileGO->AddComponent<TileComponent>(*tileGO, row, col);
             tileComp->SetDug(false); // Default: not dug == has dirt
@@ -118,7 +118,7 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
         int row = levelJson["playerSpawns"][0][1];
 
         auto playerGO = std::make_shared<dae::GameObject>();
-        playerGO->SetPosition(col * TILE_SIZE, row * TILE_SIZE);
+        playerGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
         playerGO->AddComponent<dae::TextureComponent>(*playerGO, "digger.png", 1.f, 0);
 		playerGO->AddComponent<dae::SubjectComponent>(*playerGO);
         playerGO->AddComponent<PlayerComponent>(*playerGO, row, col)->SetState(std::make_unique<AliveState>());
@@ -137,7 +137,7 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
             int row = pos[1];
 
             auto enemyGO = std::make_shared<dae::GameObject>();
-            enemyGO->SetPosition(col * TILE_SIZE, row * TILE_SIZE);
+            enemyGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
 
             if (type == "Nobbin")
                 enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "nobbin.png", 1.f, 0);

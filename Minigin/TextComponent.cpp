@@ -10,6 +10,7 @@
 #include "Texture2D.h"
 
 
+
 dae::TextComponent::TextComponent(GameObject& owner, const std::string& text, std::shared_ptr<Font> font)
 	: Component(owner), m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_TextTexture(nullptr)
 {

@@ -26,7 +26,7 @@ void DiggerSceneBuilder::CreateDebugScene(dae::Scene& scene)
         {
             std::string texture = (row + col) % 2 == 0 ? "tile_white.png" : "tile_black.png";
             auto tile = std::make_shared<dae::GameObject>();
-            tile->SetPosition(col * TILE_SIZE, row * TILE_SIZE);
+            tile->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
             tile->AddComponent<dae::TextureComponent>(*tile, texture, 1.5f, 0);
             scene.Add(tile);
         }

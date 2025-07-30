@@ -6,6 +6,9 @@
 #include "Transform.h"
 #include "Component.h"
 
+#include <glm/vec2.hpp>
+
+
 namespace dae
 {
 	class Font;

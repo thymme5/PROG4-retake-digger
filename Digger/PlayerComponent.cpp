@@ -9,7 +9,7 @@ constexpr int TILE_SIZE = 48;
 PlayerComponent::PlayerComponent(dae::GameObject& owner, int startRow, int startCol)
     : Component(owner), m_Row{ startRow }, m_Col{ startCol }
 {
-    owner.SetPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+    owner.SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
     DigCurrentTile(); // Dig starting tile
 }
 
@@ -21,8 +21,6 @@ void PlayerComponent::Update()
 
 void PlayerComponent::Move(int dRow, int dCol)
 {
-    std::cout << "moving " << std::endl;
-
     int newRow = m_Row + dRow;
     int newCol = m_Col + dCol;
 
@@ -31,7 +29,12 @@ void PlayerComponent::Move(int dRow, int dCol)
     {
         m_Row = newRow;
         m_Col = newCol;
-        GetOwner()->SetPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+
+        std::cout << "position before change: " << m_Col * TILE_SIZE << ", " << m_Row * TILE_SIZE << std::endl;;
+
+        GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+        std::cout << "position after change " << GetOwner()->GetWorldPosition().x << ", " << GetOwner()->GetWorldPosition().y << std::endl;
+
         DigCurrentTile();
     }
 }

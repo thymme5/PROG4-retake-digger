@@ -49,6 +49,7 @@ namespace dae
         m_SoundToChannel.clear();
 
         Mix_CloseAudio();
+        Mix_Quit();
     }
 
     void SDLMixerSoundService::SetMuted(bool muted) 
