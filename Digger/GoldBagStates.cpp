@@ -4,7 +4,6 @@
 #include "TextureComponent.h"
 #include "TileManager.h"
 
-constexpr int TILE_SIZE = 48;
 
 //
 // IdleState

@@ -16,7 +16,6 @@
 
 using json = nlohmann::json;
 
-constexpr int TILE_SIZE = 48;
 
 void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 {

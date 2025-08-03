@@ -12,6 +12,7 @@ namespace dae
 		TileContainsEmerald,
 		TileContainsGoldBag,
 		GoldBagDropped,
+		GoldCollected,
 		EmeraldCollected,
 		EnemySpawned,
 		PlayerSpawned,
