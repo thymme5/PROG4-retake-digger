@@ -18,6 +18,7 @@ namespace dae
 		PlayerCollectedAllEmeralds,
 		PlayerReachedExit,
 		LevelCompleted,
+		
 	};
 
 	class Observer

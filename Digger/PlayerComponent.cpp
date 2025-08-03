@@ -3,6 +3,9 @@
 #include "TileManager.h"
 #include "TileComponent.h"
 #include "TextureComponent.h"
+#include "EmeraldComponent.h"
+#include "SceneManager.h"
+#include "InteractableComponent.h"
 
 constexpr int TILE_SIZE = 48;
 
@@ -25,15 +28,12 @@ void PlayerComponent::Move(int dRow, int dCol)
     int newCol = m_Col + dCol;
 
     auto tile = TileManager::GetInstance().GetTile(newRow, newCol);
-    if (tile) // valid move
+    if (tile)
     {
         m_Row = newRow;
         m_Col = newCol;
 
-        std::cout << "position before change: " << m_Col * TILE_SIZE << ", " << m_Row * TILE_SIZE << std::endl;;
-
         GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
-        std::cout << "position after change " << GetOwner()->GetWorldPosition().x << ", " << GetOwner()->GetWorldPosition().y << std::endl;
 
         DigCurrentTile();
     }
@@ -42,11 +42,24 @@ void PlayerComponent::Move(int dRow, int dCol)
 void PlayerComponent::DigCurrentTile()
 {
     auto tile = TileManager::GetInstance().GetTile(m_Row, m_Col);
+    if (!tile) return;
+
+    auto* tileGO = tile->GetGameObject();
+
     if (tile && !tile->IsDug())
     {
         tile->SetDug(true);
         tile->GetGameObject()->GetComponent<dae::TextureComponent>()->SetVisible(false);
         TileManager::GetInstance().OnNotify(dae::Event::TileDug, GetOwner());
+    }
+
+    auto interactables = TileManager::GetInstance().GetInteractablesAt(m_Row, m_Col);
+    for (const auto& interactable : interactables)
+    {
+        if (auto* interactableComp = interactable->GetComponent<InteractableComponent>())
+        {
+            interactableComp->Interact(*GetOwner());
+        }
     }
 }
 

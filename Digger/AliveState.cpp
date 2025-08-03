@@ -14,13 +14,11 @@ void AliveState::Enter(PlayerComponent& player)
 {
     auto& input = dae::InputManager::GetInstance();
 
-    std::cout << "entering alive state " << std::endl;
-
     // WASD or arrow keys, for example
-    input.BindCommand(SDLK_w, KeyState::Down, std::make_shared<MoveCommand>(player, -1, 0));
-    input.BindCommand(SDLK_s, KeyState::Down, std::make_shared<MoveCommand>(player, 1, 0));
-    input.BindCommand(SDLK_a, KeyState::Down, std::make_shared<MoveCommand>(player, 0, -1));
-    input.BindCommand(SDLK_d, KeyState::Down, std::make_shared<MoveCommand>(player, 0, 1));
+    input.BindCommand(SDLK_UP, KeyState::Down, std::make_shared<MoveCommand>(player, -1, 0));
+    input.BindCommand(SDLK_DOWN, KeyState::Down, std::make_shared<MoveCommand>(player, 1, 0));
+    input.BindCommand(SDLK_LEFT, KeyState::Down, std::make_shared<MoveCommand>(player, 0, -1));
+    input.BindCommand(SDLK_RIGHT, KeyState::Down, std::make_shared<MoveCommand>(player, 0, 1));
 }
 
 

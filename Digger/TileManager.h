@@ -2,9 +2,11 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include "TileComponent.h"
 #include "Observer.h"
 #include "Singleton.h"
+#include "GameObject.h"
 
 class TileManager final : public dae::Observer, public dae::Singleton<TileManager>
 {
@@ -17,6 +19,10 @@ public:
     void RegisterTile(int row, int col, std::shared_ptr<TileComponent> tile);
     std::shared_ptr<TileComponent> GetTile(int row, int col) const;
 
+    void RegisterInteractable(int row, int col, dae::GameObject* interactable);
+    std::vector<dae::GameObject*> GetInteractablesAt(int row, int col) const;
+    void RemoveInteractable(int row, int col, dae::GameObject* interactable);
+
     const std::vector<std::vector<std::shared_ptr<TileComponent>>>& GetTileMap() const { return m_TileMap; }
 
     int GetWidth() const { return static_cast<int>(m_TileMap.empty() ? 0 : m_TileMap[0].size()); }
@@ -26,4 +32,5 @@ public:
 
 private:
     std::vector<std::vector<std::shared_ptr<TileComponent>>> m_TileMap;
+    std::unordered_map<int, std::unordered_map<int, std::vector<dae::GameObject*>>> m_Interactables;
 };

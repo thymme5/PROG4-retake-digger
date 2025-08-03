@@ -55,6 +55,30 @@
     <Filter Include="Player\MoveCommand">
       <UniqueIdentifier>{0317e76e-bc86-4615-a279-bad089c5b212}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level Objects">
+      <UniqueIdentifier>{d53340bb-b14e-445c-9669-dfe9a059e9b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InteractableComponent">
+      <UniqueIdentifier>{ed5fec35-5f8f-4c79-a885-2a584bc6dc9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level Objects\GoldBag">
+      <UniqueIdentifier>{500ce616-30c8-4810-ab5e-a473914fd904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level Objects\Emerald">
+      <UniqueIdentifier>{a40b83b1-51af-4f94-b6da-dd1f5cc2847e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level Objects\Emerald\EmeraldComponent">
+      <UniqueIdentifier>{d6b952ad-4300-4ba5-aa92-ebf055f12a7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level Objects\GoldBag\GoldbagComponent">
+      <UniqueIdentifier>{0bfbc455-459a-4a3c-805d-394b448ad2e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level Objects\GoldBag\Goldbag States">
+      <UniqueIdentifier>{346468af-6044-4a92-acc7-66e82f4cbf47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level Objects\GoldBag\Goldbag States\States">
+      <UniqueIdentifier>{0f16580d-02e1-4489-b0aa-f1c62484cc86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +110,15 @@
     </ClCompile>
     <ClCompile Include="DeadState.cpp">
       <Filter>Player\States\DeadState</Filter>
+    </ClCompile>
+    <ClCompile Include="EmeraldComponent.cpp">
+      <Filter>Level Objects\Emerald\EmeraldComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldBagStates.cpp">
+      <Filter>Level Objects\GoldBag\Goldbag States\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldBagComponent.cpp">
+      <Filter>Level Objects\GoldBag\GoldbagComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +157,18 @@
     </ClInclude>
     <ClInclude Include="MoveCommand.h">
       <Filter>Player\MoveCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="EmeraldComponent.h">
+      <Filter>Level Objects\Emerald\EmeraldComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractableComponent.h">
+      <Filter>InteractableComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldBagStates.h">
+      <Filter>Level Objects\GoldBag\Goldbag States\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldBagComponent.h">
+      <Filter>Level Objects\GoldBag\GoldbagComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

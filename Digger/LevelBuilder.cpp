@@ -10,6 +10,9 @@
 #include "SubjectComponent.h"
 #include "PlayerComponent.h"
 #include "AliveState.h"
+#include "EmeraldComponent.h"
+#include "GoldBagComponent.h"
+
 
 using json = nlohmann::json;
 
@@ -89,8 +92,20 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 
             if (auto tile = TileManager::GetInstance().GetTile(row, col))
             {
+                // TODO: remove this line it's dumb and unnecessary
                 tile->SetHasEmerald(true);
-                tile->GetGameObject()->GetComponent<dae::TextureComponent>()->SetTexture("Emerald.png");
+
+                // Create Emerald GameObject
+                auto emeraldGO = std::make_shared<dae::GameObject>();
+                emeraldGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+                emeraldGO->AddComponent<dae::TextureComponent>(*emeraldGO, "Emerald.png", 1.f, 1);
+                emeraldGO->AddComponent<EmeraldComponent>(*emeraldGO, row, col);
+
+                // Register as an interactable in the TileManager
+                TileManager::GetInstance().RegisterInteractable(row, col, emeraldGO.get());
+
+                // Add to scene
+                scene.Add(emeraldGO);
             }
         }
     }
@@ -103,10 +118,24 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
             int col = pos[0];
             int row = pos[1];
 
+            // If tile exists
             if (auto tile = TileManager::GetInstance().GetTile(row, col))
             {
-                tile->SetHasGoldBag(true);
-                tile->GetGameObject()->GetComponent<dae::TextureComponent>()->SetTexture("goldbag.png");
+                // Create GoldBag GameObject
+                auto goldBagGO = std::make_shared<dae::GameObject>();
+                goldBagGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+
+                std::cout << "GoldBag spawned at (" << row << ", " << col << ")\n";
+
+                // Add components
+                goldBagGO->AddComponent<dae::TextureComponent>(*goldBagGO, "goldbag.png", 1.f, 1);
+                goldBagGO->AddComponent<GoldBagComponent>(*goldBagGO, row, col);
+
+                // Register as interactable
+                TileManager::GetInstance().RegisterInteractable(row, col, goldBagGO.get());
+
+                // Add to scene
+                scene.Add(goldBagGO);
             }
         }
     }

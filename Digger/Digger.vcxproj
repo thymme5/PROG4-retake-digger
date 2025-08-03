@@ -143,7 +143,10 @@
     <ClCompile Include="AliveState.cpp" />
     <ClCompile Include="DeadState.cpp" />
     <ClCompile Include="DiggerSceneBuilder.cpp" />
+    <ClCompile Include="EmeraldComponent.cpp" />
     <ClCompile Include="GameModeManager.cpp" />
+    <ClCompile Include="GoldBagComponent.cpp" />
+    <ClCompile Include="GoldBagStates.cpp" />
     <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -155,8 +158,12 @@
     <ClInclude Include="AliveState.h" />
     <ClInclude Include="DeadState.h" />
     <ClInclude Include="DiggerSceneBuilder.h" />
+    <ClInclude Include="EmeraldComponent.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="GameModeManager.h" />
+    <ClInclude Include="GoldBagComponent.h" />
+    <ClInclude Include="GoldBagStates.h" />
+    <ClInclude Include="InteractableComponent.h" />
     <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MoveCommand.h" />
