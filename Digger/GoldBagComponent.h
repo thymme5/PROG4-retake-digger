@@ -18,14 +18,18 @@ public:
     void Interact(dae::GameObject& interactor) override;
 
     void SetState(std::unique_ptr<GoldBagState> newState);
+    GoldBagState* GetState() const;
 
     void Fall();
     int GetFallDistance() const { return m_FallDistance; }
     void ResetFallDistance() { m_FallDistance = 0; }
 
+    bool IsBroken() const;
+
     int GetRow() const { return m_Row; }
     int GetCol() const { return m_Col; }
 
+    bool TryPush(int dRow, int dCol);
 
 
 private:

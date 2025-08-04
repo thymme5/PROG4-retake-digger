@@ -6,8 +6,7 @@
 #include "EmeraldComponent.h"
 #include "SceneManager.h"
 #include "InteractableComponent.h"
-
-constexpr int TILE_SIZE = 48;
+#include "GoldBagComponent.h"
 
 PlayerComponent::PlayerComponent(dae::GameObject& owner, int startRow, int startCol)
     : Component(owner), m_Row{ startRow }, m_Col{ startCol }
@@ -18,26 +17,93 @@ PlayerComponent::PlayerComponent(dae::GameObject& owner, int startRow, int start
 
 void PlayerComponent::Update()
 {
+    if (m_IsMoving)
+    {
+        glm::vec2 currentPos = GetOwner()->GetWorldPosition();
+        glm::vec2 targetPos = { m_TargetCol * TILE_SIZE, m_TargetRow * TILE_SIZE };
+
+        glm::vec2 newPos = currentPos + m_MoveDirection;
+
+        // Overshoot clamp
+        bool reached = false;
+        if (m_MoveDirection.x > 0.f && newPos.x >= targetPos.x) reached = true;
+        else if (m_MoveDirection.x < 0.f && newPos.x <= targetPos.x) reached = true;
+        else if (m_MoveDirection.y > 0.f && newPos.y >= targetPos.y) reached = true;
+        else if (m_MoveDirection.y < 0.f && newPos.y <= targetPos.y) reached = true;
+
+        if (reached)
+        {
+            GetOwner()->SetLocalPosition(targetPos.x, targetPos.y);
+            m_Row = m_TargetRow;
+            m_Col = m_TargetCol;
+            m_IsMoving = false;
+            DigCurrentTile();
+        }
+        else
+        {
+            GetOwner()->SetLocalPosition(newPos.x, newPos.y);
+        }
+    }
+
     if (m_pCurrentState)
         m_pCurrentState->Update(*this);
 }
 
 void PlayerComponent::Move(int dRow, int dCol)
 {
-    int newRow = m_Row + dRow;
-    int newCol = m_Col + dCol;
+    if (m_IsMoving) return;
+
+    const int newRow = m_Row + dRow;
+    const int newCol = m_Col + dCol;
 
     auto tile = TileManager::GetInstance().GetTile(newRow, newCol);
-    if (tile)
+    if (!tile) return;
+
+    // Check for gold bag
+    for (auto* obj : TileManager::GetInstance().GetInteractablesAt(newRow, newCol))
     {
-        m_Row = newRow;
-        m_Col = newCol;
+        if (auto* goldBag = obj->GetComponent<GoldBagComponent>())
+        {
+            // check if bag can be pushed 
+            if (goldBag->IsBroken()) continue;
 
-        GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+            // Only allow pushing left/right
+            if (dRow != 0) return;
 
-        DigCurrentTile();
+            const int bagRow = newRow;
+            const int bagCol = newCol;
+
+            const int pushCol = bagCol + dCol;
+            const int pushRow = bagRow;
+
+            // Ensure player is on correct side of bag
+            const int playerCol = m_Col;
+            if ((dCol == -1 && playerCol != bagCol + 1) || // player must be to the right
+                (dCol == 1 && playerCol != bagCol - 1))    // player must be to the left
+            {
+                return;
+            }
+
+            auto pushTile = TileManager::GetInstance().GetTile(pushRow, pushCol);
+            if (!pushTile || !pushTile->IsDug()) return;
+
+            if (!TileManager::GetInstance().GetInteractablesAt(pushRow, pushCol).empty()) return;
+
+            if (!goldBag->TryPush(pushRow, pushCol)) return;
+        }
     }
+
+
+    // No obstruction or bag was pushed successfully
+    m_TargetRow = newRow;
+    m_TargetCol = newCol;
+    m_MoveDirection = glm::vec2{
+        static_cast<float>(dCol) * m_MoveSpeedPerFrame,
+        static_cast<float>(dRow) * m_MoveSpeedPerFrame
+    };
+    m_IsMoving = true;
 }
+
 
 void PlayerComponent::DigCurrentTile()
 {

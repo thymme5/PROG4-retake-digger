@@ -2,6 +2,8 @@
 #include "PlayerState.h"
 #include "Component.h"
 #include "Observer.h"
+#include "glm.hpp"
+
 #include <memory>
 
 class PlayerComponent final : public dae::Component
@@ -23,6 +25,12 @@ public:
 private:
     int m_Row{};
     int m_Col{};
-
     std::unique_ptr<PlayerState> m_pCurrentState;
+
+    // Movement related variables
+    int m_TargetRow{}, m_TargetCol{};
+    glm::vec2 m_MoveDirection{ 0.f, 0.f };
+    float m_Speed{ 100.f }; // Pixels per second
+    bool m_IsMoving{ false };
+    float m_MoveSpeedPerFrame{ .10f };
 };

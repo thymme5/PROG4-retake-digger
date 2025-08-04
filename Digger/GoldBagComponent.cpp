@@ -41,13 +41,42 @@ void GoldBagComponent::SetState(std::unique_ptr<GoldBagState> newState)
     if (m_pCurrentState)
         m_pCurrentState->Enter(*this);
 }
+GoldBagState* GoldBagComponent::GetState() const
+{
+	return m_pCurrentState.get();
+}
+
+bool GoldBagComponent::IsBroken() const
+{
+    return dynamic_cast<BrokenState*>(m_pCurrentState.get()) != nullptr;
+}
+
+bool GoldBagComponent::TryPush(int targetRow, int targetCol)
+{
+    auto targetTile = TileManager::GetInstance().GetTile(targetRow, targetCol);
+
+    if (targetTile && targetTile->IsDug() &&
+        TileManager::GetInstance().GetInteractablesAt(targetRow, targetCol).empty())
+    {
+        TileManager::GetInstance().RemoveInteractable(m_Row, m_Col, GetOwner());
+
+        m_Row = targetRow;
+        m_Col = targetCol;
+        GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+
+        TileManager::GetInstance().RegisterInteractable(m_Row, m_Col, GetOwner());
+        return true;
+    }
+
+    return false;
+}
 
 void GoldBagComponent::Fall()
 {
     int newRow = m_Row + 1;
 
     auto tileBelow = TileManager::GetInstance().GetTile(newRow, m_Col);
-    if (!tileBelow || tileBelow->IsDug()) // Can fall
+    if (!tileBelow || tileBelow->IsDug())
     {
         // Remove from current tile
         TileManager::GetInstance().RemoveInteractable(m_Row, m_Col, GetOwner());
