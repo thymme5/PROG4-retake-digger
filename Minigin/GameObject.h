@@ -21,20 +21,28 @@ namespace dae
 		GameObject(const GameObject& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 
+		// standard gameobject things
 		void Update();
 		void Render() const;
 		void RenderImGui();
 
+		// position 
 		void SetLocalPosition(float x, float y);
 		const glm::vec3& GetLocalPosition() const;
 		glm::vec3 GetWorldPosition();
 		Transform& GetTransform();
 
+		// hierarchy logic
 		void SetParent(GameObject* newParent, bool keepWorldPosition = true);
 		GameObject* GetParent() const noexcept;
 		GameObject* GetChildAt(int index);
 		int GetChildCount() const noexcept;
 
+		// destroy logic
+		void Destroy();
+		bool IsMarkedForDestroy() const noexcept;
+
+		// component logic
 		template <typename T, typename... Args>
 		T* AddComponent(Args&&... args)
 		{
@@ -103,5 +111,6 @@ namespace dae
 		std::vector<std::unique_ptr<Component>> m_Components;
 
 		bool m_IsDirty{ true };
+		bool m_IsMarkedForDestroy{ false };
 	};
 }

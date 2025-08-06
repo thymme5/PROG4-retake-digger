@@ -53,6 +53,9 @@ void PlayerComponent::Move(int dRow, int dCol)
 {
     if (m_IsMoving) return;
 
+    m_LastDirRow = dRow;
+    m_LastDirCol = dCol;
+
     const int newRow = m_Row + dRow;
     const int newCol = m_Col + dCol;
 
@@ -129,6 +132,23 @@ void PlayerComponent::DigCurrentTile()
     }
 }
 
+void PlayerComponent::ShootFireball()
+{
+    if (m_HasFireball) return; 
+
+    auto fireball = std::make_unique<dae::GameObject>();
+    fireball->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+
+    fireball->AddComponent<dae::TextureComponent>(*fireball, "fireball.png", 1.f);
+    fireball->AddComponent<FireballComponent>(*fireball, m_Row, m_Col, m_LastDirRow, m_LastDirCol);
+
+    dae::SceneManager::GetInstance().GetActiveScene().Add(std::move(fireball));
+
+    m_HasFireball = true;
+}
+
+
+
 void PlayerComponent::SetState(std::unique_ptr<PlayerState> newState)
 {
     if (m_pCurrentState)
@@ -139,3 +159,4 @@ void PlayerComponent::SetState(std::unique_ptr<PlayerState> newState)
     if (m_pCurrentState)
         m_pCurrentState->Enter(*this);
 }
+

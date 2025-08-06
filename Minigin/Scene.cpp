@@ -11,6 +11,19 @@ Scene::Scene(const std::string& name) : m_name(name) {}
 
 Scene::~Scene() = default;
 
+
+void Scene::CleanupDestroyedObjects()
+{
+	m_objects.erase(
+		std::remove_if(m_objects.begin(), m_objects.end(),
+			[](const std::shared_ptr<GameObject>& obj)
+			{
+				return obj->IsMarkedForDestroy();
+			}),
+		m_objects.end()
+	);
+}
+
 void Scene::Add(std::shared_ptr<GameObject> object)
 {
 	m_objects.emplace_back(std::move(object));
@@ -32,6 +45,8 @@ void Scene::Update()
 	{
 		object->Update();
 	}
+
+	//CleanupDestroyedObjects();
 }
 
 void Scene::Render() const

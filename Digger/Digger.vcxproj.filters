@@ -52,9 +52,6 @@
     <Filter Include="Player\States\DeadState">
       <UniqueIdentifier>{1d48ceaf-85a4-4402-b4f7-f5b40d2afc34}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Player\MoveCommand">
-      <UniqueIdentifier>{0317e76e-bc86-4615-a279-bad089c5b212}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Level Objects">
       <UniqueIdentifier>{d53340bb-b14e-445c-9669-dfe9a059e9b7}</UniqueIdentifier>
     </Filter>
@@ -78,6 +75,18 @@
     </Filter>
     <Filter Include="Level Objects\GoldBag\Goldbag States\States">
       <UniqueIdentifier>{0f16580d-02e1-4489-b0aa-f1c62484cc86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\FireballComponent">
+      <UniqueIdentifier>{836c7622-3dcd-45fa-9612-6dafa9d5ed82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Commands">
+      <UniqueIdentifier>{dd8fed24-a7a4-476a-a826-5b94ca2d8bc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Commands\MoveCommand">
+      <UniqueIdentifier>{0317e76e-bc86-4615-a279-bad089c5b212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player\Commands\FireballCommand">
+      <UniqueIdentifier>{9388c10f-ebd5-4725-a38f-4bc2bca3c7b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +129,9 @@
     <ClCompile Include="GoldBagComponent.cpp">
       <Filter>Level Objects\GoldBag\GoldbagComponent</Filter>
     </ClCompile>
+    <ClCompile Include="FireballComponent.cpp">
+      <Filter>Player\FireballComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameModeManager.h">
@@ -156,7 +168,7 @@
       <Filter>Player\States</Filter>
     </ClInclude>
     <ClInclude Include="MoveCommand.h">
-      <Filter>Player\MoveCommand</Filter>
+      <Filter>Player\Commands\MoveCommand</Filter>
     </ClInclude>
     <ClInclude Include="EmeraldComponent.h">
       <Filter>Level Objects\Emerald\EmeraldComponent</Filter>
@@ -169,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="GoldBagComponent.h">
       <Filter>Level Objects\GoldBag\GoldbagComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="FireballComponent.h">
+      <Filter>Player\FireballComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="FireballCommand.h">
+      <Filter>Player\Commands\FireballCommand</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

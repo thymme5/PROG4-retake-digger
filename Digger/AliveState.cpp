@@ -9,16 +9,19 @@
 #include "TextureComponent.h"
 #include "InputManager.h"
 #include "MoveCommand.h"
+#include "FireballCommand.h"
 
 void AliveState::Enter(PlayerComponent& player)
 {
     auto& input = dae::InputManager::GetInstance();
 
-    // WASD or arrow keys, for example
+    // WASD or arrow keys
     input.BindCommand(SDLK_UP, KeyState::Down, std::make_shared<MoveCommand>(player, -1, 0));
     input.BindCommand(SDLK_DOWN, KeyState::Down, std::make_shared<MoveCommand>(player, 1, 0));
     input.BindCommand(SDLK_LEFT, KeyState::Down, std::make_shared<MoveCommand>(player, 0, -1));
     input.BindCommand(SDLK_RIGHT, KeyState::Down, std::make_shared<MoveCommand>(player, 0, 1));
+
+	input.BindCommand(SDLK_SPACE, KeyState::Down, std::make_shared<FireballCommand>(player));
 }
 
 

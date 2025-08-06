@@ -3,6 +3,9 @@
 #include "Component.h"
 #include "Observer.h"
 #include "glm.hpp"
+#include "FireballComponent.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 #include <memory>
 
@@ -22,15 +25,22 @@ public:
 
     void SetState(std::unique_ptr<PlayerState> newState);
 
+    void ShootFireball();
+
 private:
     int m_Row{};
     int m_Col{};
     std::unique_ptr<PlayerState> m_pCurrentState;
 
-    // Movement related variables
+    // movement related variables
     int m_TargetRow{}, m_TargetCol{};
     glm::vec2 m_MoveDirection{ 0.f, 0.f };
-    float m_Speed{ 100.f }; // Pixels per second
+    float m_Speed{ 100.f }; //pixels per second
     bool m_IsMoving{ false };
-    float m_MoveSpeedPerFrame{ .10f };
+    float m_MoveSpeedPerFrame{ .05f };
+
+    // last direction in which player moved for fireball's purpose
+    int m_LastDirRow{ 0 };
+    int m_LastDirCol{ 1 }; // facing right on default
+    bool m_HasFireball{ false };
 };

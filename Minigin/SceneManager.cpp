@@ -1,6 +1,15 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+dae::Scene& dae::SceneManager::GetActiveScene()
+{
+	if (m_scenes.empty())
+	{
+		throw std::runtime_error("No active scene available.");
+	}
+	return *m_scenes.back();
+}
+
 void dae::SceneManager::Update()
 {
 	for(auto& scene : m_scenes)

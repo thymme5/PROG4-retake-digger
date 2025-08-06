@@ -151,6 +151,15 @@ void GameObject::Reparent(GameObject* newParent, bool keepWorldPosition)
 	MarkDirty();
 }
 
+void GameObject::Destroy()
+{
+	m_IsMarkedForDestroy = true;
+}
+bool GameObject::IsMarkedForDestroy() const noexcept
+{
+	return m_IsMarkedForDestroy;
+}
+
 void GameObject::MarkDirty()
 {
 	m_IsDirty = true;
