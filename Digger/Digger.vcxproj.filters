@@ -88,6 +88,9 @@
     <Filter Include="Player\Commands\FireballCommand">
       <UniqueIdentifier>{9388c10f-ebd5-4725-a38f-4bc2bca3c7b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{6d5cd49b-04e8-4032-bcbe-7b161c11dae6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -131,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="FireballComponent.cpp">
       <Filter>Player\FireballComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponent.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="FireballCommand.h">
       <Filter>Player\Commands\FireballCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

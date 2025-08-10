@@ -12,6 +12,7 @@
 #include "AliveState.h"
 #include "EmeraldComponent.h"
 #include "GoldBagComponent.h"
+#include "UIComponent.h"
 
 
 using json = nlohmann::json;
@@ -129,6 +130,7 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
                 // Add components
                 goldBagGO->AddComponent<dae::TextureComponent>(*goldBagGO, "goldbag.png", 1.f, 1);
                 goldBagGO->AddComponent<GoldBagComponent>(*goldBagGO, row, col);
+				goldBagGO->AddComponent<dae::SubjectComponent>(*goldBagGO);
 
                 // Register as interactable
                 TileManager::GetInstance().RegisterInteractable(row, col, goldBagGO.get());
@@ -152,7 +154,23 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
         playerGO->AddComponent<PlayerComponent>(*playerGO, row, col)->SetState(std::make_unique<AliveState>());
 
         scene.Add(playerGO);
+
+        // === HUD ===
+        if (auto* playerSubj = playerGO->GetComponent<dae::SubjectComponent>())
+        {
+            auto hudGO = std::make_shared<dae::GameObject>();
+            hudGO->SetLocalPosition(8.f, 8.f);
+
+            hudGO->AddComponent<dae::TextComponent>(*hudGO, "SCORE 000000  LIVES 4\nLEVEL 1", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
+
+            auto* ui = hudGO->AddComponent<UIComponent>(*hudGO);
+            ui->Observe(*playerSubj);
+
+            scene.Add(hudGO);
+        }
+
     }
+
 
     // === ENEMIES ===
     if (levelJson.contains("enemies"))

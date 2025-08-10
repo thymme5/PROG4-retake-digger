@@ -18,10 +18,9 @@ void GoldBagComponent::Update()
 }
 void GoldBagComponent::Interact(dae::GameObject& interactor)
 {
-	std::cout << "GoldBagComponent::Interact called\n";
     if (dynamic_cast<BrokenState*>(m_pCurrentState.get()))
     {
-        if (auto* subject = GetOwner()->GetComponent<dae::SubjectComponent>())
+        if (auto* subject = interactor.GetComponent<dae::SubjectComponent>())
         {
             subject->Notify(dae::Event::GoldCollected, &interactor);
         }

@@ -154,6 +154,7 @@
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileManager.cpp" />
+    <ClCompile Include="UIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AliveState.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileManager.h" />
+    <ClInclude Include="UIComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
