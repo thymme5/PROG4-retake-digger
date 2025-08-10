@@ -184,7 +184,6 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 
         enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "nobbin.png", 1.f, 0);
         auto enemyComp = enemyGO->AddComponent<EnemyComponent>(*enemyGO, row, col);
-        enemyComp->SetState(std::make_unique<NobbinState>());
 
         scene.Add(enemyGO);
     }

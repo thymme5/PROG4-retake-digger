@@ -5,7 +5,8 @@
 #include "TileComponent.h"
 
 void HobbinState::Enter(EnemyComponent& enemy)
-{
+{ 
+	std::cout << "HobbinState: Entering state\n";
     m_FramesRemaining = m_FramesToNobbin;
 }
 

@@ -2,17 +2,24 @@
 #include "EnemyState.h"
 #include <memory>
 
+// First stage state: Nobbin (cannot dig)
 class NobbinState final : public EnemyState
 {
 public:
-    NobbinState(int framesToHobbin = 300) // e.g., 5 seconds at 60fps
-        : m_FramesToHobbin(framesToHobbin) {
+    explicit NobbinState(float secondsToHobbin = 15.0f)
+        : m_SecondsToHobbin(secondsToHobbin),
+        m_SecondsRemaining(secondsToHobbin)
+    {
     }
 
     void Enter(EnemyComponent& enemy) override;
     void Update(EnemyComponent& enemy) override;
 
 private:
-    int m_FramesRemaining{};
-    int m_FramesToHobbin;
+    float m_SecondsRemaining;
+    float m_SecondsToHobbin;    
+
+    //TODO: tweak values
+    float m_MoveInterval{ 1.25f };
+    float m_MoveCooldown{ 0.f };
 };

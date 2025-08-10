@@ -9,6 +9,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Timer.h"
 
 #include "SoundService.h"
 #include <SDL_mixer.h>
@@ -94,15 +95,12 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	auto lastTime = std::chrono::high_resolution_clock::now();
+	Timer::Init();
 
 	bool doContinue = true;
 	while (doContinue)
 	{
-		auto currentTime = std::chrono::high_resolution_clock::now();
-		std::chrono::duration<float> elapsed = currentTime - lastTime;
-		lastTime = currentTime;
-
+		Timer::Update();
 		doContinue = input.ProcessInput();
 
 		sceneManager.Update();

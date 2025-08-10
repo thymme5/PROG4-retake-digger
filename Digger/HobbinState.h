@@ -5,7 +5,7 @@
 class HobbinState final : public EnemyState
 {
 public:
-    HobbinState(int framesToNobbin = 300) // e.g., 5 seconds at 60fps
+    HobbinState(int framesToNobbin = 3000) // e.g., 5 seconds at 60fps
         : m_FramesToNobbin(framesToNobbin) {
     }
 
