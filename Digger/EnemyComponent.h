@@ -42,5 +42,8 @@ private:
 
     int m_FrameCounter{ 0 };
 
-    std::unique_ptr<EnemyState> m_State;
+    std::unique_ptr<EnemyState> m_pCurrentState;
+
+    float m_MoveCooldown{ 0.f };
+    float m_MoveInterval{ 0.5f }; // move once every 0.2s (~5 tiles/sec)
 };

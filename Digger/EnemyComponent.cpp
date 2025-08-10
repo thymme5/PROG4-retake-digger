@@ -8,16 +8,18 @@
 EnemyComponent::EnemyComponent(dae::GameObject& owner, int startRow, int startCol)
     : Component(owner), m_Row(startRow), m_Col(startCol)
 {
-    // Start as Nobbin
     SetState(std::make_unique<NobbinState>());
 }
 
 void EnemyComponent::Update()
-{
+{ 
+    m_MoveCooldown -= 1.f / 60.f; // fixed timestep at 60fps
+    if (m_MoveCooldown > 0.f) return;
 
-	std::cout << m_Col << " " << m_Row << std::endl;
-    if (m_State)
-        m_State->Update(*this);
+    m_MoveCooldown = m_MoveInterval; 
+
+    if (m_pCurrentState)
+        m_pCurrentState->Update(*this);
 }
 
 void EnemyComponent::SetTile(int row, int col)
@@ -36,14 +38,18 @@ void EnemyComponent::MoveBy(int dr, int dc)
 
 void EnemyComponent::SetState(std::unique_ptr<EnemyState> newState)
 {
-    m_State = std::move(newState);
-    if (m_State)
-        m_State->Enter(*this);
+    if (m_pCurrentState)
+        m_pCurrentState->Exit(*this);
+
+    m_pCurrentState = std::move(newState);
+
+    if (m_pCurrentState)
+        m_pCurrentState->Enter(*this);
 }
 
 std::pair<int, int> EnemyComponent::BestStepTowardTarget(bool tunnelsOnly) const
 {
-    // Down, up, right, left
+    // down, up, right, left
     static const int dirs[4][2] = { {1,0}, {-1,0}, {0,1}, {0,-1} };
     int bestDr = 0, bestDc = 0;
     int bestDist = 1'000'000;
