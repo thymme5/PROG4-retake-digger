@@ -91,6 +91,21 @@
     <Filter Include="UI">
       <UniqueIdentifier>{6d5cd49b-04e8-4032-bcbe-7b161c11dae6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{3a8b9406-a3e9-4caa-9658-84efab9f0840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\EnemyComponent">
+      <UniqueIdentifier>{b50969b8-637d-4c59-ab25-5c659972edc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\EnemyStates">
+      <UniqueIdentifier>{a4c05423-9e20-4c00-9359-8ce712886ca8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\EnemyStates\NobbinState">
+      <UniqueIdentifier>{65664e4d-5dc1-47b3-b644-e96147dd46b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\EnemyStates\HobbinState">
+      <UniqueIdentifier>{5e4d3519-3e6b-4ca5-b231-930967981691}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -137,6 +152,15 @@
     </ClCompile>
     <ClCompile Include="UIComponent.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyComponent.cpp">
+      <Filter>Enemy\EnemyComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="NobbinState.cpp">
+      <Filter>Enemy\EnemyStates\NobbinState</Filter>
+    </ClCompile>
+    <ClCompile Include="HobbinState.cpp">
+      <Filter>Enemy\EnemyStates\HobbinState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +220,18 @@
     </ClInclude>
     <ClInclude Include="UIComponent.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyComponent.h">
+      <Filter>Enemy\EnemyComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>Enemy\EnemyStates</Filter>
+    </ClInclude>
+    <ClInclude Include="NobbinState.h">
+      <Filter>Enemy\EnemyStates\NobbinState</Filter>
+    </ClInclude>
+    <ClInclude Include="HobbinState.h">
+      <Filter>Enemy\EnemyStates\HobbinState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

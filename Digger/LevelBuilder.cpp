@@ -13,7 +13,8 @@
 #include "EmeraldComponent.h"
 #include "GoldBagComponent.h"
 #include "UIComponent.h"
-
+#include "NobbinState.h"
+#include "EnemyComponent.h"
 
 using json = nlohmann::json;
 
@@ -173,24 +174,19 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 
 
     // === ENEMIES ===
-    if (levelJson.contains("enemies"))
+    if (levelJson.contains("enemies") && levelJson["enemies"].size() == 2)
     {
-        for (const auto& enemy : levelJson["enemies"])
-        {
-            std::string type = enemy.value("type", "Nobbin");
-            auto pos = enemy["pos"];
-            int col = pos[0];
-            int row = pos[1];
+        int col = levelJson["enemies"][0];
+        int row = levelJson["enemies"][1];
 
-            auto enemyGO = std::make_shared<dae::GameObject>();
-            enemyGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+        auto enemyGO = std::make_shared<dae::GameObject>();
+        enemyGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
 
-            if (type == "Nobbin")
-                enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "nobbin.png", 1.f, 0);
-            else if (type == "Hobbin")
-                enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "hobbin.png", 1.f, 0);
+        enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "nobbin.png", 1.f, 0);
+        auto enemyComp = enemyGO->AddComponent<EnemyComponent>(*enemyGO, row, col);
+        enemyComp->SetState(std::make_unique<NobbinState>());
 
-            scene.Add(enemyGO);
-        }
+        scene.Add(enemyGO);
     }
+
 }

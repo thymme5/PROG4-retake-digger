@@ -25,8 +25,8 @@ void GoldBagComponent::Interact(dae::GameObject& interactor)
             subject->Notify(dae::Event::GoldCollected, &interactor);
         }
 
-        //TODO: remove from scene? 
-        GetOwner()->GetComponent<dae::TextureComponent>()->SetVisible(false);
+        //TODO: fix destroy
+        GetOwner()->Destroy();
     }
 }
 
