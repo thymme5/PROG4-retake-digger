@@ -11,7 +11,6 @@ Scene::Scene(const std::string& name) : m_name(name) {}
 
 Scene::~Scene() = default;
 
-
 void Scene::CleanupDestroyedObjects()
 {
 	m_objects.erase(
@@ -46,7 +45,7 @@ void Scene::Update()
 		object->Update();
 	}
 
-	//CleanupDestroyedObjects();
+	CleanupDestroyedObjects();
 }
 
 void Scene::Render() const

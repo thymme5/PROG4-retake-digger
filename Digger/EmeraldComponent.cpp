@@ -20,12 +20,12 @@ void EmeraldComponent::Interact(dae::GameObject& interactor)
         return;
 
     m_IsCollected = true;
-	GetOwner()->GetComponent<dae::TextureComponent>()->SetVisible(false);
-
     if (auto* subject = interactor.GetComponent<dae::SubjectComponent>())
     {
         subject->Notify(dae::Event::EmeraldCollected, &interactor);
     }
 
     TileManager::GetInstance().RemoveInteractable(m_Row, m_Col, GetOwner());
+
+    GetOwner()->Destroy();
 }

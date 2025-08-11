@@ -20,7 +20,6 @@ void GoldBagComponent::Interact(dae::GameObject& interactor)
 {
     if (dynamic_cast<BrokenState*>(m_pCurrentState.get()))
     {
-        GetOwner()->GetComponent<dae::TextureComponent>()->SetVisible(false);
 
         if (auto* subject = interactor.GetComponent<dae::SubjectComponent>())
         {
@@ -29,7 +28,6 @@ void GoldBagComponent::Interact(dae::GameObject& interactor)
 
         TileManager::GetInstance().RemoveInteractable(m_Row, m_Col, GetOwner());
 
-        //TODO: fix destroy
         GetOwner()->Destroy();
     }
 }

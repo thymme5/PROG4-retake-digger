@@ -118,7 +118,7 @@ void PlayerComponent::DigCurrentTile()
     if (tile && !tile->IsDug())
     {
         tile->SetDug(true);
-        tile->GetGameObject()->GetComponent<dae::TextureComponent>()->SetVisible(false);
+        tile->GetGameObject()->Destroy();
         TileManager::GetInstance().OnNotify(dae::Event::TileDug, GetOwner());
     }
 

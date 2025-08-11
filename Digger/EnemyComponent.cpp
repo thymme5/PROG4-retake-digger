@@ -29,8 +29,8 @@ EnemyComponent::~EnemyComponent()
 }
 void EnemyComponent::Update()
 { 
-    //if (m_pCurrentState)
-        //m_pCurrentState->Update(*this);
+    if (m_pCurrentState)
+        m_pCurrentState->Update(*this);
 }
 
 void EnemyComponent::SetTile(int row, int col)
