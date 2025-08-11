@@ -96,7 +96,6 @@ void PlayerComponent::Move(int dRow, int dCol)
         }
     }
 
-
     // No obstruction or bag was pushed successfully
     m_TargetRow = newRow;
     m_TargetCol = newCol;

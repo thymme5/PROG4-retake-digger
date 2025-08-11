@@ -99,7 +99,10 @@ namespace dae
 			}
 			return nullptr;
 		}
-
+		const std::vector<std::unique_ptr<Component>>& GetComponents() const
+		{
+			return m_Components;
+		}
 	private:
 		void Reparent(GameObject* newParent, bool keepWorldPosition);
 		void MarkDirty();

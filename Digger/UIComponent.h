@@ -10,8 +10,7 @@ namespace dae { class SubjectComponent; class TextComponent; class GameObject; }
 class UIComponent final : public dae::Component, public dae::Observer
 {
 public:
-    explicit UIComponent(dae::GameObject& owner)
-        : dae::Component(owner) {}
+    explicit UIComponent(dae::GameObject& owner);
     ~UIComponent() override { StopObservingAll(); }
 
     void Observe(dae::SubjectComponent& subject);

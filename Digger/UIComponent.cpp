@@ -4,7 +4,17 @@
 #include "SubjectComponent.h"
 #include "GameObject.h"
 #include "TextComponent.h"
-#include <cstdio> // std::snprintf
+#include <cstdio>
+
+UIComponent::UIComponent(dae::GameObject& owner)
+    : dae::Component(owner) 
+{
+    SetRenderLayer(RenderLayer::HUD);
+    EnsureTextCached();
+
+    if (m_pText)
+        m_pText->SetRenderLayer(RenderLayer::HUD);
+}
 
 void UIComponent::EnsureTextCached()
 {

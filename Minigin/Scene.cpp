@@ -50,11 +50,31 @@ void Scene::Update()
 
 void Scene::Render() const
 {
-	for (auto& object : m_objects)
+	std::vector<const dae::Component*> renderQueue;
+
+	// Collect all renderable components from all GameObjects
+	for (const auto& object : m_objects)
 	{
-		object->Render();
+		for (const auto& comp : object->GetComponents())
+		{
+			renderQueue.push_back(comp.get());
+		}
+	}
+
+	// Sort components by their render layer
+	std::sort(renderQueue.begin(), renderQueue.end(),
+		[](const dae::Component* a, const dae::Component* b)
+		{
+			return static_cast<int>(a->GetRenderLayer()) < static_cast<int>(b->GetRenderLayer());
+		});
+
+	// Render in sorted order
+	for (const auto& component : renderQueue)
+	{
+		component->Render();
 	}
 }
+
 
 void Scene::RenderImGui()
 {
