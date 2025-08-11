@@ -82,7 +82,7 @@ dae::Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(g_window);
-	Mix_CloseAudio();
+	Mix_CloseAudio();	
 	g_window = nullptr;
 	SDL_Quit();
 }

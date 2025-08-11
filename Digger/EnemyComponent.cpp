@@ -7,8 +7,8 @@
 
 // --- tiny registry of all enemies ---
 static std::vector<EnemyComponent*>& EnemyList() {
-    static auto* s = new std::vector<EnemyComponent*>();
-    return *s;
+    static std::vector<EnemyComponent*> s;
+    return s;
 }
 
 EnemyComponent::EnemyComponent(dae::GameObject& owner, int startRow, int startCol)
@@ -24,8 +24,7 @@ EnemyComponent::EnemyComponent(dae::GameObject& owner, int startRow, int startCo
 EnemyComponent::~EnemyComponent()
 {
     auto& v = EnemyList();
-    v.erase(std::remove(v.begin(), v.end(), this), v.end());
-
+    v.clear(); 
     TileManager::GetInstance().RemoveEnemy(m_Row, m_Col, GetOwner());
 }
 void EnemyComponent::Update()

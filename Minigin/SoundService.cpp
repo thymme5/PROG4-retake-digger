@@ -22,10 +22,17 @@ namespace dae
     }
     SDLMixerSoundService::SDLMixerSoundService()
     {
+        int flags = MIX_INIT_MP3 | MIX_INIT_OGG;
+        if ((Mix_Init(flags) & flags) != flags)
+        {
+            std::cerr << "Mix_Init failed: " << Mix_GetError() << std::endl;
+        }
+
         if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
         {
             std::cerr << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
         }
+
         m_WorkerThread = std::thread(&SDLMixerSoundService::ProcessQueue, this);
     }
 
@@ -113,42 +120,65 @@ namespace dae
 
             while (!m_CommandQueue.empty())
             {
-                auto cmd = m_CommandQueue.front();
+                SoundCommand cmd = m_CommandQueue.front();
                 m_CommandQueue.pop();
+
+                // Unlock while processing to avoid blocking other threads
                 lock.unlock();
 
-                if (cmd.type == SoundCommandType::Load)
+                switch (cmd.type)
+                {
+                case SoundCommandType::Load:
                 {
                     if (m_LoadedSounds.find(cmd.soundFile) == m_LoadedSounds.end())
                     {
                         Mix_Chunk* chunk = Mix_LoadWAV(cmd.soundFile.c_str());
                         if (chunk)
                         {
-                            Mix_VolumeChunk(chunk, m_Volume); 
+                            Mix_VolumeChunk(chunk, m_Volume);
                             m_LoadedSounds[cmd.soundFile] = chunk;
                         }
                         else
-                            std::cerr << "Failed to load sound: " << Mix_GetError() << std::endl;
+                        {
+                            std::cerr << "Failed to load sound: " << cmd.soundFile
+                                << " — " << Mix_GetError() << std::endl;
+                        }
                     }
+                    break;
                 }
-                else if (cmd.type == SoundCommandType::Play)
+
+                case SoundCommandType::Play:
                 {
                     auto it = m_LoadedSounds.find(cmd.soundFile);
                     if (it != m_LoadedSounds.end())
-                        Mix_PlayChannel(-1, it->second, 0);
-                    else
-                        std::cerr << "Sound not loaded: " << cmd.soundFile << std::endl;
-                    
-                    int channel = Mix_PlayChannel(-1, it->second, 0);
-                    if (channel != -1)
                     {
-                        m_SoundToChannel[cmd.soundFile] = channel;
+                        int channel = Mix_PlayChannel(-1, it->second, 0);
+                        if (channel != -1)
+                        {
+                            m_SoundToChannel[cmd.soundFile] = channel;
+                        }
+                        else
+                        {
+                            std::cerr << "Failed to play sound: " << cmd.soundFile
+                                << " — " << Mix_GetError() << std::endl;
+                        }
                     }
-
+                    else
+                    {
+                        std::cerr << "Sound not loaded: " << cmd.soundFile << std::endl;
+                    }
+                    break;
                 }
 
+                default:
+                    std::cerr << "Unknown sound command type." << std::endl;
+                    break;
+                }
+
+                // Re-lock for next iteration
                 lock.lock();
             }
         }
     }
+
 }
