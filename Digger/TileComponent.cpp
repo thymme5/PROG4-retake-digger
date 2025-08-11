@@ -1,4 +1,6 @@
 #include "TileComponent.h"
+#include "GameObject.h"
+#include "TextureComponent.h"
 
 TileComponent::TileComponent(dae::GameObject& owner, int row, int col)
     : Component(owner), m_Row(row), m_Col(col)
@@ -8,7 +10,14 @@ TileComponent::TileComponent(dae::GameObject& owner, int row, int col)
 int TileComponent::GetRow() const { return m_Row; }
 int TileComponent::GetCol() const { return m_Col; }
 
-void TileComponent::SetDug(bool isDug) { m_IsDug = isDug; }
+void TileComponent::SetDug(bool isDug)
+{
+	if (m_pOwner->HasComponent<dae::TextureComponent>())
+	{
+		m_pOwner->GetComponent<dae::TextureComponent>()->SetVisible(!isDug);
+	}
+    m_IsDug = isDug;
+}
 bool TileComponent::IsDug() const { return m_IsDug; }
 
 void TileComponent::SetHasEmerald(bool hasEmerald) { m_HasEmerald = hasEmerald; }

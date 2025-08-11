@@ -19,9 +19,15 @@ public:
     void RegisterTile(int row, int col, std::shared_ptr<TileComponent> tile);
     std::shared_ptr<TileComponent> GetTile(int row, int col) const;
 
+    // interactable management
     void RegisterInteractable(int row, int col, dae::GameObject* interactable);
     std::vector<dae::GameObject*> GetInteractablesAt(int row, int col) const;
     void RemoveInteractable(int row, int col, dae::GameObject* interactable);
+
+    // enemy management
+    void RegisterEnemy(int row, int col, dae::GameObject* go);
+    void RemoveEnemy(int row, int col, dae::GameObject* go);
+    const std::vector<dae::GameObject*>& GetEnemiesAt(int row, int col) const;
 
     const std::vector<std::vector<std::shared_ptr<TileComponent>>>& GetTileMap() const { return m_TileMap; }
 
@@ -33,4 +39,5 @@ public:
 private:
     std::vector<std::vector<std::shared_ptr<TileComponent>>> m_TileMap;
     std::unordered_map<int, std::unordered_map<int, std::vector<dae::GameObject*>>> m_Interactables;
+    std::vector<std::vector<std::vector<dae::GameObject*>>> m_Enemies;
 };

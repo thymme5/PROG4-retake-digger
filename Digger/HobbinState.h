@@ -5,14 +5,13 @@
 class HobbinState final : public EnemyState
 {
 public:
-    HobbinState(int framesToNobbin = 3000) // e.g., 5 seconds at 60fps
-        : m_FramesToNobbin(framesToNobbin) {
-    }
+    HobbinState() = default;
 
     void Enter(EnemyComponent& enemy) override;
     void Update(EnemyComponent& enemy) override;
+    void Exit(EnemyComponent& enemy) override {}
 
 private:
-    int m_FramesRemaining{};
-    int m_FramesToNobbin;
+    float m_MoveInterval{ 0.50f };
+    float m_MoveCooldown{ 0.0f };
 };

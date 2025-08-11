@@ -47,6 +47,15 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 
     TileManager::GetInstance().Initialize(width, height);
 
+    // === Init UI first === 
+    auto hudGO = std::make_shared<dae::GameObject>();
+    hudGO->SetLocalPosition(8.f, 8.f);
+
+    hudGO->AddComponent<dae::TextComponent>(*hudGO, "SCORE 000000  LIVES 4\nLEVEL 1", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
+
+    auto* ui = hudGO->AddComponent<UIComponent>(*hudGO);
+    scene.Add(hudGO);
+
     // === TILE GRID ===
     for (int row = 0; row < height; ++row)
     {
@@ -133,6 +142,12 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
                 goldBagGO->AddComponent<GoldBagComponent>(*goldBagGO, row, col);
 				goldBagGO->AddComponent<dae::SubjectComponent>(*goldBagGO);
 
+                // === attach HUD to goldbag ===
+                if (auto* playerSubj = goldBagGO->GetComponent<dae::SubjectComponent>())
+                {
+                    ui->Observe(*playerSubj);
+                }
+
                 // Register as interactable
                 TileManager::GetInstance().RegisterInteractable(row, col, goldBagGO.get());
 
@@ -156,36 +171,37 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 
         scene.Add(playerGO);
 
-        // === HUD ===
+        // === attach HUD to player ===
         if (auto* playerSubj = playerGO->GetComponent<dae::SubjectComponent>())
         {
-            auto hudGO = std::make_shared<dae::GameObject>();
-            hudGO->SetLocalPosition(8.f, 8.f);
-
-            hudGO->AddComponent<dae::TextComponent>(*hudGO, "SCORE 000000  LIVES 4\nLEVEL 1", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
-
-            auto* ui = hudGO->AddComponent<UIComponent>(*hudGO);
             ui->Observe(*playerSubj);
-
-            scene.Add(hudGO);
         }
 
     }
 
 
     // === ENEMIES ===
-    if (levelJson.contains("enemies") && levelJson["enemies"].size() == 2)
+    if (levelJson.contains("enemies") && levelJson["enemies"].is_array())
     {
-        int col = levelJson["enemies"][0];
-        int row = levelJson["enemies"][1];
+        for (const auto& pos : levelJson["enemies"])
+        {
+            if (!pos.is_array() || pos.size() < 2) continue;
 
-        auto enemyGO = std::make_shared<dae::GameObject>();
-        enemyGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+            int col = pos[0];
+            int row = pos[1];
 
-        enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "nobbin.png", 1.f, 0);
-        auto enemyComp = enemyGO->AddComponent<EnemyComponent>(*enemyGO, row, col);
+            // bounds guard
+            if (!TileManager::GetInstance().GetTile(row, col)) continue;
 
-        scene.Add(enemyGO);
+            auto enemyGO = std::make_shared<dae::GameObject>();
+            enemyGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+
+            enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "nobbin.png", 1.f, 0);
+            auto enemyComp = enemyGO->AddComponent<EnemyComponent>(*enemyGO, row, col);
+
+            scene.Add(enemyGO);
+        }
     }
+
 
 }

@@ -1,15 +1,16 @@
 #pragma once
 #include "Component.h"
 #include <memory>
-#include <utility> // for std::pair
+#include <utility> 
+#include "SubjectComponent.h"
 
-class EnemyState; // forward declaration
+class EnemyState; 
 
 class EnemyComponent final : public dae::Component
 {
 public:
     EnemyComponent(dae::GameObject& owner, int startRow, int startCol);
-    ~EnemyComponent() override = default;
+    ~EnemyComponent() override ;
 
     void Update() override;
     void Render() const override {}
@@ -33,7 +34,6 @@ public:
 
     // slow down movement
     bool ShouldStepThisFrame(int framesPerStep);
-
 private:
     int m_Row{};
     int m_Col{};
@@ -46,5 +46,4 @@ private:
 
 	int m_LastDr{ 0 }; // last direction moved in row
 	int m_LastDc{ 0 }; // last direction moved in col
-
 };

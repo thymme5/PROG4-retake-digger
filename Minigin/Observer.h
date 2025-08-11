@@ -14,12 +14,9 @@ namespace dae
 		GoldBagDropped,
 		GoldCollected,
 		EmeraldCollected,
-		EnemySpawned,
-		PlayerSpawned,
 		PlayerCollectedAllEmeralds,
-		PlayerReachedExit,
 		LevelCompleted,
-		
+		EnemyKilled,
 	};
 
 	class Observer

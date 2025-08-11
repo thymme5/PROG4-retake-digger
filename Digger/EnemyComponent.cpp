@@ -5,26 +5,46 @@
 #include "GameObject.h"
 #include "NobbinState.h" 
 
+// --- tiny registry of all enemies ---
+static std::vector<EnemyComponent*>& EnemyList() {
+    static auto* s = new std::vector<EnemyComponent*>();
+    return *s;
+}
+
 EnemyComponent::EnemyComponent(dae::GameObject& owner, int startRow, int startCol)
     : Component(owner), m_Row(startRow), m_Col(startCol)
 {
-    // first state
+    // first state is always nobbin
+    // (this kept confusing me)
+    EnemyList().push_back(this);
     SetState(std::make_unique<NobbinState>());
+    TileManager::GetInstance().RegisterEnemy(m_Row, m_Col, GetOwner());
 }
 
+EnemyComponent::~EnemyComponent()
+{
+    auto& v = EnemyList();
+    v.erase(std::remove(v.begin(), v.end(), this), v.end());
+
+    TileManager::GetInstance().RemoveEnemy(m_Row, m_Col, GetOwner());
+}
 void EnemyComponent::Update()
 { 
-    if (m_pCurrentState)
-        m_pCurrentState->Update(*this);
+    //if (m_pCurrentState)
+        //m_pCurrentState->Update(*this);
 }
 
 void EnemyComponent::SetTile(int row, int col)
 {
+    TileManager::GetInstance().RemoveEnemy(m_Row, m_Col, GetOwner());
+
     m_Row = row;
     m_Col = col;
 
     constexpr int TILE_SIZE = 48;
     GetOwner()->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+
+    TileManager::GetInstance().RegisterEnemy(m_Row, m_Col, GetOwner());
 }
 
 void EnemyComponent::MoveBy(int dr, int dc)

@@ -51,6 +51,7 @@ void UIComponent::OnNotify(dae::Event event, dae::GameObject*)
     case dae::Event::GoldCollected:     m_Score += 500; std::cout << "Gold collected: +500 points \n"; break;
     case dae::Event::PlayerDied:        --m_Lives; if (m_Lives < 0) m_Lives = 0; break;
     case dae::Event::LevelCompleted:    ++m_Level; break;
+	case dae::Event::EnemyKilled:       m_Score += 250; std::cout << "Enemy killed: +250 points \n"; break;
     default: break;
     }
 

@@ -1,36 +1,34 @@
 #include "NobbinState.h"
 #include "HobbinState.h"
 #include "EnemyComponent.h"
-#include "TileManager.h"
-#include "Timer.h" 
+#include "Timer.h"
 
-void NobbinState::Enter(EnemyComponent& enemy)
+class HobbinState;
+
+void NobbinState::Enter(EnemyComponent& /*enemy*/)
 {
     m_SecondsRemaining = m_SecondsToHobbin;
-    m_MoveCooldown = 0.f;
+    m_MoveCooldown = 0.0f; // move asap after entering
 }
 
 void NobbinState::Update(EnemyComponent& enemy)
 {
-    float dt = Timer::GetDeltaTime();
+    const float dt = Timer::GetDeltaTime();
 
-    // Countdown to evolve into Hobbin
+    // evolve countdown
     m_SecondsRemaining -= dt;
-    if (m_SecondsRemaining <= 0.f)
+    if (m_SecondsRemaining <= 0.0f)
     {
         enemy.SetState(std::make_unique<HobbinState>());
         return;
     }
 
-    // Handle movement cooldown
+    // move throttle
     m_MoveCooldown -= dt;
-    if (m_MoveCooldown > 0.f)
-        return;
-
+    if (m_MoveCooldown > 0.0f) return;
     m_MoveCooldown = m_MoveInterval;
 
-    // Nobbin: Move only through dug tunnels
-    auto [dr, dc] = enemy.BestStepTowardTarget(true); // true = tunnelsOnly
-    if (dr != 0 || dc != 0)
-        enemy.MoveBy(dr, dc);
+    // tunnels-only step; if no valid step, stay put
+    auto [dr, dc] = enemy.BestStepTowardTarget(true);
+    if (dr || dc) enemy.MoveBy(dr, dc);
 }

@@ -4,7 +4,7 @@
 #include "Observer.h"
 #include "TextureComponent.h"
 #include "TileManager.h"
-
+#include "EnemyComponent.h"
 GoldBagComponent::GoldBagComponent(dae::GameObject& owner, int row, int col)
     : InteractableComponent(owner), m_Row(row), m_Col(col)
 {
@@ -20,10 +20,14 @@ void GoldBagComponent::Interact(dae::GameObject& interactor)
 {
     if (dynamic_cast<BrokenState*>(m_pCurrentState.get()))
     {
+        GetOwner()->GetComponent<dae::TextureComponent>()->SetVisible(false);
+
         if (auto* subject = interactor.GetComponent<dae::SubjectComponent>())
         {
             subject->Notify(dae::Event::GoldCollected, &interactor);
         }
+
+        TileManager::GetInstance().RemoveInteractable(m_Row, m_Col, GetOwner());
 
         //TODO: fix destroy
         GetOwner()->Destroy();
@@ -72,11 +76,20 @@ bool GoldBagComponent::TryPush(int targetRow, int targetCol)
 
 void GoldBagComponent::Fall()
 {
-    int newRow = m_Row + 1;
+    const int newRow = m_Row + 1;
 
     auto tileBelow = TileManager::GetInstance().GetTile(newRow, m_Col);
     if (!tileBelow || tileBelow->IsDug())
     {
+        const auto enemies = TileManager::GetInstance().GetEnemiesAt(newRow, m_Col);
+        for (auto* go : enemies)
+        {
+            if (!go) continue;
+            if (auto* subj = GetOwner()->GetComponent<dae::SubjectComponent>())
+                subj->Notify(dae::Event::EnemyKilled, go);
+            go->Destroy();
+        }
+
         // Remove from current tile
         TileManager::GetInstance().RemoveInteractable(m_Row, m_Col, GetOwner());
 

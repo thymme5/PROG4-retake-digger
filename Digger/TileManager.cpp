@@ -4,7 +4,11 @@
 
 void TileManager::Initialize(int width, int height)
 {
+    // Tilemap
     m_TileMap.resize(height, std::vector<std::shared_ptr<TileComponent>>(width));
+    
+    // Enemies
+    m_Enemies.assign(height, std::vector<std::vector<dae::GameObject*>>(width));
 }
 
 void TileManager::RegisterTile(int row, int col, std::shared_ptr<TileComponent> tile)
@@ -73,6 +77,33 @@ void TileManager::RemoveInteractable(int row, int col, dae::GameObject* interact
     }
 }
 
+void TileManager::RegisterEnemy(int row, int col, dae::GameObject* go)
+{
+    auto& v = m_Enemies[row][col];
+    if (std::find(v.begin(), v.end(), go) == v.end())
+        v.push_back(go);
+}
+
+void TileManager::RemoveEnemy(int row, int col, dae::GameObject* go)
+{
+    // bounds checking to avoid crash
+    if (go == nullptr)
+        return;
+
+    if (row < 0 || row >= static_cast<int>(m_Enemies.size()))
+        return;
+
+    if (col < 0 || col >= static_cast<int>(m_Enemies[row].size()))
+        return;
+
+    auto& v = m_Enemies[row][col];
+    v.erase(std::remove(v.begin(), v.end(), go), v.end());
+}
+
+const std::vector<dae::GameObject*>& TileManager::GetEnemiesAt(int row, int col) const
+{
+    return m_Enemies[row][col];
+}
 void TileManager::OnNotify(dae::Event, dae::GameObject*)
 {
 
