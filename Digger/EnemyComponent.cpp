@@ -39,6 +39,10 @@ void EnemyComponent::Update()
             SetTarget(row, col);
             player->ClearDirtyFlag();
         }
+        if (GetTilePosition() == player->GetTilePosition() && !player->IsDead())
+        {
+            player->MarkAsDead(); 
+        }
     }
 
     if (m_pCurrentState)

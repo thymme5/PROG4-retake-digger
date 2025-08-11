@@ -18,6 +18,7 @@ public:
     // Row/Col position in the tile grid
     int GetRow() const { return m_Row; }
     int GetCol() const { return m_Col; }
+    std::pair<int, int> GetTilePosition() const { return { m_Row, m_Col }; }
     void SetTile(int row, int col);
 
     // Move by row/col offset

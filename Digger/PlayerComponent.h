@@ -6,6 +6,7 @@
 #include "FireballComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "SubjectComponent.h"
 
 #include <memory>
 #include <vector>
@@ -34,6 +35,10 @@ public:
     void SetState(std::unique_ptr<PlayerState> newState);
 
     void ShootFireball();
+
+    // dead logic
+    bool IsDead() const;
+    void MarkAsDead();
 private:
     int m_Row{};
     int m_Col{};
@@ -53,4 +58,6 @@ private:
 
     // dirty positions for enemies
 	bool m_PositionDirty{ false };  
+
+	bool m_IsDead{ false }; // internal flag to mark player as dead
 };

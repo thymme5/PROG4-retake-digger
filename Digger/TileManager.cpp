@@ -19,6 +19,13 @@ void TileManager::RegisterTile(int row, int col, std::shared_ptr<TileComponent> 
     }
 }
 
+bool TileManager::IsValidTile(int row, int col) const
+{
+    return row >= 0 && col >= 0 &&
+        row < static_cast<int>(m_TileMap.size()) &&
+        col < static_cast<int>(m_TileMap[row].size());
+}
+
 std::shared_ptr<TileComponent> TileManager::GetTile(int row, int col) const
 {
     if (row >= 0 && row < GetHeight() && col >= 0 && col < GetWidth())
@@ -102,8 +109,16 @@ void TileManager::RemoveEnemy(int row, int col, dae::GameObject* go)
 
 const std::vector<dae::GameObject*>& TileManager::GetEnemiesAt(int row, int col) const
 {
+    static const std::vector<dae::GameObject*> emptyList;
+
+    if (row < 0 || col < 0 || row >= static_cast<int>(m_Enemies.size()) || col >= static_cast<int>(m_Enemies[row].size()))
+    {
+        return emptyList;
+    }
+
     return m_Enemies[row][col];
 }
+
 void TileManager::OnNotify(dae::Event, dae::GameObject*)
 {
 

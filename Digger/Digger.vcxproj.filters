@@ -103,7 +103,7 @@
     <Filter Include="Enemy\EnemyStates\HobbinState">
       <UniqueIdentifier>{5e4d3519-3e6b-4ca5-b231-930967981691}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Level Objects\GoldBag\Goldbag States\States\GoldbagComponent">
+    <Filter Include="Level Objects\GoldBag\Goldbag States\GoldbagComponent">
       <UniqueIdentifier>{0bfbc455-459a-4a3c-805d-394b448ad2e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -145,7 +145,7 @@
       <Filter>Level Objects\GoldBag\Goldbag States\States</Filter>
     </ClCompile>
     <ClCompile Include="GoldBagComponent.cpp">
-      <Filter>Level Objects\GoldBag\Goldbag States\States\GoldbagComponent</Filter>
+      <Filter>Level Objects\GoldBag\Goldbag States\GoldbagComponent</Filter>
     </ClCompile>
     <ClCompile Include="FireballComponent.cpp">
       <Filter>Player\FireballComponent</Filter>
@@ -210,7 +210,7 @@
       <Filter>Level Objects\GoldBag\Goldbag States\States</Filter>
     </ClInclude>
     <ClInclude Include="GoldBagComponent.h">
-      <Filter>Level Objects\GoldBag\Goldbag States\States\GoldbagComponent</Filter>
+      <Filter>Level Objects\GoldBag\Goldbag States\GoldbagComponent</Filter>
     </ClInclude>
     <ClInclude Include="FireballComponent.h">
       <Filter>Player\FireballComponent</Filter>

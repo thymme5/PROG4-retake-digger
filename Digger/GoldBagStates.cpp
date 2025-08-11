@@ -44,6 +44,13 @@ void FallingState::Update(GoldBagComponent& goldBag)
     const int col = goldBag.GetCol();
     const int belowRow = currRow + 1;
 
+    if (!TileManager::GetInstance().IsValidTile(belowRow, col))
+    {
+        // Break immediately before falling off map
+        goldBag.SetState(std::make_unique<BrokenState>());
+        return;
+    }
+
     auto belowTile = TileManager::GetInstance().GetTile(belowRow, col);
 
     // Check if gold bag should continue falling

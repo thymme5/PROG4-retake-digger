@@ -169,8 +169,6 @@ void PlayerComponent::ShootFireball()
     m_HasFireball = true;
 }
 
-
-
 void PlayerComponent::SetState(std::unique_ptr<PlayerState> newState)
 {
     if (m_pCurrentState)
@@ -182,3 +180,15 @@ void PlayerComponent::SetState(std::unique_ptr<PlayerState> newState)
         m_pCurrentState->Enter(*this);
 }
 
+bool PlayerComponent::IsDead() const
+{ 
+    return m_IsDead; 
+}
+void PlayerComponent::MarkAsDead() 
+{
+    if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
+    {
+		playerSubj->Notify(dae::Event::PlayerDied, GetOwner());
+    }
+    m_IsDead = true; 
+}
