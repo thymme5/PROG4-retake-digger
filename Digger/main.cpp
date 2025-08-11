@@ -20,18 +20,26 @@
 
 void load()
 {
+    auto& rm = dae::ResourceManager::GetInstance();
 
-	//TODO: clean this up and put everything in it's proper place
-	std::stringstream ss;
-	ss << dae::ResourceManager::GetInstance().GetDataPath().string() << "levels/Level01Solo.json";
-	std::string levelPath = ss.str();
+    std::filesystem::path levelPath = rm.GetDataPath() / "levels" / "Level01Solo.json";
 
-	DiggerSceneBuilder::CreateSinglePlayerScene(dae::SceneManager::GetInstance().CreateScene("mainscene"), levelPath);
-	//DiggerSceneBuilder::CreateDebugScene(dae::SceneManager::GetInstance().CreateScene("mainscene"));
+    if (!std::filesystem::exists(levelPath)) {
+        std::cerr << "Failed to open level file: " << levelPath.string() << "\n";
+        return;
+    }
+
+    DiggerSceneBuilder::CreateSinglePlayerScene(dae::SceneManager::GetInstance().CreateScene("mainscene"), levelPath.string());
 }
-int main(int, char* [])
+
+int main(int, char* argv[])
 {
-	dae::Minigin engine("Data/");
-	engine.Run(load);
-	return 0;
+    std::filesystem::path exeDir = std::filesystem::canonical(argv[0]).parent_path();
+    std::filesystem::current_path(exeDir);
+
+    std::filesystem::path dataPath = exeDir / "Data";
+    dae::Minigin engine(dataPath.string());
+
+    engine.Run(load);
+    return 0;
 }
