@@ -8,11 +8,33 @@
 #include "InteractableComponent.h"
 #include "GoldBagComponent.h"
 
+static std::vector<PlayerComponent*>& PlayerList()
+{
+    static std::vector<PlayerComponent*> s;
+    return s;
+}
+
+const std::vector<PlayerComponent*>& PlayerComponent::GetAllPlayers()
+{
+    return PlayerList();
+}
+
 PlayerComponent::PlayerComponent(dae::GameObject& owner, int startRow, int startCol)
     : Component(owner), m_Row{ startRow }, m_Col{ startCol }
 {
     owner.SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
-    DigCurrentTile(); // Dig starting tile
+    PlayerList().push_back(this);
+
+    DigCurrentTile(); // Dig starting tile 
+}
+PlayerComponent::~PlayerComponent()
+{
+    auto& list = PlayerList();
+    auto it = std::find(list.begin(), list.end(), this);
+    if (it != list.end())
+    {
+        list.erase(it);
+    }
 }
 
 void PlayerComponent::Update()
@@ -37,6 +59,7 @@ void PlayerComponent::Update()
             m_Row = m_TargetRow;
             m_Col = m_TargetCol;
             m_IsMoving = false;
+            m_PositionDirty = true;
             DigCurrentTile();
         }
         else

@@ -8,17 +8,25 @@
 #include "Scene.h"
 
 #include <memory>
+#include <vector>
+#include <utility>
 
 class PlayerComponent final : public dae::Component
 {
 public:
-    PlayerComponent(dae::GameObject& owner, int startRow, int startCol);
+    static const std::vector<PlayerComponent*>& GetAllPlayers();
 
+    PlayerComponent(dae::GameObject& owner, int startRow, int startCol);
+    ~PlayerComponent();
     void Update() override;
     void Render() const override {}
 
     int GetRow() const { return m_Row; }
     int GetCol() const { return m_Col; }
+    std::pair<int, int> GetTilePosition() const { return { m_Row, m_Col }; }
+
+    bool IsPositionDirty() const { return m_PositionDirty; }
+    void ClearDirtyFlag() { m_PositionDirty = false; }
 
     void Move(int dRow, int dCol); // Move(1, 0) to go down
     void DigCurrentTile();
@@ -26,7 +34,6 @@ public:
     void SetState(std::unique_ptr<PlayerState> newState);
 
     void ShootFireball();
-
 private:
     int m_Row{};
     int m_Col{};
@@ -43,4 +50,7 @@ private:
     int m_LastDirRow{ 0 };
     int m_LastDirCol{ 1 }; // facing right on default
     bool m_HasFireball{ false };
+
+    // dirty positions for enemies
+	bool m_PositionDirty{ false };  
 };

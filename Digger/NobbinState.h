@@ -20,6 +20,6 @@ private:
     float m_SecondsToHobbin;    
 
     //TODO: tweak values
-    float m_MoveInterval{ 1.25f };
+    float m_MoveInterval{ 0.5f };
     float m_MoveCooldown{ 0.f };
 };

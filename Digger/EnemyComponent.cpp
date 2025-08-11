@@ -4,6 +4,7 @@
 #include "TileComponent.h"
 #include "GameObject.h"
 #include "NobbinState.h" 
+#include "PlayerComponent.h"
 
 // --- tiny registry of all enemies ---
 static std::vector<EnemyComponent*>& EnemyList() {
@@ -29,6 +30,17 @@ EnemyComponent::~EnemyComponent()
 }
 void EnemyComponent::Update()
 { 
+    //TODO: should this be an event?
+    for (auto* player : PlayerComponent::GetAllPlayers())
+    {
+        if (player->IsPositionDirty())
+        {
+            auto [row, col] = player->GetTilePosition();
+            SetTarget(row, col);
+            player->ClearDirtyFlag();
+        }
+    }
+
     if (m_pCurrentState)
         m_pCurrentState->Update(*this);
 }
@@ -53,6 +65,12 @@ void EnemyComponent::MoveBy(int dr, int dc)
     SetTile(m_Row + dr, m_Col + dc);
 }
 
+void EnemyComponent::SetTarget(int row, int col) 
+{ 
+    m_TargetRow = row; 
+    m_TargetCol = col; 
+}
+
 void EnemyComponent::SetState(std::unique_ptr<EnemyState> newState)
 {
     if (m_pCurrentState)
@@ -66,26 +84,25 @@ void EnemyComponent::SetState(std::unique_ptr<EnemyState> newState)
 
 std::pair<int, int> EnemyComponent::BestStepTowardTarget(bool tunnelsOnly) const
 {
-    // down, up, right, left
-    static const int dirs[4][2] = { {1,0}, {-1,0}, {0,1}, {0,-1} };
-    int bestDr = 0, bestDc = 0;
-    int bestDist = 1'000'000;
+    // Directions: down, up, right, left
+    static const int dirs[4][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
 
-    for (auto& d : dirs)
+    int bestDr = 0, bestDc = 0;
+    int bestDist = std::numeric_limits<int>::max();
+    bool foundValid = false;
+
+    for (const auto& d : dirs)
     {
         int dr = d[0], dc = d[1];
-
-        if (dr == -m_LastDr && dc == -m_LastDc)
-            continue;
-
         int nr = m_Row + dr;
         int nc = m_Col + dc;
 
-        auto tile = TileManager::GetInstance().GetTile(nr, nc);
-        if (!tile)
+        // Skip backtracking unless it's the only option
+        if (dr == -m_LastDr && dc == -m_LastDc)
             continue;
 
-        if (tunnelsOnly && !tile->IsDug())
+        auto tile = TileManager::GetInstance().GetTile(nr, nc);
+        if (!tile || (tunnelsOnly && !tile->IsDug()))
             continue;
 
         int dist = std::abs(m_TargetRow - nr) + std::abs(m_TargetCol - nc);
@@ -94,11 +111,33 @@ std::pair<int, int> EnemyComponent::BestStepTowardTarget(bool tunnelsOnly) const
             bestDist = dist;
             bestDr = dr;
             bestDc = dc;
+            foundValid = true;
+        }
+    }
+
+    // Fallback: allow backtracking if no other move was valid
+    if (!foundValid)
+    {
+        for (const auto& d : dirs)
+        {
+            int dr = d[0], dc = d[1];
+            if (dr != -m_LastDr || dc != -m_LastDc)
+                continue;
+
+            int nr = m_Row + dr;
+            int nc = m_Col + dc;
+
+            auto tile = TileManager::GetInstance().GetTile(nr, nc);
+            if (!tile || (tunnelsOnly && !tile->IsDug()))
+                continue;
+
+            return { dr, dc };
         }
     }
 
     return { bestDr, bestDc };
 }
+
 
 bool EnemyComponent::ShouldStepThisFrame(int framesPerStep)
 {

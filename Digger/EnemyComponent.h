@@ -24,7 +24,7 @@ public:
     void MoveBy(int dr, int dc);
 
     // Target
-    void SetTarget(int row, int col) { m_TargetRow = row; m_TargetCol = col; }
+    void SetTarget(int row, int col);
 
     // State handling
     void SetState(std::unique_ptr<EnemyState> newState);
