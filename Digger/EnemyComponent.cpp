@@ -138,7 +138,6 @@ std::pair<int, int> EnemyComponent::BestStepTowardTarget(bool tunnelsOnly) const
     return { bestDr, bestDc };
 }
 
-
 bool EnemyComponent::ShouldStepThisFrame(int framesPerStep)
 {
     if (++m_FrameCounter >= framesPerStep)
