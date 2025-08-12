@@ -99,10 +99,11 @@ void dae::TextComponent::Render() const
 {
     if (m_TextTexture != nullptr)
     {
-        const auto& pos = m_pOwner->GetTransform().GetWorldPosition();
+        const auto& pos = m_pOwner->GetWorldPosition();
         dae::Renderer::GetInstance().RenderTexture(*m_TextTexture, pos.x, pos.y);
     }
 }
+
 
 void dae::TextComponent::SetText(const std::string& text)
 {

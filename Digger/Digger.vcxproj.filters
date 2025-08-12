@@ -106,6 +106,33 @@
     <Filter Include="Level Objects\GoldBag\Goldbag States\GoldbagComponent">
       <UniqueIdentifier>{0bfbc455-459a-4a3c-805d-394b448ad2e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{997e3131-5088-4470-a159-dce1fcad642e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\Menus">
+      <UniqueIdentifier>{5083136e-91f6-42de-b224-609adf1318e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\Menus\MainMenu">
+      <UniqueIdentifier>{9eba401f-8cf6-4cda-aa09-2c3e47b34584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModes">
+      <UniqueIdentifier>{d0c8d5f9-1dd9-4d77-b736-64800be815b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModes\SinglePlayer">
+      <UniqueIdentifier>{ad0cf281-90f2-4856-a4e3-17b44d5576c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModes\CoopMode">
+      <UniqueIdentifier>{e40cc1a4-e689-4dbe-9f3a-2e6603e94c45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModes\VersusMode">
+      <UniqueIdentifier>{c15fe0c8-aab7-4960-897a-59c775534a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\Menus\MainMenu\MainMenuUIComponent">
+      <UniqueIdentifier>{9e1285e9-c5cf-4d6b-89a5-c8048d51b608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\Menus\MainMenu\Commands">
+      <UniqueIdentifier>{ecda75df-a0fa-4a98-9512-2926d940a715}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -161,6 +188,21 @@
     </ClCompile>
     <ClCompile Include="HobbinState.cpp">
       <Filter>Enemy\EnemyStates\HobbinState</Filter>
+    </ClCompile>
+    <ClCompile Include="DiggerSoundLibrary.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SinglePlayerMode.cpp">
+      <Filter>GameMode\GameModes\SinglePlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="VersusMode.cpp">
+      <Filter>GameMode\GameModes\VersusMode</Filter>
+    </ClCompile>
+    <ClCompile Include="CoopMode.cpp">
+      <Filter>GameMode\GameModes\CoopMode</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuUIComponent.cpp">
+      <Filter>GameMode\Menus\MainMenu\MainMenuUIComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +274,27 @@
     </ClInclude>
     <ClInclude Include="HobbinState.h">
       <Filter>Enemy\EnemyStates\HobbinState</Filter>
+    </ClInclude>
+    <ClInclude Include="DiggerSoundLibrary.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SinglePlayerMode.h">
+      <Filter>GameMode\GameModes\SinglePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusMode.h">
+      <Filter>GameMode\GameModes\VersusMode</Filter>
+    </ClInclude>
+    <ClInclude Include="CoopMode.h">
+      <Filter>GameMode\GameModes\CoopMode</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuUIComponent.h">
+      <Filter>GameMode\Menus\MainMenu\MainMenuUIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveMenuArrow.h">
+      <Filter>GameMode\Menus\MainMenu\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterGameMode.h">
+      <Filter>GameMode\Menus\MainMenu\Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

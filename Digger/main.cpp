@@ -18,18 +18,17 @@
 #include <filesystem>
 #include <sstream>
 
+#include "GameModeManager.h"
+#include "MainMenu.h"
+
 void load()
 {
-    auto& rm = dae::ResourceManager::GetInstance();
+   
 
-    std::filesystem::path levelPath = rm.GetDataPath() / "levels" / "Level01Solo.json";
+    //DiggerSceneBuilder::CreateSinglePlayerScene(dae::SceneManager::GetInstance().CreateScene("mainscene"), levelPath.string());
 
-    if (!std::filesystem::exists(levelPath)) {
-        std::cerr << "Failed to open level file: " << levelPath.string() << "\n";
-        return;
-    }
+	GameModeManager::GetInstance().SetMode(std::make_unique<MainMenu>());
 
-    DiggerSceneBuilder::CreateSinglePlayerScene(dae::SceneManager::GetInstance().CreateScene("mainscene"), levelPath.string());
 }
 
 int main(int, char* argv[])

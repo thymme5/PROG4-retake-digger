@@ -141,8 +141,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AliveState.cpp" />
+    <ClCompile Include="CoopMode.cpp" />
     <ClCompile Include="DeadState.cpp" />
     <ClCompile Include="DiggerSceneBuilder.cpp" />
+    <ClCompile Include="DiggerSoundLibrary.cpp" />
     <ClCompile Include="EmeraldComponent.cpp" />
     <ClCompile Include="EnemyComponent.cpp" />
     <ClCompile Include="FireballComponent.cpp" />
@@ -153,19 +155,25 @@
     <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="MainMenuUIComponent.cpp" />
     <ClCompile Include="NobbinState.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="SinglePlayerMode.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="UIComponent.cpp" />
+    <ClCompile Include="VersusMode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AliveState.h" />
+    <ClInclude Include="CoopMode.h" />
     <ClInclude Include="DeadState.h" />
     <ClInclude Include="DiggerSceneBuilder.h" />
+    <ClInclude Include="DiggerSoundLibrary.h" />
     <ClInclude Include="EmeraldComponent.h" />
     <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="EnemyState.h" />
+    <ClInclude Include="EnterGameMode.h" />
     <ClInclude Include="FireballCommand.h" />
     <ClInclude Include="FireballComponent.h" />
     <ClInclude Include="GameMode.h" />
@@ -176,13 +184,17 @@
     <ClInclude Include="InteractableComponent.h" />
     <ClInclude Include="LevelBuilder.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MainMenuUIComponent.h" />
     <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="MoveMenuArrow.h" />
     <ClInclude Include="NobbinState.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="SinglePlayerMode.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="UIComponent.h" />
+    <ClInclude Include="VersusMode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
