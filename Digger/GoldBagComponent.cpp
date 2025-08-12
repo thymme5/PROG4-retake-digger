@@ -5,6 +5,8 @@
 #include "TextureComponent.h"
 #include "TileManager.h"
 #include "EnemyComponent.h"
+#include "Timer.h"
+
 GoldBagComponent::GoldBagComponent(dae::GameObject& owner, int row, int col)
     : InteractableComponent(owner), m_Row(row), m_Col(col)
 {
@@ -13,9 +15,33 @@ GoldBagComponent::GoldBagComponent(dae::GameObject& owner, int row, int col)
 
 void GoldBagComponent::Update()
 {
+    float deltaTime = Timer::GetDeltaTime();
+
+    if (m_IsMidFall)
+    {
+        glm::vec2 currentPos = GetOwner()->GetLocalPosition();
+        glm::vec2 direction = m_TargetPosition - currentPos;
+
+        if (glm::length(direction) < 1.f)
+        {
+            GetOwner()->SetLocalPosition(m_TargetPosition.x, m_TargetPosition.y);
+            m_IsMidFall = false;
+
+            // Re-register on new tile
+            TileManager::GetInstance().RegisterInteractable(m_Row, m_Col, GetOwner());
+        }
+        else
+        {
+            glm::vec2 velocity = glm::normalize(direction) * m_FallSpeed;
+            glm::vec2 newPos = currentPos + velocity * deltaTime;
+            GetOwner()->SetLocalPosition(newPos.x, newPos.y);
+        }
+    }
+
     if (m_pCurrentState)
         m_pCurrentState->Update(*this);
 }
+
 void GoldBagComponent::Interact(dae::GameObject& interactor)
 {
     if (dynamic_cast<BrokenState*>(m_pCurrentState.get()))
@@ -51,7 +77,10 @@ bool GoldBagComponent::IsBroken() const
 {
     return dynamic_cast<BrokenState*>(m_pCurrentState.get()) != nullptr;
 }
-
+bool GoldBagComponent::IsMidFall() const
+{
+	return m_IsMidFall;
+}
 bool GoldBagComponent::TryPush(int targetRow, int targetCol)
 {
     auto targetTile = TileManager::GetInstance().GetTile(targetRow, targetCol);
@@ -71,7 +100,6 @@ bool GoldBagComponent::TryPush(int targetRow, int targetCol)
 
     return false;
 }
-
 void GoldBagComponent::Fall()
 {
     const int newRow = m_Row + 1;
@@ -88,16 +116,12 @@ void GoldBagComponent::Fall()
             go->Destroy();
         }
 
-        // Remove from current tile
         TileManager::GetInstance().RemoveInteractable(m_Row, m_Col, GetOwner());
 
         ++m_Row;
         ++m_FallDistance;
 
-        // Move GameObject visually
-        GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
-
-        // Re-register on new tile
-        TileManager::GetInstance().RegisterInteractable(m_Row, m_Col, GetOwner());
+        m_TargetPosition = { m_Col * TILE_SIZE, m_Row * TILE_SIZE };
+        m_IsMidFall = true;
     }
 }

@@ -40,41 +40,41 @@ void FallingState::Enter(GoldBagComponent& goldBag)
 
 void FallingState::Update(GoldBagComponent& goldBag)
 {
+    if (goldBag.IsMidFall()) return;
+
     const int currRow = goldBag.GetRow();
     const int col = goldBag.GetCol();
     const int belowRow = currRow + 1;
 
     if (!TileManager::GetInstance().IsValidTile(belowRow, col))
     {
-        // Break immediately before falling off map
+        // Out of bounds, break
         goldBag.SetState(std::make_unique<BrokenState>());
         return;
     }
 
     auto belowTile = TileManager::GetInstance().GetTile(belowRow, col);
-
-    // Check if gold bag should continue falling
     bool canFall = (!belowTile || belowTile->IsDug());
 
     if (canFall)
     {
-        goldBag.Fall(); // Move down, increase fall distance
-        goldBag.GetOwner()->SetLocalPosition(col * TILE_SIZE, (currRow + 1) * TILE_SIZE);
+        goldBag.Fall();
     }
     else
     {
-        // Stop falling, evaluate how far it fell
+        // Landed on solid tile — now check fall distance
         if (goldBag.GetFallDistance() >= 2)
         {
             goldBag.SetState(std::make_unique<BrokenState>());
         }
         else
         {
-            goldBag.ResetFallDistance(); // Didn’t fall far enough to break
+            goldBag.ResetFallDistance();
             goldBag.SetState(std::make_unique<IdleState>());
         }
     }
 }
+
 
 void FallingState::Exit(GoldBagComponent& goldBag)
 {

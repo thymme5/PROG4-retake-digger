@@ -4,7 +4,7 @@
 #include "TileComponent.h"
 #include "TextureComponent.h"
 #include "EnemyComponent.h"
-
+#include "Timer.h"
 constexpr int TILE_SIZE = 48;
 
 FireballComponent::FireballComponent(dae::GameObject& owner, int row, int col, int dRow, int dCol)
@@ -15,7 +15,7 @@ FireballComponent::FireballComponent(dae::GameObject& owner, int row, int col, i
 
 void FireballComponent::Update()
 {
-    m_Timer += 1.f / 60.f;
+    m_Timer += Timer::GetDeltaTime();
     if (m_Timer < m_MoveInterval) return;
     m_Timer = 0.f;
 
@@ -32,7 +32,7 @@ void FireballComponent::Update()
     auto enemies = TileManager::GetInstance().GetEnemiesAt(nextRow, nextCol);
     for (auto* obj : enemies)
     {
-        if (obj->HasComponent<EnemyComponent>()) // placeholder
+        if (obj->HasComponent<EnemyComponent>())
         {
             obj->Destroy();
             GetOwner()->Destroy();

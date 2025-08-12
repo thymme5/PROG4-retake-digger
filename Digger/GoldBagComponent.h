@@ -1,7 +1,7 @@
 #pragma once
 #include "InteractableComponent.h"
 #include "GoldBagStates.h"
-
+#include "glm.hpp"
 #include <memory>
 
 class GoldBagState;
@@ -25,17 +25,19 @@ public:
     void ResetFallDistance() { m_FallDistance = 0; }
 
     bool IsBroken() const;
-
+    bool IsMidFall() const;
     int GetRow() const { return m_Row; }
     int GetCol() const { return m_Col; }
 
     bool TryPush(int dRow, int dCol);
-
-
 private:
     int m_Row{};
     int m_Col{};
     int m_FallDistance{ 0 };
+
+    glm::vec2 m_TargetPosition{};
+    float m_FallSpeed = 250.f; 
+    bool m_IsMidFall = false;
 
     std::unique_ptr<GoldBagState> m_pCurrentState;
 };
