@@ -3,11 +3,17 @@
 #include "TileManager.h"
 #include "TileComponent.h"
 #include "Timer.h"
+#include "TextureComponent.h"
 
-void HobbinState::Enter(EnemyComponent& /*enemy*/)
+void HobbinState::Enter(EnemyComponent& enemy)
 {
     // Move as soon as we enter this state
     m_MoveCooldown = 0.0f;
+
+    if (enemy.GetOwner()->HasComponent<dae::TextureComponent>())
+    {
+		enemy.GetOwner()->GetComponent<dae::TextureComponent>()->SetTexture("hobbin.png");
+    }
 }
 
 void HobbinState::Update(EnemyComponent& enemy)
