@@ -197,8 +197,29 @@ void PlayerComponent::DigCurrentTile()
         if (auto* interactableComp = interactable->GetComponent<InteractableComponent>())
         {
             interactableComp->Interact(*GetOwner());
+
+            // Emerald streak logic
+            if (interactable->GetComponent<EmeraldComponent>())
+            {
+                m_EmeraldStreak++;
+
+                if (m_EmeraldStreak == m_EmeraldStreakGoal)
+                {
+                    m_EmeraldStreak = 0; // Reset after reaching goal
+
+                    if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
+                    {
+                        playerSubj->Notify(dae::Event::PlayerCollected8Emeralds, GetOwner());
+                    }
+                }
+            }
+            else
+            {
+                m_EmeraldStreak = 0; // Break emerald streak, even if object interacted is not an emerald
+            }
         }
     }
+
 }
 
 void PlayerComponent::ShootFireball()

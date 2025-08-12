@@ -14,6 +14,7 @@ namespace dae
 		GoldBagDropped,
 		GoldCollected,
 		EmeraldCollected,
+		PlayerCollected8Emeralds,
 		PlayerCollectedAllEmeralds,
 		LevelCompleted,
 		EnemyKilled,

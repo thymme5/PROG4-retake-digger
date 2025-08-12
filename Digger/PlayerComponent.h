@@ -75,4 +75,7 @@ private:
     const float m_HasFireballInterval = 10.f; // Time before fireball can be used again
 
 
+    // Emeralds logic
+    int m_EmeraldStreak = 0;
+    const int m_EmeraldStreakGoal = 8;
 };
