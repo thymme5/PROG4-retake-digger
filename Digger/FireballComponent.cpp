@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "TileComponent.h"
 #include "TextureComponent.h"
+#include "EnemyComponent.h"
 
 constexpr int TILE_SIZE = 48;
 
@@ -28,15 +29,15 @@ void FireballComponent::Update()
         return;
     }
 
-    auto interactables = TileManager::GetInstance().GetInteractablesAt(nextRow, nextCol);
-    for (auto* obj : interactables)
+    auto enemies = TileManager::GetInstance().GetEnemiesAt(nextRow, nextCol);
+    for (auto* obj : enemies)
     {
-        //if (obj->HasComponent<EnemyComponent>()) // placeholder
-        //{
-        //    obj->Destroy();
-        //    GetOwner()->Destroy();
-        //    return;
-        //}
+        if (obj->HasComponent<EnemyComponent>()) // placeholder
+        {
+            obj->Destroy();
+            GetOwner()->Destroy();
+            return;
+        }
     }
 
     m_Row = nextRow;

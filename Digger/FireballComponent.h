@@ -13,4 +13,5 @@ private:
     int m_DirRow{}, m_DirCol{};
     float m_Timer = 0.f;
     float m_MoveInterval = 3.f;
+
 };

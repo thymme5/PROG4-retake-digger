@@ -54,10 +54,14 @@ private:
     // last direction in which player moved for fireball's purpose
     int m_LastDirRow{ 0 };
     int m_LastDirCol{ 1 }; // facing right on default
-    bool m_HasFireball{ false };
 
     // dirty positions for enemies
 	bool m_PositionDirty{ false };  
 
 	bool m_IsDead{ false }; // internal flag to mark player as dead
+
+    // Fireball logic
+    float m_HasFireballTimer = 0.f;
+    bool m_HasFireball{ true };
+    const float m_HasFireballInterval = 10.f; // Time before fireball can be used again
 };

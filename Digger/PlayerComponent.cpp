@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "InteractableComponent.h"
 #include "GoldBagComponent.h"
+#include "Timer.h"
 
 static std::vector<PlayerComponent*>& PlayerList()
 {
@@ -65,6 +66,18 @@ void PlayerComponent::Update()
         else
         {
             GetOwner()->SetLocalPosition(newPos.x, newPos.y);
+        }
+    }
+
+    // Fireball cooldown logic
+    if (!m_HasFireball)
+    {
+        m_HasFireballTimer += Timer::GetDeltaTime();
+        if (m_HasFireballTimer >= m_HasFireballInterval)
+        {
+            m_HasFireball = true;
+            m_HasFireballTimer = 0.f;
+            std::cout << "Fireball ready!\n";
         }
     }
 
@@ -156,7 +169,7 @@ void PlayerComponent::DigCurrentTile()
 
 void PlayerComponent::ShootFireball()
 {
-    if (m_HasFireball) return; 
+    if (!m_HasFireball) return; 
 
     auto fireball = std::make_unique<dae::GameObject>();
     fireball->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
@@ -166,7 +179,8 @@ void PlayerComponent::ShootFireball()
 
     dae::SceneManager::GetInstance().GetActiveScene().Add(std::move(fireball));
 
-    m_HasFireball = true;
+    m_HasFireball = false;
+    m_HasFireballTimer = 0.f;
 }
 
 void PlayerComponent::SetState(std::unique_ptr<PlayerState> newState)
