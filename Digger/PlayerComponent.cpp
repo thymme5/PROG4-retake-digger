@@ -21,7 +21,7 @@ const std::vector<PlayerComponent*>& PlayerComponent::GetAllPlayers()
 }
 
 PlayerComponent::PlayerComponent(dae::GameObject& owner, int startRow, int startCol)
-    : Component(owner), m_Row{ startRow }, m_Col{ startCol }
+	: Component(owner), m_Row{ startRow }, m_Col{ startCol }, m_SpawnCol{ startCol }, m_SpawnRow{ startRow }
 {
     owner.SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
     PlayerList().push_back(this);
@@ -40,6 +40,40 @@ PlayerComponent::~PlayerComponent()
 
 void PlayerComponent::Update()
 {
+    // Check if player is dead
+    if (m_IsDead)
+    {
+        m_DeathTimer += Timer::GetDeltaTime();
+        m_PulseTimer += Timer::GetDeltaTime();
+
+        if (m_PulseTimer >= m_PulseInterval)
+        {
+            m_IsVisible = !m_IsVisible;
+            m_PulseTimer = 0.f;
+
+            if (auto* tex = GetOwner()->GetComponent<dae::TextureComponent>())
+                tex->SetVisible(m_IsVisible);
+        }
+        
+        // Respawn logic
+        if (m_DeathTimer >= m_RespawnDelay)
+        {
+            m_Row = m_SpawnRow;
+            m_Col = m_SpawnCol;
+            GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+
+            m_IsDead = false;
+            m_DeathTimer = 0.f;
+            m_PulseTimer = 0.f;
+            m_IsVisible = true;
+
+            if (auto* tex = GetOwner()->GetComponent<dae::TextureComponent>())
+                tex->SetVisible(true);
+        }
+
+        return; // Skip normal update while dead
+    }
+
     if (m_IsMoving)
     {
         glm::vec2 currentPos = GetOwner()->GetWorldPosition();
@@ -87,7 +121,7 @@ void PlayerComponent::Update()
 
 void PlayerComponent::Move(int dRow, int dCol)
 {
-    if (m_IsMoving) return;
+    if (m_IsMoving || m_IsDead) return;
 
     m_LastDirRow = dRow;
     m_LastDirCol = dCol;

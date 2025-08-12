@@ -19,9 +19,6 @@
     <Filter Include="GameMode\GameModeManager">
       <UniqueIdentifier>{9fed587b-2e9d-4862-bed3-6894853209c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameMode\MainMenu">
-      <UniqueIdentifier>{d3406167-3063-4e4c-9832-2d6daf88279c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="LevelBuilder">
       <UniqueIdentifier>{d47751af-65aa-4cc1-85bb-06d380fd7b3a}</UniqueIdentifier>
     </Filter>
@@ -109,12 +106,6 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{997e3131-5088-4470-a159-dce1fcad642e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameMode\Menus">
-      <UniqueIdentifier>{5083136e-91f6-42de-b224-609adf1318e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameMode\Menus\MainMenu">
-      <UniqueIdentifier>{9eba401f-8cf6-4cda-aa09-2c3e47b34584}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameMode\GameModes">
       <UniqueIdentifier>{d0c8d5f9-1dd9-4d77-b736-64800be815b7}</UniqueIdentifier>
     </Filter>
@@ -127,11 +118,17 @@
     <Filter Include="GameMode\GameModes\VersusMode">
       <UniqueIdentifier>{c15fe0c8-aab7-4960-897a-59c775534a11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameMode\Menus\MainMenu\MainMenuUIComponent">
+    <Filter Include="GameMode\GameModes\MainMenu">
+      <UniqueIdentifier>{9eba401f-8cf6-4cda-aa09-2c3e47b34584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModes\MainMenu\MainMenuUIComponent">
       <UniqueIdentifier>{9e1285e9-c5cf-4d6b-89a5-c8048d51b608}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameMode\Menus\MainMenu\Commands">
+    <Filter Include="GameMode\GameModes\MainMenu\Commands">
       <UniqueIdentifier>{ecda75df-a0fa-4a98-9512-2926d940a715}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModes\MainMenu\MainMenu">
+      <UniqueIdentifier>{d3406167-3063-4e4c-9832-2d6daf88279c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -142,7 +139,7 @@
       <Filter>GameMode\GameModeManager</Filter>
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
-      <Filter>GameMode\MainMenu</Filter>
+      <Filter>GameMode\GameModes\MainMenu\MainMenu</Filter>
     </ClCompile>
     <ClCompile Include="LevelBuilder.cpp">
       <Filter>LevelBuilder</Filter>
@@ -202,7 +199,7 @@
       <Filter>GameMode\GameModes\CoopMode</Filter>
     </ClCompile>
     <ClCompile Include="MainMenuUIComponent.cpp">
-      <Filter>GameMode\Menus\MainMenu\MainMenuUIComponent</Filter>
+      <Filter>GameMode\GameModes\MainMenu\MainMenuUIComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,7 +210,7 @@
       <Filter>GameMode</Filter>
     </ClInclude>
     <ClInclude Include="MainMenu.h">
-      <Filter>GameMode\MainMenu</Filter>
+      <Filter>GameMode\GameModes\MainMenu\MainMenu</Filter>
     </ClInclude>
     <ClInclude Include="LevelBuilder.h">
       <Filter>LevelBuilder</Filter>
@@ -288,13 +285,13 @@
       <Filter>GameMode\GameModes\CoopMode</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuUIComponent.h">
-      <Filter>GameMode\Menus\MainMenu\MainMenuUIComponent</Filter>
+      <Filter>GameMode\GameModes\MainMenu\MainMenuUIComponent</Filter>
     </ClInclude>
     <ClInclude Include="MoveMenuArrow.h">
-      <Filter>GameMode\Menus\MainMenu\Commands</Filter>
+      <Filter>GameMode\GameModes\MainMenu\Commands</Filter>
     </ClInclude>
     <ClInclude Include="EnterGameMode.h">
-      <Filter>GameMode\Menus\MainMenu\Commands</Filter>
+      <Filter>GameMode\GameModes\MainMenu\Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

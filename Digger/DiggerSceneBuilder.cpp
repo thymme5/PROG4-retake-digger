@@ -15,8 +15,6 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
     const float spacing = 50.0f;
     const auto windowWidth = dae::Renderer::GetInstance().GetWindowSize().x;
 
-    std::cout << "[DEBUG] Window width: " << windowWidth << std::endl;
-
     std::vector<std::string> options = { "Solo mode", "Co-op Mode", "Versus mode", "High score" };
 
     float arrowX{};
@@ -33,13 +31,9 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
         auto width = text->GetTextureSize().x;
         auto height = text->GetTextureSize().y;
 
-        std::cout << "[DEBUG] Option " << i << " \"" << options[i] << "\" texture size: "
-            << width << "x" << height << std::endl;
-
         float x = (windowWidth - width) / 2.0f;
         float y = baseY + i * spacing;
 
-        std::cout << "[DEBUG] Option " << i << " position: (" << x << ", " << y << ")" << std::endl;
 
         optionGO->SetLocalPosition(x, y);
         scene.Add(optionGO);
@@ -48,7 +42,6 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
         {
             arrowX = x - 30.f;
             arrowY = y;
-            std::cout << "[DEBUG] Arrow initial position: (" << arrowX << ", " << arrowY << ")" << std::endl;
         }
     }
 
@@ -57,7 +50,6 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
     arrowGO->SetLocalPosition(arrowX, arrowY);
 
     const auto& arrowWorldPos = arrowGO->GetTransform().GetWorldPosition();
-    std::cout << "[DEBUG] Arrow world position: (" << arrowWorldPos.x << ", " << arrowWorldPos.y << ")" << std::endl;
 
     UIcomponent->SetArrow(arrowGO);
     scene.Add(arrowGO);

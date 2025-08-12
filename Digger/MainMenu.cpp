@@ -2,6 +2,8 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "DiggerSceneBuilder.h"
+#include "SoundService.h"
+#include "DiggerSoundLibrary.h"
 void MainMenu::Enter()
 {
 	DiggerSceneBuilder::BuildMainMenu(dae::SceneManager::GetInstance().CreateScene(m_SceneName),
@@ -9,11 +11,12 @@ void MainMenu::Enter()
 
 
 	// load all sounds
-	//auto soundService = dae::ServiceLocator::GetSoundService();
-	//if (soundService)
-	//{
-	//	soundService->SetVolume(10);
-	//}
+	auto soundService = dae::ServiceLocator::GetSoundService();
+	if (soundService)
+	{
+		DiggerSoundLibrary::LoadAllSounds();
+		soundService->SetVolume(10);
+	}
 }
 void MainMenu::Exit()
 {

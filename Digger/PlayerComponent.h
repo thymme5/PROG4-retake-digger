@@ -58,10 +58,21 @@ private:
     // dirty positions for enemies
 	bool m_PositionDirty{ false };  
 
-	bool m_IsDead{ false }; // internal flag to mark player as dead
+	// death logic
+    bool m_IsDead{ false }; // internal flag to mark player as dead
+    const int m_SpawnRow; 
+    const int m_SpawnCol;
+    float m_DeathTimer = 0.f;
+    float m_PulseTimer = 0.f;
+    const float m_RespawnDelay = 5.f;
+    const float m_PulseInterval = 0.3f;
+    bool m_IsVisible = true;
+
 
     // Fireball logic
     float m_HasFireballTimer = 0.f;
     bool m_HasFireball{ true };
     const float m_HasFireballInterval = 10.f; // Time before fireball can be used again
+
+
 };
