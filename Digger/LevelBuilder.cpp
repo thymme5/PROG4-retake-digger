@@ -171,12 +171,12 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 
         scene.Add(playerGO);
 
-        // === attach HUD to player ===
+        // === attach HUD & TileManager to player ===
         if (auto* playerSubj = playerGO->GetComponent<dae::SubjectComponent>())
         {
             ui->Observe(*playerSubj);
+            playerSubj->AddObserver(&TileManager::GetInstance());
         }
-
     }
 
 

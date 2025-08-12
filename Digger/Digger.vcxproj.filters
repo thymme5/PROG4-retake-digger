@@ -130,6 +130,9 @@
     <Filter Include="GameMode\GameModes\MainMenu\MainMenu">
       <UniqueIdentifier>{d3406167-3063-4e4c-9832-2d6daf88279c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LevelManager">
+      <UniqueIdentifier>{327506c9-99b5-42d6-88a1-525d30f5f9a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -200,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="MainMenuUIComponent.cpp">
       <Filter>GameMode\GameModes\MainMenu\MainMenuUIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>LevelManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="EnterGameMode.h">
       <Filter>GameMode\GameModes\MainMenu\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>LevelManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

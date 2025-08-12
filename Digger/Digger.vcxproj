@@ -153,6 +153,7 @@
     <ClCompile Include="GoldBagStates.cpp" />
     <ClCompile Include="HobbinState.cpp" />
     <ClCompile Include="LevelBuilder.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainMenuUIComponent.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="HobbinState.h" />
     <ClInclude Include="InteractableComponent.h" />
     <ClInclude Include="LevelBuilder.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MainMenuUIComponent.h" />
     <ClInclude Include="MoveCommand.h" />

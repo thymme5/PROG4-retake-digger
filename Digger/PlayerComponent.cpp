@@ -188,7 +188,11 @@ void PlayerComponent::DigCurrentTile()
     {
         tile->SetDug(true);
         tile->GetGameObject()->Destroy();
-        TileManager::GetInstance().OnNotify(dae::Event::TileDug, GetOwner());
+
+        if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
+        {
+            playerSubj->Notify(dae::Event::TileDug, GetOwner());
+        }
     }
 
     auto interactables = TileManager::GetInstance().GetInteractablesAt(m_Row, m_Col);
@@ -255,9 +259,9 @@ bool PlayerComponent::IsDead() const
 }
 void PlayerComponent::MarkAsDead() 
 {
-    if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
+    /*if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
     {
 		playerSubj->Notify(dae::Event::PlayerDied, GetOwner());
     }
-    m_IsDead = true; 
+    m_IsDead = true; */
 }

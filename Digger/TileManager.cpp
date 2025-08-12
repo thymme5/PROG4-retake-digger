@@ -40,6 +40,9 @@ void TileManager::RegisterInteractable(int row, int col, dae::GameObject* intera
     if (interactable == nullptr)
         return;
 
+    if (interactable->HasComponent<EmeraldComponent>())
+		++m_TotalEmeralds;
+
     m_Interactables[row][col].push_back(interactable);
 }
 
@@ -119,7 +122,77 @@ const std::vector<dae::GameObject*>& TileManager::GetEnemiesAt(int row, int col)
     return m_Enemies[row][col];
 }
 
-void TileManager::OnNotify(dae::Event, dae::GameObject*)
+void TileManager::OnNotify(dae::Event e, dae::GameObject* go)
 {
-
+    switch (e)
+    {
+    case dae::Event::PlayerDied:
+        std::cout << "[TileManager] Event: PlayerDied\n";
+        break;
+    case dae::Event::PlayerDugTile:
+        std::cout << "[TileManager] Event: PlayerDugTile\n";
+        break;
+    case dae::Event::TileDug:
+        std::cout << "[TileManager] Event: TileDug\n";
+        break;
+    case dae::Event::TileContainsEmerald:
+        std::cout << "[TileManager] Event: TileContainsEmerald\n";
+        break;
+    case dae::Event::TileContainsGoldBag:
+        std::cout << "[TileManager] Event: TileContainsGoldBag\n";
+        break;
+    case dae::Event::GoldBagDropped:
+        std::cout << "[TileManager] Event: GoldBagDropped\n";
+        break;
+    case dae::Event::GoldCollected:
+        std::cout << "[TileManager] Event: GoldCollected\n";
+        break;
+    case dae::Event::EmeraldCollected:
+        ++m_CollectedEmeralds;
+        break;
+    case dae::Event::PlayerCollected8Emeralds:
+        std::cout << "[TileManager] Event: PlayerCollected8Emeralds\n";
+        break;
+    case dae::Event::PlayerCollectedAllEmeralds:
+        std::cout << "[TileManager] Event: PlayerCollectedAllEmeralds\n";
+        break;
+    case dae::Event::LevelCompleted:
+        std::cout << "[TileManager] Event: LevelCompleted\n";
+        break;
+    case dae::Event::EnemyKilled:
+        std::cout << "[TileManager] Event: EnemyKilled\n";
+        break;
+    default:
+        std::cout << "[TileManager] Event: Unknown\n";
+        break;
+    }
+    CheckLevelCompletion(go);
 }
+
+//TODO: not sure about this implementation in TileManager? Move to LevelManager? 
+void TileManager::CheckLevelCompletion(dae::GameObject* go)
+{
+    bool allEmeraldsCollected = m_CollectedEmeralds >= m_TotalEmeralds;
+    bool allEnemiesGone = true;
+
+    for (const auto& row : m_Enemies)
+    {
+        for (const auto& cell : row)
+        {
+            if (!cell.empty())
+            {
+                allEnemiesGone = false;
+                break;
+            }
+        }
+        if (!allEnemiesGone)
+            break;
+    }
+
+	// If all emeralds are collected or all enemies are gone, load the next level
+    if (allEmeraldsCollected || allEnemiesGone)
+    {
+        LevelManager::GetInstance().LoadNextLevel();
+    }
+}
+

@@ -3,10 +3,14 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+
 #include "TileComponent.h"
 #include "Observer.h"
 #include "Singleton.h"
 #include "GameObject.h"
+#include "EmeraldComponent.h"
+#include "SubjectComponent.h"
+#include "LevelManager.h"
 
 class TileManager final : public dae::Observer, public dae::Singleton<TileManager>
 {
@@ -45,4 +49,9 @@ private:
     std::vector<std::vector<std::shared_ptr<TileComponent>>> m_TileMap;
     std::unordered_map<int, std::unordered_map<int, std::vector<dae::GameObject*>>> m_Interactables;
     std::vector<std::vector<std::vector<dae::GameObject*>>> m_Enemies;
+
+    int m_TotalEmeralds = 0;
+    int m_CollectedEmeralds = 0;
+
+    void CheckLevelCompletion(dae::GameObject* go);
 };
