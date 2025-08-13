@@ -44,7 +44,7 @@ void LevelManager::LoadNextLevel()
     else
 	{		
         Notify(dae::Event::GameCompleted, nullptr);
-        GameModeManager::GetInstance().SetMode(std::unique_ptr<MainMenu>());
+        GameModeManager::GetInstance().SetMode(std::make_unique<MainMenu>());
     }
 }
 

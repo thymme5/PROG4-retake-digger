@@ -57,17 +57,17 @@ void UIComponent::OnNotify(dae::Event event, dae::GameObject*)
 {
     switch (event)
     {
-    case dae::Event::EmeraldCollected:          m_Score += 25; std::cout << "[DEBUG] Emerald collected: +25 points \n";  break;
-	case dae::Event::PlayerCollected8Emeralds:  m_Score += 250; std::cout << "[DEBUG] Collected 8 emeralds: +250 points \n"; break;
-    case dae::Event::GoldCollected:             m_Score += 500; std::cout << "[DEBUG] Gold collected: +500 points \n"; break;
+    case dae::Event::EmeraldCollected:          m_Score += 25; std::cout << "[UIComponent] Emerald collected: +25 points \n";  break;
+	case dae::Event::PlayerCollected8Emeralds:  m_Score += 250; std::cout << "[UIComponent] Collected 8 emeralds: +250 points \n"; break;
+    case dae::Event::GoldCollected:             m_Score += 500; std::cout << "[UIComponent] Gold collected: +500 points \n"; break;
     case dae::Event::PlayerDied:                --m_Lives; if (m_Lives < 0) m_Lives = 0; break;
     case dae::Event::LevelCompleted:            m_Level = LevelManager::GetInstance().GetCurrentLevelIndex(); break;
-	case dae::Event::EnemyKilled:               m_Score += 250; std::cout << "[DEBUG] Enemy killed: +250 points \n"; break;
+	case dae::Event::EnemyKilled:               m_Score += 250; std::cout << "[UIComponent] Enemy killed: +250 points \n"; break;
 	case dae::Event::GameCompleted:  
     {
         HighscoreEntry entry{ "aaa", m_Score };
         HighscoreManager::GetInstance().AddHighscore(entry);
-        std::cout << "[DEBUG] Game completed, score saved.\n";
+        std::cout << "[UIComponent] Game completed, score saved.\n";
         break;
     }
     default: break;

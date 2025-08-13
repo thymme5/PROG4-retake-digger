@@ -2,7 +2,7 @@
 #include <fstream>
 #include <algorithm>
 #include <nlohmann/json.hpp>
-
+#include <iostream>
 const std::vector<HighscoreEntry>& HighscoreManager::GetHighscores() const
 {
     return m_Highscores;
@@ -20,6 +20,8 @@ void HighscoreManager::AddHighscore(const HighscoreEntry& entry)
 
     if (m_Highscores.size() > 5)
         m_Highscores.resize(5);
+
+    SaveHighscores();
 }
 
 
@@ -56,6 +58,7 @@ void HighscoreManager::SaveHighscores() const
     std::ofstream file(m_FilePath);
     if (file.is_open())
         file << data.dump(4);
+
 }
 HighscoreEntry& HighscoreManager::GetLastAddedEntry()
 {
