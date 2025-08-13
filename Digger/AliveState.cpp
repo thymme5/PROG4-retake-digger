@@ -34,19 +34,12 @@ void AliveState::Update(PlayerComponent& player)
     if (tile && !tile->IsDug())
     {
         tile->SetDug(true);
-
-        if (auto tex = tile->GetOwner()->GetComponent<dae::TextureComponent>())
-        {
-
-        }
-
+        
         if (auto subject = player.GetOwner()->GetComponent<dae::SubjectComponent>())
         {
-            //subject->Notify(dae::Event::TileStateChanged, tile->GetOwner());
+            subject->Notify(dae::Event::TileDug, tile->GetOwner());
         }
     }
-
-    // TODO: Check if player collected emerald or collided with gold bag
 }
 
 void AliveState::Exit(PlayerComponent& /*player*/)

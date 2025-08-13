@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "SubjectComponent.h"
+#include "DeadState.h"
 
 #include <memory>
 #include <vector>
@@ -25,21 +26,25 @@ public:
     int GetRow() const { return m_Row; }
     int GetCol() const { return m_Col; }
     std::pair<int, int> GetTilePosition() const { return { m_Row, m_Col }; }
+    std::pair<int, int> GetSpawnPosition() const { return { m_SpawnRow, m_SpawnCol }; }
 
     bool IsPositionDirty() const { return m_PositionDirty; }
     void ClearDirtyFlag() { m_PositionDirty = false; }
 
     void Move(int dRow, int dCol); // Move(1, 0) to go down
+    void SetTilePosition(int row, int col);
+
     void DigCurrentTile();
 
     void SetState(std::unique_ptr<PlayerState> newState);
 
     void ShootFireball();
 
-    // dead logic
-    bool IsDead() const;
+    // death logic
     void MarkAsDead();
+    bool IsInDeadState() const;
 private:
+
     int m_Row{};
     int m_Col{};
     std::unique_ptr<PlayerState> m_pCurrentState;
@@ -58,22 +63,14 @@ private:
     // dirty positions for enemies
 	bool m_PositionDirty{ false };  
 
-	// death logic
-    bool m_IsDead{ false }; // internal flag to mark player as dead
+	// Spawn location
     const int m_SpawnRow; 
     const int m_SpawnCol;
-    float m_DeathTimer = 0.f;
-    float m_PulseTimer = 0.f;
-    const float m_RespawnDelay = 5.f;
-    const float m_PulseInterval = 0.3f;
-    bool m_IsVisible = true;
-
 
     // Fireball logic
     float m_HasFireballTimer = 0.f;
     bool m_HasFireball{ true };
     const float m_HasFireballInterval = 10.f; // Time before fireball can be used again
-
 
     // Emeralds logic
     int m_EmeraldStreak = 0;

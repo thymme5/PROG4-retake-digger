@@ -40,40 +40,6 @@ PlayerComponent::~PlayerComponent()
 
 void PlayerComponent::Update()
 {
-    // Check if player is dead
-    if (m_IsDead)
-    {
-        m_DeathTimer += Timer::GetDeltaTime();
-        m_PulseTimer += Timer::GetDeltaTime();
-
-        if (m_PulseTimer >= m_PulseInterval)
-        {
-            m_IsVisible = !m_IsVisible;
-            m_PulseTimer = 0.f;
-
-            if (auto* tex = GetOwner()->GetComponent<dae::TextureComponent>())
-                tex->SetVisible(m_IsVisible);
-        }
-        
-        // Respawn logic
-        if (m_DeathTimer >= m_RespawnDelay)
-        {
-            m_Row = m_SpawnRow;
-            m_Col = m_SpawnCol;
-            GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
-
-            m_IsDead = false;
-            m_DeathTimer = 0.f;
-            m_PulseTimer = 0.f;
-            m_IsVisible = true;
-
-            if (auto* tex = GetOwner()->GetComponent<dae::TextureComponent>())
-                tex->SetVisible(true);
-        }
-
-        return; // Skip normal update while dead
-    }
-
     if (m_IsMoving)
     {
         glm::vec2 currentPos = GetOwner()->GetWorldPosition();
@@ -111,7 +77,6 @@ void PlayerComponent::Update()
         {
             m_HasFireball = true;
             m_HasFireballTimer = 0.f;
-            std::cout << "Fireball ready!\n";
         }
     }
 
@@ -121,7 +86,7 @@ void PlayerComponent::Update()
 
 void PlayerComponent::Move(int dRow, int dCol)
 {
-    if (m_IsMoving || m_IsDead) return;
+    if (m_IsMoving || IsInDeadState()) return;
 
     m_LastDirRow = dRow;
     m_LastDirCol = dCol;
@@ -176,6 +141,14 @@ void PlayerComponent::Move(int dRow, int dCol)
     m_IsMoving = true;
 }
 
+void PlayerComponent::SetTilePosition(int row, int col)
+{
+    m_Row = row;
+    m_Col = col;
+
+    // Force update because I'm unsure if it will work otherwise
+    GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+}
 
 void PlayerComponent::DigCurrentTile()
 {
@@ -253,15 +226,16 @@ void PlayerComponent::SetState(std::unique_ptr<PlayerState> newState)
         m_pCurrentState->Enter(*this);
 }
 
-bool PlayerComponent::IsDead() const
-{ 
-    return m_IsDead; 
-}
 void PlayerComponent::MarkAsDead() 
 {
-    /*if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
+    if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
     {
 		playerSubj->Notify(dae::Event::PlayerDied, GetOwner());
     }
-    m_IsDead = true; */
+
+	SetState(std::make_unique<DeadState>());
+}
+bool PlayerComponent::IsInDeadState() const
+{
+    return dynamic_cast<DeadState*>(m_pCurrentState.get()) != nullptr;
 }
