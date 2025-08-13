@@ -41,9 +41,10 @@ void LevelManager::LoadNextLevel()
         ++m_CurrentLevelIndex;
         LoadLevel(m_CurrentLevelIndex);
     }
-    else
+    else // Game done
 	{		
         Notify(dae::Event::GameCompleted, nullptr);
+		m_CurrentLevelIndex = 1; // Reset for next game
         GameModeManager::GetInstance().SetMode(std::make_unique<MainMenu>());
     }
 }

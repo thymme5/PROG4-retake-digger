@@ -50,7 +50,8 @@ void UIComponent::Observe(dae::SubjectComponent& subject)
 
 void UIComponent::StopObservingAll()
 {
-    LevelManager::GetInstance().RemoveObserver(this);
+    if (&LevelManager::GetInstance())
+        LevelManager::GetInstance().RemoveObserver(this);
 }
  
 void UIComponent::OnNotify(dae::Event event, dae::GameObject*)
