@@ -7,6 +7,14 @@
 
 #include <iostream>
 
+static bool s_IsAlive = false;
+
+LevelManager::LevelManager() { s_IsAlive = true; }
+LevelManager::~LevelManager() { s_IsAlive = false; }
+
+bool LevelManager::IsAlive() { return s_IsAlive; }
+
+
 void LevelManager::Initialize()
 {
     m_CurrentLevelIndex = 1;

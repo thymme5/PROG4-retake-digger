@@ -31,7 +31,6 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
         auto optionGO = std::make_shared<dae::GameObject>();
         auto* text = optionGO->AddComponent<dae::TextComponent>(*optionGO, options[i], font);
 
-        text->SetText(options[i]);
         text->Update();
 
         auto width = text->GetTextureSize().x;

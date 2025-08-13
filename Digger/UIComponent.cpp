@@ -50,7 +50,7 @@ void UIComponent::Observe(dae::SubjectComponent& subject)
 
 void UIComponent::StopObservingAll()
 {
-    if (&LevelManager::GetInstance())
+    if (LevelManager::IsAlive())
         LevelManager::GetInstance().RemoveObserver(this);
 }
  
@@ -73,7 +73,7 @@ void UIComponent::OnNotify(dae::Event event, dae::GameObject*)
     }
     default: break;
     }
-
+             
     // Extra life every 20,000 points
     while (m_Score >= m_NextLifeScore)
     {

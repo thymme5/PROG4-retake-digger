@@ -9,8 +9,8 @@ class Subject;
 class LevelManager final : public dae::Singleton<LevelManager>, public dae::Subject
 {
 public:
-    LevelManager() = default;
-    ~LevelManager() override = default;
+    LevelManager();
+    ~LevelManager() override;
 
     void Initialize();
     void LoadLevel(int index);
@@ -18,6 +18,7 @@ public:
 
     int GetCurrentLevelIndex() const { return m_CurrentLevelIndex; };
 
+    static bool IsAlive();
 private:
     int m_CurrentLevelIndex = 1;
     int m_TotalLevels = 3;
