@@ -124,14 +124,20 @@
     <Filter Include="GameMode\GameModes\MainMenu\MainMenuUIComponent">
       <UniqueIdentifier>{9e1285e9-c5cf-4d6b-89a5-c8048d51b608}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameMode\GameModes\MainMenu\Commands">
-      <UniqueIdentifier>{ecda75df-a0fa-4a98-9512-2926d940a715}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameMode\GameModes\MainMenu\MainMenu">
       <UniqueIdentifier>{d3406167-3063-4e4c-9832-2d6daf88279c}</UniqueIdentifier>
     </Filter>
     <Filter Include="LevelManager">
       <UniqueIdentifier>{327506c9-99b5-42d6-88a1-525d30f5f9a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModes\Commands">
+      <UniqueIdentifier>{ecda75df-a0fa-4a98-9512-2926d940a715}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\GameModes\HighScoreMenu">
+      <UniqueIdentifier>{163622e7-beaf-4186-af1b-414a0703f902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HighScoreManager">
+      <UniqueIdentifier>{1dff06e5-c3fa-4aed-8268-392334129390}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +212,12 @@
     </ClCompile>
     <ClCompile Include="LevelManager.cpp">
       <Filter>LevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreMenu.cpp">
+      <Filter>GameMode\GameModes\HighScoreMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreManager.cpp">
+      <Filter>HighScoreManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -294,13 +306,25 @@
       <Filter>GameMode\GameModes\MainMenu\MainMenuUIComponent</Filter>
     </ClInclude>
     <ClInclude Include="MoveMenuArrow.h">
-      <Filter>GameMode\GameModes\MainMenu\Commands</Filter>
+      <Filter>GameMode\GameModes\Commands</Filter>
     </ClInclude>
     <ClInclude Include="EnterGameMode.h">
-      <Filter>GameMode\GameModes\MainMenu\Commands</Filter>
+      <Filter>GameMode\GameModes\Commands</Filter>
     </ClInclude>
     <ClInclude Include="LevelManager.h">
       <Filter>LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScoreMenu.h">
+      <Filter>GameMode\GameModes\HighScoreMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScoreManager.h">
+      <Filter>HighScoreManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BackToMenuCommand.h">
+      <Filter>GameMode\GameModes\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="FinishRoundCommand.h">
+      <Filter>GameMode\GameModes\Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

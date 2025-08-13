@@ -6,29 +6,22 @@
 #endif
 #include <iostream>
 
-//engine files
+// Engine files
 #include "Minigin.h"
-#include "Scene.h"
 #include "InputManager.h"
 
-#include "SoundService.h"
-#include "ResourceManager.h"
-#include "LevelBuilder.h"
-#include "DiggerSceneBuilder.h"
-#include <filesystem>
-#include <sstream>
-
+// Game files
 #include "GameModeManager.h"
 #include "MainMenu.h"
+#include "DiggerSoundLibrary.h"
+
+// STD library files
+#include <filesystem>v
 
 void load()
 {
-   
-
-    //DiggerSceneBuilder::CreateSinglePlayerScene(dae::SceneManager::GetInstance().CreateScene("mainscene"), levelPath.string());
-
 	GameModeManager::GetInstance().SetMode(std::make_unique<MainMenu>());
-
+    DiggerSoundLibrary::LoadAllSounds();
 }
 
 int main(int, char* argv[])

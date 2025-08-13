@@ -2,6 +2,7 @@
 #include "Command.h"
 #include "MainMenuUIComponent.h"
 #include "GameModeManager.h"
+#include "HighScoreMenu.h"
 
 #include "SinglePlayerMode.h"
 #include "CoopMode.h"
@@ -39,7 +40,7 @@ public:
             GameModeManager::GetInstance().SetMode(std::make_unique<VersusMode>(1));
             break;
         case 3:
-            //GameModeManager::GetInstance().SetMode(std::make_unique<HighScoreMenu>());
+            GameModeManager::GetInstance().SetMode(std::make_unique<HighScoreMenu>());
             break;
         case 4:
             GameModeManager::GetInstance().SetMode(std::make_unique<MainMenu>());

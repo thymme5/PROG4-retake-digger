@@ -11,9 +11,6 @@ void DeadState::Enter(PlayerComponent& player)
     m_DeathTimer = 0.f;
     m_PulseTimer = 0.f;
     m_IsVisible = true;
-
-    if (auto* tex = player.GetOwner()->GetComponent<dae::TextureComponent>())
-        tex->SetVisible(true);
 }
 
 void DeadState::Update(PlayerComponent& player)

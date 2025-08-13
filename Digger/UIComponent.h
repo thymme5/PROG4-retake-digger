@@ -3,8 +3,8 @@
 #include <vector>
 #include <string>
 #include "Component.h"
-#include "Observer.h"   // Event enum + Observer base
-
+#include "Observer.h"
+#include "LevelManager.h"
 namespace dae { class SubjectComponent; class TextComponent; class GameObject; }
 
 class UIComponent final : public dae::Component, public dae::Observer

@@ -4,6 +4,7 @@
 #include "SinglePlayerMode.h"
 #include "CoopMode.h"
 #include "VersusMode.h"
+
 #include <iostream>
 
 void LevelManager::Initialize()
@@ -15,6 +16,7 @@ void LevelManager::Initialize()
 void LevelManager::LoadLevel(int index)
 {
     std::cout << "[LevelManager] Loading level " << index << "\n";
+	Notify(dae::Event::LevelCompleted, nullptr);
     ResetLevelState();
 
     auto* currentMode = GameModeManager::GetInstance().GetCurrentGameMode();
@@ -40,16 +42,9 @@ void LevelManager::LoadNextLevel()
         LoadLevel(m_CurrentLevelIndex);
     }
     else
-    {
-        std::cout << "[LevelManager] All levels completed!\n";
-    }
-}
-
-void LevelManager::OnNotify(dae::Event event, dae::GameObject* source)
-{
-    if (event == dae::Event::LevelCompleted)
-    {
-        HandleLevelCompleted(source);
+	{		
+        Notify(dae::Event::GameCompleted, nullptr);
+        GameModeManager::GetInstance().SetMode(std::unique_ptr<MainMenu>());
     }
 }
 

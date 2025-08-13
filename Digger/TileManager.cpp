@@ -163,7 +163,6 @@ void TileManager::OnNotify(dae::Event e, dae::GameObject* go)
         std::cout << "[TileManager] Event: EnemyKilled\n";
         break;
     default:
-        std::cout << "[TileManager] Event: Unknown\n";
         break;
     }
     CheckLevelCompletion(go);

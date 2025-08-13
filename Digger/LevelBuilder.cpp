@@ -54,7 +54,9 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
     hudGO->AddComponent<dae::TextComponent>(*hudGO, "SCORE 000000  LIVES 4\nLEVEL 1", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
 
     auto* ui = hudGO->AddComponent<UIComponent>(*hudGO);
+
     scene.Add(hudGO);
+    LevelManager::GetInstance().AddObserver(ui);
 
     // === TILE GRID ===
     for (int row = 0; row < height; ++row)
@@ -178,7 +180,6 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
             playerSubj->AddObserver(&TileManager::GetInstance());
         }
     }
-
 
     // === ENEMIES ===
     if (levelJson.contains("enemies") && levelJson["enemies"].is_array())

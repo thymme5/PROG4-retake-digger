@@ -7,7 +7,6 @@
 #include "SubjectComponent.h"
 #include <SDL.h>
 #include "TextureComponent.h"
-#include "InputManager.h"
 #include "MoveCommand.h"
 #include "FireballCommand.h"
 

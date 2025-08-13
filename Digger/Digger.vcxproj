@@ -151,6 +151,8 @@
     <ClCompile Include="GameModeManager.cpp" />
     <ClCompile Include="GoldBagComponent.cpp" />
     <ClCompile Include="GoldBagStates.cpp" />
+    <ClCompile Include="HighScoreManager.cpp" />
+    <ClCompile Include="HighScoreMenu.cpp" />
     <ClCompile Include="HobbinState.cpp" />
     <ClCompile Include="LevelBuilder.cpp" />
     <ClCompile Include="LevelManager.cpp" />
@@ -167,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AliveState.h" />
+    <ClInclude Include="BackToMenuCommand.h" />
     <ClInclude Include="CoopMode.h" />
     <ClInclude Include="DeadState.h" />
     <ClInclude Include="DiggerSceneBuilder.h" />
@@ -175,12 +178,15 @@
     <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="EnemyState.h" />
     <ClInclude Include="EnterGameMode.h" />
+    <ClInclude Include="FinishRoundCommand.h" />
     <ClInclude Include="FireballCommand.h" />
     <ClInclude Include="FireballComponent.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="GameModeManager.h" />
     <ClInclude Include="GoldBagComponent.h" />
     <ClInclude Include="GoldBagStates.h" />
+    <ClInclude Include="HighScoreManager.h" />
+    <ClInclude Include="HighScoreMenu.h" />
     <ClInclude Include="HobbinState.h" />
     <ClInclude Include="InteractableComponent.h" />
     <ClInclude Include="LevelBuilder.h" />

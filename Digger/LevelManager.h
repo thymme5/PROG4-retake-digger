@@ -1,9 +1,12 @@
 #pragma once
 #include "Singleton.h"
-#include "Observer.h"
 #include "GameObject.h"
+#include "MainMenu.h"
+#include "Subject.h"
 
-class LevelManager final : public dae::Observer, public dae::Singleton<LevelManager>
+class Subject;
+
+class LevelManager final : public dae::Singleton<LevelManager>, public dae::Subject
 {
 public:
     LevelManager() = default;
@@ -13,7 +16,7 @@ public:
     void LoadLevel(int index);
     void LoadNextLevel();
 
-    void OnNotify(dae::Event event, dae::GameObject* source) override;
+    int GetCurrentLevelIndex() const { return m_CurrentLevelIndex; };
 
 private:
     int m_CurrentLevelIndex = 1;

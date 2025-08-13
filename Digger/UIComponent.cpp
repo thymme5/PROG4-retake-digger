@@ -1,9 +1,9 @@
-
-// UIComponent.cpp
 #include "UIComponent.h"
 #include "SubjectComponent.h"
 #include "GameObject.h"
 #include "TextComponent.h"
+#include "HighScoreManager.h"
+
 #include <cstdio>
 
 UIComponent::UIComponent(dae::GameObject& owner)
@@ -50,7 +50,7 @@ void UIComponent::Observe(dae::SubjectComponent& subject)
 
 void UIComponent::StopObservingAll()
 {
-   
+    LevelManager::GetInstance().RemoveObserver(this);
 }
  
 void UIComponent::OnNotify(dae::Event event, dae::GameObject*)
@@ -61,8 +61,15 @@ void UIComponent::OnNotify(dae::Event event, dae::GameObject*)
 	case dae::Event::PlayerCollected8Emeralds:  m_Score += 250; std::cout << "[DEBUG] Collected 8 emeralds: +250 points \n"; break;
     case dae::Event::GoldCollected:             m_Score += 500; std::cout << "[DEBUG] Gold collected: +500 points \n"; break;
     case dae::Event::PlayerDied:                --m_Lives; if (m_Lives < 0) m_Lives = 0; break;
-    case dae::Event::LevelCompleted:            ++m_Level; break;
+    case dae::Event::LevelCompleted:            m_Level = LevelManager::GetInstance().GetCurrentLevelIndex(); break;
 	case dae::Event::EnemyKilled:               m_Score += 250; std::cout << "[DEBUG] Enemy killed: +250 points \n"; break;
+	case dae::Event::GameCompleted:  
+    {
+        HighscoreEntry entry{ "aaa", m_Score };
+        HighscoreManager::GetInstance().AddHighscore(entry);
+        std::cout << "[DEBUG] Game completed, score saved.\n";
+        break;
+    }
     default: break;
     }
 
