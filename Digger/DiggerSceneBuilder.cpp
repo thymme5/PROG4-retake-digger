@@ -149,6 +149,12 @@ void DiggerSceneBuilder::CreateSinglePlayerScene(dae::Scene& scene, const std::s
 	CreateBaseDiggerScene(scene, levelPath);
 }
 
+void DiggerSceneBuilder::CreateCoopScene(dae::Scene& scene, const std::string& levelPath)
+{
+    CreateBaseDiggerScene(scene, levelPath);
+}
+
+
 void DiggerSceneBuilder::CreateDebugScene(dae::Scene& scene)
 {
     constexpr int TILE_SIZE = 48;

@@ -13,14 +13,30 @@
 void AliveState::Enter(PlayerComponent& player)
 {
     auto& input = dae::InputManager::GetInstance();
+    int playerID = player.GetPlayerID();
 
-    // WASD or arrow keys
-    input.BindCommand(SDLK_UP, KeyState::Down, std::make_shared<MoveCommand>(player, -1, 0));
-    input.BindCommand(SDLK_DOWN, KeyState::Down, std::make_shared<MoveCommand>(player, 1, 0));
-    input.BindCommand(SDLK_LEFT, KeyState::Down, std::make_shared<MoveCommand>(player, 0, -1));
-    input.BindCommand(SDLK_RIGHT, KeyState::Down, std::make_shared<MoveCommand>(player, 0, 1));
+    if (playerID == 0)
+    {
+		std::cout << "[AliveState] Player 1 controls initialized.\n";
 
-	input.BindCommand(SDLK_SPACE, KeyState::Down, std::make_shared<FireballCommand>(player));
+        // Keyboard controls for Player 1
+        input.BindCommand(SDLK_UP, KeyState::Down, std::make_shared<MoveCommand>(player, -1, 0));
+        input.BindCommand(SDLK_DOWN, KeyState::Down, std::make_shared<MoveCommand>(player, 1, 0));
+        input.BindCommand(SDLK_LEFT, KeyState::Down, std::make_shared<MoveCommand>(player, 0, -1));
+        input.BindCommand(SDLK_RIGHT, KeyState::Down, std::make_shared<MoveCommand>(player, 0, 1));
+        input.BindCommand(SDLK_SPACE, KeyState::Down, std::make_shared<FireballCommand>(player));
+    }
+    else if (playerID == 1)
+    {
+        std::cout << "[AliveState] Player 2 controls initialized.\n";
+
+        // Controller controls for Player 2
+        input.BindCommand(0, GamepadButton::DPadUp, KeyState::Down, std::make_shared<MoveCommand>(player, -1, 0));
+        input.BindCommand(0, GamepadButton::DPadDown, KeyState::Down, std::make_shared<MoveCommand>(player, 1, 0));
+        input.BindCommand(0, GamepadButton::DPadLeft, KeyState::Down, std::make_shared<MoveCommand>(player, 0, -1));
+        input.BindCommand(0, GamepadButton::DPadRight, KeyState::Down, std::make_shared<MoveCommand>(player, 0, 1));
+        input.BindCommand(0, GamepadButton::A, KeyState::Down, std::make_shared<FireballCommand>(player));
+    }
 }
 
 

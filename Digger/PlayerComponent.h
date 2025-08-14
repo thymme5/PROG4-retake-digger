@@ -43,6 +43,10 @@ public:
     // death logic
     void MarkAsDead();
     bool IsInDeadState() const;
+
+    // Set playerID is automatically handled in the constructor
+    void SetPlayerID(int id) { m_PlayerID = id; }
+    int GetPlayerID() const { return m_PlayerID; }
 private:
 
     int m_Row{};
@@ -75,4 +79,7 @@ private:
     // Emeralds logic
     int m_EmeraldStreak = 0;
     const int m_EmeraldStreakGoal = 8;
+
+    // For multiplayer
+	int m_PlayerID{ 0 };
 };

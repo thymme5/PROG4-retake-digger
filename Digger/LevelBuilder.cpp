@@ -1,20 +1,9 @@
+#pragma once
 #include "LevelBuilder.h"
-#include "TextureComponent.h"
-#include "Scene.h"
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <TextComponent.h>
-#include "TileComponent.h"
-#include "TileManager.h"
-#include "SubjectComponent.h"
-#include "PlayerComponent.h"
-#include "AliveState.h"
-#include "EmeraldComponent.h"
-#include "GoldBagComponent.h"
-#include "UIComponent.h"
-#include "NobbinState.h"
-#include "EnemyComponent.h"
 
 using json = nlohmann::json;
 
@@ -160,26 +149,8 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
     }
 
     // === PLAYER SPAWN ===
-    if (levelJson.contains("playerSpawns") && !levelJson["playerSpawns"].empty())
-    {
-        int col = levelJson["playerSpawns"][0][0];
-        int row = levelJson["playerSpawns"][0][1];
-
-        auto playerGO = std::make_shared<dae::GameObject>();
-        playerGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
-        playerGO->AddComponent<dae::TextureComponent>(*playerGO, "digger.png", 1.f, 0);
-		playerGO->AddComponent<dae::SubjectComponent>(*playerGO);
-        playerGO->AddComponent<PlayerComponent>(*playerGO, row, col)->SetState(std::make_unique<AliveState>());
-
-        scene.Add(playerGO);
-
-        // === attach HUD & TileManager to player ===
-        if (auto* playerSubj = playerGO->GetComponent<dae::SubjectComponent>())
-        {
-            ui->Observe(*playerSubj);
-            playerSubj->AddObserver(&TileManager::GetInstance());
-        }
-    }
+    const auto playerSpawns = levelJson.value("playerSpawns", std::vector<std::vector<int>>{});
+    SpawnPlayers(playerSpawns, scene, ui);
 
     // === ENEMIES ===
     if (levelJson.contains("enemies") && levelJson["enemies"].is_array())
@@ -205,4 +176,33 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
     }
 
 
+}
+
+void LevelBuilder::SpawnPlayers(const std::vector<std::vector<int>>& spawns, dae::Scene& scene, UIComponent* ui)
+{
+    for (size_t i = 0; i < spawns.size(); ++i)
+    {
+        std::cout << "[SpawnPlayers] Spawning " << spawns.size() << " players\n";
+
+
+        int col = spawns[i][0];
+        int row = spawns[i][1];
+
+        auto playerGO = std::make_shared<dae::GameObject>();
+        playerGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+
+        std::string texture = (i == 0) ? "digger.png" : "digger2.png";
+        playerGO->AddComponent<dae::TextureComponent>(*playerGO, texture, 1.f, 0);
+        playerGO->AddComponent<dae::SubjectComponent>(*playerGO);
+        auto* playerComp = playerGO->AddComponent<PlayerComponent>(*playerGO, row, col);
+        playerComp->SetState(std::make_unique<AliveState>());
+
+        scene.Add(playerGO);
+
+        if (auto* playerSubj = playerGO->GetComponent<dae::SubjectComponent>())
+        {
+            ui->Observe(*playerSubj);
+            playerSubj->AddObserver(&TileManager::GetInstance());
+        }
+    }
 }

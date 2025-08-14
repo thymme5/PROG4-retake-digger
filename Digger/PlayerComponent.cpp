@@ -24,6 +24,12 @@ PlayerComponent::PlayerComponent(dae::GameObject& owner, int startRow, int start
 	: Component(owner), m_Row{ startRow }, m_Col{ startCol }, m_SpawnCol{ startCol }, m_SpawnRow{ startRow }
 {
     owner.SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+    
+    // Assign ID based on size of PlayerList 
+    m_PlayerID = static_cast<int>(PlayerList().size());
+
+	std::cout << "[PlayerComponent] Player ID set to " << m_PlayerID << '\n';
+
     PlayerList().push_back(this);
 
     DigCurrentTile(); // Dig starting tile 
