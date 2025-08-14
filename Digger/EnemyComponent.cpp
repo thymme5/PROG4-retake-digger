@@ -38,17 +38,20 @@ EnemyComponent::~EnemyComponent()
 void EnemyComponent::Update()
 { 
     //TODO: should this be an event?
-    for (auto* player : PlayerComponent::GetAllPlayers())
+    if (!m_IsPlayerControlled)
     {
-        if (player->IsPositionDirty())
+        for (auto* player : PlayerComponent::GetAllPlayers())
         {
-            auto [row, col] = player->GetTilePosition();
-            SetTarget(row, col);
-            player->ClearDirtyFlag();
-        }
-        if (GetTilePosition() == player->GetTilePosition() && !player->IsInDeadState())
-        {
-            player->MarkAsDead(); 
+            if (player->IsPositionDirty())
+            {
+                auto [row, col] = player->GetTilePosition();
+                SetTarget(row, col);
+                player->ClearDirtyFlag();
+            }
+            if (GetTilePosition() == player->GetTilePosition() && !player->IsInDeadState())
+            {
+                player->MarkAsDead();
+            }
         }
     }
 
@@ -98,7 +101,7 @@ void EnemyComponent::SetTile(int row, int col)
 void EnemyComponent::MoveBy(int dr, int dc)
 {
     if (m_IsMoving) return;
-
+    
     const int newRow = m_Row + dr;
     const int newCol = m_Col + dc;
 
@@ -116,10 +119,12 @@ void EnemyComponent::MoveBy(int dr, int dc)
     {
         return;
     }
+    std::cout << "[MoveBy] Enemy address: " << this << std::endl;
 
     m_LastDr = dr;
     m_LastDc = dc;
-
+	std::cout << "[EnemyComponent] moving to << " << newRow << ", " << newCol << std::endl;
+   
     m_TargetRow = newRow;
     m_TargetCol = newCol;
     m_MoveDirection = glm::vec2{
