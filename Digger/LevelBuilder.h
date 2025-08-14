@@ -28,5 +28,6 @@ class LevelBuilder final
 public:
 	static void LoadLevelFromFile(const std::string& path, dae::Scene& scene);
 private:
-	static void SpawnPlayers(const std::vector<std::vector<int>>& spawns, dae::Scene& scene, UIComponent* ui);
+	static void SpawnPlayers(const std::vector<std::vector<int>>& spawns, dae::Scene& scene, UIComponent* ui, const std::string& mode);
+
 };

@@ -20,7 +20,7 @@ public:
 	// game modes
 	static void CreateSinglePlayerScene(dae::Scene& scene, const std::string& levelPath);
 	static void CreateCoopScene(dae::Scene& scene, const std::string& levelPath);
-	static void CreateVersusScene();
+	static void CreateVersusScene(dae::Scene& scene, const std::string& levelPath);
 
 
 	static void CreateDebugScene(dae::Scene& scene);

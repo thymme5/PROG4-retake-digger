@@ -5,6 +5,9 @@
 #include "GameObject.h"
 #include "NobbinState.h" 
 #include "PlayerComponent.h"
+#include "NobbinControlState.h"
+
+constexpr int TILE_SIZE = 48;
 
 // --- tiny registry of all enemies ---
 static std::vector<EnemyComponent*>& EnemyList() {
@@ -12,15 +15,19 @@ static std::vector<EnemyComponent*>& EnemyList() {
     return s;
 }
 
-EnemyComponent::EnemyComponent(dae::GameObject& owner, int startRow, int startCol)
-    : Component(owner), m_Row(startRow), m_Col(startCol)
+EnemyComponent::EnemyComponent(dae::GameObject& owner, int startRow, int startCol, bool isPlayerControlled)
+    : Component(owner), m_Row(startRow), m_Col(startCol), m_IsPlayerControlled(isPlayerControlled)
 {
-    // first state is always nobbin
-    // (this kept confusing me)
     EnemyList().push_back(this);
-    SetState(std::make_unique<NobbinState>());
+
+    if (m_IsPlayerControlled)
+        SetState(std::make_unique<NobbinControlState>());
+    else
+        SetState(std::make_unique<NobbinState>());
+
     TileManager::GetInstance().RegisterEnemy(m_Row, m_Col, GetOwner());
 }
+
 
 EnemyComponent::~EnemyComponent()
 {
@@ -45,6 +52,32 @@ void EnemyComponent::Update()
         }
     }
 
+    // Movement interpolation
+    if (m_IsMoving)
+    {
+        glm::vec2 currentPos = GetOwner()->GetWorldPosition();
+        glm::vec2 targetPos = { m_TargetCol * TILE_SIZE, m_TargetRow * TILE_SIZE };
+        glm::vec2 newPos = currentPos + m_MoveDirection;
+
+        bool reached = false;
+        if (m_MoveDirection.x > 0.f && newPos.x >= targetPos.x) reached = true;
+        else if (m_MoveDirection.x < 0.f && newPos.x <= targetPos.x) reached = true;
+        else if (m_MoveDirection.y > 0.f && newPos.y >= targetPos.y) reached = true;
+        else if (m_MoveDirection.y < 0.f && newPos.y <= targetPos.y) reached = true;
+
+        if (reached)
+        {
+            GetOwner()->SetLocalPosition(targetPos.x, targetPos.y);
+            m_Row = m_TargetRow;
+            m_Col = m_TargetCol;
+            m_IsMoving = false;
+            SetTile(m_Row, m_Col);
+        }
+        else
+        {
+            GetOwner()->SetLocalPosition(newPos.x, newPos.y);
+        }
+    }
     if (m_pCurrentState)
         m_pCurrentState->Update(*this);
 }
@@ -64,9 +97,36 @@ void EnemyComponent::SetTile(int row, int col)
 
 void EnemyComponent::MoveBy(int dr, int dc)
 {
+    if (m_IsMoving) return;
+
+    const int newRow = m_Row + dr;
+    const int newCol = m_Col + dc;
+
+    auto& tileManager = TileManager::GetInstance();
+    if (newRow < 0 || newRow >= tileManager.GetHeight() ||
+        newCol < 0 || newCol >= tileManager.GetWidth())
+    {
+        std::cerr << "[EnemyComponent] Invalid move: (" << newRow << ", " << newCol << ") out of bounds." << std::endl;
+        return;
+    }
+    auto tile = tileManager.GetTile(newRow, newCol);
+    if (!tile) return;
+
+    if (m_IsPlayerControlled && !tile->IsDug())
+    {
+        return;
+    }
+
     m_LastDr = dr;
     m_LastDc = dc;
-    SetTile(m_Row + dr, m_Col + dc);
+
+    m_TargetRow = newRow;
+    m_TargetCol = newCol;
+    m_MoveDirection = glm::vec2{
+        static_cast<float>(dc) * m_MoveSpeedPerFrame,
+        static_cast<float>(dr) * m_MoveSpeedPerFrame
+    };
+    m_IsMoving = true;
 }
 
 void EnemyComponent::SetTarget(int row, int col) 

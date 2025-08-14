@@ -9,12 +9,14 @@
 #include "TextureComponent.h"
 #include "MoveCommand.h"
 #include "FireballCommand.h"
+#include "GameModeManager.h"
+#include "SinglePlayerMode.h"
 void AliveState::Enter(PlayerComponent& player)
 {
     auto& input = dae::InputManager::GetInstance();
     int playerID = player.GetPlayerID();
 
-    const bool isSolo = PlayerComponent::GetAllPlayers().size() == 1;
+    const bool isSolo = dynamic_cast<SinglePlayerMode*>(GameModeManager::GetInstance().GetCurrentGameMode()) != nullptr;
 
     if (playerID == 0)
     {

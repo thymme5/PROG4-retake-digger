@@ -3,14 +3,15 @@
 #include <memory>
 #include <utility> 
 #include "SubjectComponent.h"
+#include <glm/vec2.hpp>
 
 class EnemyState; 
 
 class EnemyComponent final : public dae::Component
 {
 public:
-    EnemyComponent(dae::GameObject& owner, int startRow, int startCol);
-    ~EnemyComponent() override ;
+    EnemyComponent(dae::GameObject& owner, int startRow, int startCol, bool isPlayerControlled = false);
+    ~EnemyComponent() override;
 
     void Update() override;
     void Render() const override {}
@@ -35,16 +36,27 @@ public:
 
     // slow down movement
     bool ShouldStepThisFrame(int framesPerStep);
+
+    // Player controlled
+    void SetPlayerControlled(bool controlled) { m_IsPlayerControlled = controlled; }
+    bool IsPlayerControlled() const { return m_IsPlayerControlled; }
+
 private:
     int m_Row{};
     int m_Col{};
-    int m_TargetRow{};
-    int m_TargetCol{};
 
     int m_FrameCounter{ 0 };
 
     std::unique_ptr<EnemyState> m_pCurrentState;
 
-	int m_LastDr{ 0 }; // last direction moved in row
-	int m_LastDc{ 0 }; // last direction moved in col
+    int m_LastDr{ 0 }; // last direction moved in row
+    int m_LastDc{ 0 }; // last direction moved in col
+
+    bool m_IsPlayerControlled{ false };
+
+    // Movement variables
+    int m_TargetRow{}, m_TargetCol{};
+    glm::vec2 m_MoveDirection{ 0.f, 0.f };
+    bool m_IsMoving{ false };
+    float m_MoveSpeedPerFrame{ 0.10f };
 };

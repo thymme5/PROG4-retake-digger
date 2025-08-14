@@ -139,6 +139,9 @@
     <Filter Include="HighScoreManager">
       <UniqueIdentifier>{1dff06e5-c3fa-4aed-8268-392334129390}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy\EnemyStates\NobbinControlState">
+      <UniqueIdentifier>{e600a1e4-4e6e-4473-a8f7-7cc9a04dd05b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -218,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="HighScoreManager.cpp">
       <Filter>HighScoreManager</Filter>
+    </ClCompile>
+    <ClCompile Include="NobbinControlState.cpp">
+      <Filter>Enemy\EnemyStates\NobbinControlState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +331,12 @@
     </ClInclude>
     <ClInclude Include="FinishRoundCommand.h">
       <Filter>GameMode\GameModes\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="NobbinControlState.h">
+      <Filter>Enemy\EnemyStates\NobbinControlState</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveEnemyCommand.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@ void SinglePlayerMode::Enter()
     std::filesystem::path levelPath = rm.GetDataPath() / "levels" / ss.str();
 
     if (!std::filesystem::exists(levelPath)) {
-        std::cerr << "Failed to open level file: " << levelPath.string() << "\n";
+        std::cerr << "[SinglePlayerMode] Failed to open level file: " << levelPath.string() << "\n";
         return;
     }
 

@@ -3,7 +3,7 @@
 #include "EnemyComponent.h"
 #include "Timer.h"
 
-//FIRST STATE
+// FIRST STATE
 class HobbinState;
 
 void NobbinState::Enter(EnemyComponent& /*enemy*/)

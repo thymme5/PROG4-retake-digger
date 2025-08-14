@@ -60,12 +60,12 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
     auto& inputManager = dae::InputManager::GetInstance();
 
     auto moveArrowUp = std::make_shared<MoveMenuArrow>(UIcomponent, -1.f);
-    inputManager.BindCommand(SDLK_UP, KeyState::Held, moveArrowUp);
-    inputManager.BindCommand(0, GamepadButton::DPadUp, KeyState::Held, moveArrowUp);
+    inputManager.BindCommand(SDLK_UP, KeyState::Pressed, moveArrowUp);
+    inputManager.BindCommand(0, GamepadButton::DPadUp, KeyState::Pressed, moveArrowUp);
 
     auto moveArrowDown = std::make_shared<MoveMenuArrow>(UIcomponent, 1.f);
-    inputManager.BindCommand(SDLK_DOWN, KeyState::Held, moveArrowDown);
-    inputManager.BindCommand(0, GamepadButton::DPadDown, KeyState::Held, moveArrowDown);
+    inputManager.BindCommand(SDLK_DOWN, KeyState::Pressed, moveArrowDown);
+    inputManager.BindCommand(0, GamepadButton::DPadDown, KeyState::Pressed, moveArrowDown);
 
     auto confirmCommand = std::make_shared<EnterGameMode>(UIcomponent);
     inputManager.BindCommand(SDLK_RETURN, KeyState::Pressed, confirmCommand);
@@ -142,6 +142,10 @@ void DiggerSceneBuilder::CreateSinglePlayerScene(dae::Scene& scene, const std::s
 }
 
 void DiggerSceneBuilder::CreateCoopScene(dae::Scene& scene, const std::string& levelPath)
+{
+    CreateBaseDiggerScene(scene, levelPath);
+}
+void DiggerSceneBuilder::CreateVersusScene(dae::Scene& scene, const std::string& levelPath)
 {
     CreateBaseDiggerScene(scene, levelPath);
 }

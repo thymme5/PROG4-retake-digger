@@ -159,6 +159,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainMenuUIComponent.cpp" />
+    <ClCompile Include="NobbinControlState.cpp" />
     <ClCompile Include="NobbinState.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="SinglePlayerMode.cpp" />
@@ -194,7 +195,9 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MainMenuUIComponent.h" />
     <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="MoveEnemyCommand.h" />
     <ClInclude Include="MoveMenuArrow.h" />
+    <ClInclude Include="NobbinControlState.h" />
     <ClInclude Include="NobbinState.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerState.h" />
