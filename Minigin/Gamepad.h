@@ -27,10 +27,17 @@ namespace dae
     {
     public:
         explicit Gamepad(int index);
+
         void Update();
-        bool IsButtonDown(WORD button) const;
-        bool IsButtonUp(WORD button) const;
-        bool IsButtonPressed(WORD button) const;
+
+        // Returns true only on the frame the button was first pressed
+        bool IsButtonJustPressed(WORD button) const;
+
+        // Returns true as long as the button is held down
+        bool IsButtonHeld(WORD button) const;
+
+        // Returns true only on the frame the button was released
+        bool IsButtonJustReleased(WORD button) const;
 
     private:
         int m_Index;

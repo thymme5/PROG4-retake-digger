@@ -39,7 +39,6 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
         float x = (windowWidth - width) / 2.0f;
         float y = baseY + i * spacing;
 
-
         optionGO->SetLocalPosition(x, y);
         scene.Add(optionGO);
 
@@ -54,8 +53,6 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
     arrowGO->AddComponent<dae::TextureComponent>(*arrowGO, "Selection Arrow.png", 2.f);
     arrowGO->SetLocalPosition(arrowX, arrowY);
 
-    const auto& arrowWorldPos = arrowGO->GetTransform().GetWorldPosition();
-
     UIcomponent->SetArrow(arrowGO);
     scene.Add(arrowGO);
 
@@ -63,16 +60,16 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
     auto& inputManager = dae::InputManager::GetInstance();
 
     auto moveArrowUp = std::make_shared<MoveMenuArrow>(UIcomponent, -1.f);
-    inputManager.BindCommand(SDLK_UP, KeyState::Down, moveArrowUp);
-    inputManager.BindCommand(0, GamepadButton::DPadUp, KeyState::Down, moveArrowUp);
+    inputManager.BindCommand(SDLK_UP, KeyState::Held, moveArrowUp);
+    inputManager.BindCommand(0, GamepadButton::DPadUp, KeyState::Held, moveArrowUp);
 
     auto moveArrowDown = std::make_shared<MoveMenuArrow>(UIcomponent, 1.f);
-    inputManager.BindCommand(SDLK_DOWN, KeyState::Down, moveArrowDown);
-    inputManager.BindCommand(0, GamepadButton::DPadDown, KeyState::Down, moveArrowDown);
+    inputManager.BindCommand(SDLK_DOWN, KeyState::Held, moveArrowDown);
+    inputManager.BindCommand(0, GamepadButton::DPadDown, KeyState::Held, moveArrowDown);
 
     auto confirmCommand = std::make_shared<EnterGameMode>(UIcomponent);
-    inputManager.BindCommand(SDLK_RETURN, KeyState::Down, confirmCommand);
-    inputManager.BindCommand(0, GamepadButton::A, KeyState::Down, confirmCommand);
+    inputManager.BindCommand(SDLK_RETURN, KeyState::Pressed, confirmCommand);
+    inputManager.BindCommand(0, GamepadButton::A, KeyState::Pressed, confirmCommand);
 }
 
 
@@ -90,8 +87,7 @@ void DiggerSceneBuilder::BuildHighScoreScene(dae::Scene& scene)
     titleGO->SetLocalPosition(x, 100.f);
     scene.Add(titleGO);
 
-
-    // === load and display scores ===
+    // === Scores ===
     HighscoreManager::GetInstance().LoadHighscores();
     const auto& scores = HighscoreManager::GetInstance().GetHighscores();
     const float baseY = 180.0f;
@@ -114,8 +110,7 @@ void DiggerSceneBuilder::BuildHighScoreScene(dae::Scene& scene)
         scene.Add(scoreGO);
     }
 
-    // === Hint text ===
-
+    // === Hint ===
     auto hintGO = std::make_shared<dae::GameObject>();
     auto* hintText = hintGO->AddComponent<dae::TextComponent>(*hintGO, "ESC OR B TO GO BACK", smallFont);
     hintText->Update();
@@ -124,24 +119,21 @@ void DiggerSceneBuilder::BuildHighScoreScene(dae::Scene& scene)
     hintGO->SetLocalPosition(x, 400.f);
     scene.Add(hintGO);
 
-
     // === Input ===
     auto& input = dae::InputManager::GetInstance();
     auto confirmCmd = std::make_shared<BackToMenuCommand>();
-    input.BindCommand(SDLK_ESCAPE, KeyState::Down, confirmCmd);
-    input.BindCommand(0, GamepadButton::B, KeyState::Down, confirmCmd);
+    input.BindCommand(SDLK_ESCAPE, KeyState::Pressed, confirmCmd);
+    input.BindCommand(0, GamepadButton::B, KeyState::Pressed, confirmCmd);
 }
 
 void DiggerSceneBuilder::CreateBaseDiggerScene(dae::Scene& scene, const std::string& levelPath)
 {
-    //input handling
     auto& inputManager = dae::InputManager::GetInstance();
-    
-    // === Skip round === 
-    auto skipRound = std::make_shared<FinishRoundCommand>();
-    inputManager.BindCommand(SDLK_F1, KeyState::Down, skipRound);
 
-	LevelBuilder::LoadLevelFromFile(levelPath, scene);
+    auto skipRound = std::make_shared<FinishRoundCommand>();
+    inputManager.BindCommand(SDLK_F1, KeyState::Pressed, skipRound);
+
+    LevelBuilder::LoadLevelFromFile(levelPath, scene);
 }
 
 void DiggerSceneBuilder::CreateSinglePlayerScene(dae::Scene& scene, const std::string& levelPath)

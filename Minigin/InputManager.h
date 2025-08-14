@@ -9,10 +9,11 @@
 
 enum class KeyState
 {
-	Down,
-	Up,
-	Pressed
+	Pressed,   // Just pressed this frame
+	Held,      // Being held down
+	Released   // Just released this frame
 };
+
 //TODO: GamepadButton is not entirely written by the rules of PIMPL, fix it
 namespace dae
 {
