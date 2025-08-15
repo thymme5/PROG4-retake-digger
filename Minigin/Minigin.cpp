@@ -10,7 +10,6 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Timer.h"
-
 #include "SoundService.h"
 #include <SDL_mixer.h>
 
@@ -105,6 +104,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 		sceneManager.Update();
 		renderer.Render();
+
+
 		sceneManager.Cleanup();
 	}
 }

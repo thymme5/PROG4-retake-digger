@@ -38,5 +38,5 @@ void SinglePlayerMode::Exit()
 
 void SinglePlayerMode::Update()
 {
-
+    LevelManager::GetInstance().ProcessQueuedLoads();
 }

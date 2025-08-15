@@ -24,9 +24,6 @@ public:
     void RegisterTile(int row, int col, dae::GameObject* tileOwner);
     TileComponent* GetTile(int row, int col) const;
     bool IsValidTile(int row, int col) const;
-    
-
-
 
     // interactable management
     void RegisterInteractable(int row, int col, dae::GameObject* interactable);

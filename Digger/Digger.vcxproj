@@ -162,6 +162,7 @@
     <ClCompile Include="NobbinControlState.cpp" />
     <ClCompile Include="NobbinState.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="SinglePlayerMode.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileManager.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="FinishRoundCommand.h" />
     <ClInclude Include="FireballCommand.h" />
     <ClInclude Include="FireballComponent.h" />
+    <ClInclude Include="GameDirectorComponent.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="GameModeManager.h" />
     <ClInclude Include="GoldBagComponent.h" />
@@ -201,6 +203,7 @@
     <ClInclude Include="NobbinState.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="SinglePlayerMode.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileManager.h" />

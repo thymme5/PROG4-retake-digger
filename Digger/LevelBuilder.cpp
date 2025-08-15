@@ -16,7 +16,8 @@
 #include "EnemyComponent.h"
 #include "NobbinControlState.h"
 #include "NobbinState.h"
-
+#include "ScoreManager.h"
+#include "GameDirectorComponent.h"
 using json = nlohmann::json;
 
 void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
@@ -46,6 +47,10 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
         return;
     }
 
+    auto directorGO = std::make_shared<dae::GameObject>();
+    directorGO->AddComponent<GameDirectorComponent>(*directorGO);
+    scene.Add(directorGO);
+
     TileManager::GetInstance().Initialize(width, height);
 
     // === UI ===
@@ -54,7 +59,6 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
     hudGO->AddComponent<dae::TextComponent>(*hudGO, "SCORE 000000  LIVES 4\nLEVEL 1", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
     auto* ui = hudGO->AddComponent<UIComponent>(*hudGO);
     scene.Add(hudGO);
-    LevelManager::GetInstance().AddObserver(ui);
 
     // === Tiles ===
     for (int row = 0; row < height; ++row)
@@ -128,7 +132,7 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
                 goldBagGO->AddComponent<dae::SubjectComponent>(*goldBagGO);
 
                 if (auto* subj = goldBagGO->GetComponent<dae::SubjectComponent>())
-                    ui->Observe(*subj);
+                    subj->AddObserver(&ScoreManager::GetInstance());
 
                 TileManager::GetInstance().RegisterInteractable(row, col, goldBagGO.get());
                 scene.Add(goldBagGO);
@@ -198,7 +202,7 @@ void LevelBuilder::SpawnPlayers(const std::vector<std::vector<int>>& spawns, dae
 
         if (auto* subj = playerGO->GetComponent<dae::SubjectComponent>())
         {
-            ui->Observe(*subj);
+            subj->AddObserver(&ScoreManager::GetInstance());
             subj->AddObserver(&TileManager::GetInstance());
         }
     }

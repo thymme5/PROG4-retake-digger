@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -136,11 +132,24 @@
     <Filter Include="GameMode\GameModes\HighScoreMenu">
       <UniqueIdentifier>{163622e7-beaf-4186-af1b-414a0703f902}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HighScoreManager">
-      <UniqueIdentifier>{1dff06e5-c3fa-4aed-8268-392334129390}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Enemy\EnemyStates\NobbinControlState">
       <UniqueIdentifier>{e600a1e4-4e6e-4473-a8f7-7cc9a04dd05b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Scores">
+      <UniqueIdentifier>{bc5ff581-ca07-4f0b-a292-dc6e1f4ed907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scores\HighScoreManager">
+      <UniqueIdentifier>{1dff06e5-c3fa-4aed-8268-392334129390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scores\ScoreManager">
+      <UniqueIdentifier>{e2f17b1a-ae20-411a-a689-7987045a57cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameDirectorComponent">
+      <UniqueIdentifier>{fcc69434-0a70-4785-ab4e-dd71abd1ee60}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -220,10 +229,13 @@
       <Filter>GameMode\GameModes\HighScoreMenu</Filter>
     </ClCompile>
     <ClCompile Include="HighScoreManager.cpp">
-      <Filter>HighScoreManager</Filter>
+      <Filter>Scores\HighScoreManager</Filter>
     </ClCompile>
     <ClCompile Include="NobbinControlState.cpp">
       <Filter>Enemy\EnemyStates\NobbinControlState</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreManager.cpp">
+      <Filter>Scores\ScoreManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -324,7 +336,7 @@
       <Filter>GameMode\GameModes\HighScoreMenu</Filter>
     </ClInclude>
     <ClInclude Include="HighScoreManager.h">
-      <Filter>HighScoreManager</Filter>
+      <Filter>Scores\HighScoreManager</Filter>
     </ClInclude>
     <ClInclude Include="BackToMenuCommand.h">
       <Filter>GameMode\GameModes\Commands</Filter>
@@ -337,6 +349,12 @@
     </ClInclude>
     <ClInclude Include="MoveEnemyCommand.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreManager.h">
+      <Filter>Scores\ScoreManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameDirectorComponent.h">
+      <Filter>GameDirectorComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -213,7 +213,7 @@ void TileManager::CheckLevelCompletion(dae::GameObject* go)
 	// If all emeralds are collected or all enemies are gone, load the next level
     if (allEmeraldsCollected || allEnemiesGone)
     {
-        LevelManager::GetInstance().LoadNextLevel();
+        LevelManager::GetInstance().QueueNextLevel();
     }
 }
 

@@ -1,13 +1,10 @@
 #include "UIComponent.h"
-#include "SubjectComponent.h"
-#include "GameObject.h"
 #include "TextComponent.h"
-#include "HighScoreManager.h"
-
-#include <cstdio>
+#include "ScoreManager.h"
+#include "LevelManager.h"
 
 UIComponent::UIComponent(dae::GameObject& owner)
-    : dae::Component(owner) 
+    : dae::Component(owner)
 {
     SetRenderLayer(RenderLayer::HUD);
     EnsureTextCached();
@@ -25,61 +22,31 @@ void UIComponent::EnsureTextCached()
 void UIComponent::Update()
 {
     EnsureTextCached();
-    if (m_Dirty)
+    if (!m_pText) return;
+
+    const int score = ScoreManager::GetInstance().Get();
+    const int lives = ScoreManager::GetInstance().GetLives();
+    int level = 1;
+    if (LevelManager::IsAlive())
+        level = LevelManager::GetInstance().GetCurrentLevelIndex();
+
+    if (score != m_Score || lives != m_Lives || level != m_Level || m_Dirty)
     {
+        m_Score = score;
+        m_Lives = lives;
+        m_Level = level;
         RefreshText();
         m_Dirty = false;
     }
+   
 }
 
 void UIComponent::RefreshText()
 {
     if (!m_pText) return;
 
-    std::string line1 = std::string("SCORE ") + std::to_string(m_Score) + "  LIVES " + std::to_string(m_Lives);
+    std::string line1 = "SCORE " + std::to_string(m_Score) + "  LIVES " + std::to_string(m_Lives);
     std::string line2 = "LEVEL " + std::to_string(m_Level);
 
     m_pText->SetText(line1 + " " + line2);
-}
-
-void UIComponent::Observe(dae::SubjectComponent& subject)
-{
-    subject.AddObserver(this);
-    m_Sources.push_back(&subject);
-}
-
-void UIComponent::StopObservingAll()
-{
-    if (LevelManager::IsAlive())
-        LevelManager::GetInstance().RemoveObserver(this);
-}
- 
-void UIComponent::OnNotify(dae::Event event, dae::GameObject*)
-{
-    switch (event)
-    {
-    case dae::Event::EmeraldCollected:          m_Score += 25; std::cout << "[UIComponent] Emerald collected: +25 points \n";  break;
-	case dae::Event::PlayerCollected8Emeralds:  m_Score += 250; std::cout << "[UIComponent] Collected 8 emeralds: +250 points \n"; break;
-    case dae::Event::GoldCollected:             m_Score += 500; std::cout << "[UIComponent] Gold collected: +500 points \n"; break;
-    case dae::Event::PlayerDied:                --m_Lives; if (m_Lives < 0) m_Lives = 0; break;
-    case dae::Event::LevelCompleted:            m_Level = LevelManager::GetInstance().GetCurrentLevelIndex(); break;
-	case dae::Event::EnemyKilled:               m_Score += 250; std::cout << "[UIComponent] Enemy killed: +250 points \n"; break;
-	case dae::Event::GameCompleted:  
-    {
-        HighscoreEntry entry{ "aaa", m_Score };
-        HighscoreManager::GetInstance().AddHighscore(entry);
-        std::cout << "[UIComponent] Game completed, score: " << entry.score << " saved.";
-        break;
-    }
-    default: break;
-    }
-             
-    // Extra life every 20,000 points
-    while (m_Score >= m_NextLifeScore)
-    {
-        ++m_Lives;
-        m_NextLifeScore += 20000;
-    }
-
-    m_Dirty = true;
 }
