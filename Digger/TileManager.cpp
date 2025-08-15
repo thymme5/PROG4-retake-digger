@@ -121,7 +121,23 @@ const std::vector<dae::GameObject*>& TileManager::GetEnemiesAt(int row, int col)
 
     return m_Enemies[row][col];
 }
+std::vector<dae::GameObject*> TileManager::GetAllEnemies() const
+{
+    std::vector<dae::GameObject*> allEnemies;
 
+    for (const auto& row : m_Enemies)
+    {
+        for (const auto& col : row)
+        {
+            for (auto* enemy : col)
+            {
+                if (enemy) allEnemies.push_back(enemy);
+            }
+        }
+    }
+
+    return allEnemies;
+}
 void TileManager::OnNotify(dae::Event e, dae::GameObject* go)
 {
     switch (e)

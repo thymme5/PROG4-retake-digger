@@ -36,6 +36,7 @@ public:
     void RegisterEnemy(int row, int col, dae::GameObject* go);
     void RemoveEnemy(int row, int col, dae::GameObject* go);
     const std::vector<dae::GameObject*>& GetEnemiesAt(int row, int col) const;
+    std::vector<dae::GameObject*> GetAllEnemies() const;
 
     //Tile map
     const std::vector<std::vector<std::shared_ptr<TileComponent>>>& GetTileMap() const { return m_TileMap; }
