@@ -15,7 +15,7 @@ namespace dae
 		void RemoveScene(const std::string& name);
 		void PopScene();
 		void MarkSceneForDeletion(const std::string& name);
-		void Cleanup();
+		void Cleanup(); // Call this method when cleanup is necessary to happen in the frame rather then after the update loop
 		void Update();
 		void Render();
 		void RenderUI();

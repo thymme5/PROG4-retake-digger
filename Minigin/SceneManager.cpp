@@ -16,6 +16,7 @@ void dae::SceneManager::Update()
 	{
 		scene->Update();
 	}
+	Cleanup();
 }
 
 void dae::SceneManager::Render()
@@ -44,6 +45,7 @@ void dae::SceneManager::MarkSceneForDeletion(const std::string& name)
 {
 	m_sceneMarkedForDeletion = name;
 }
+
 void dae::SceneManager::Cleanup()
 {
 	if (!m_sceneMarkedForDeletion.empty())

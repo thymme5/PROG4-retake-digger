@@ -36,12 +36,16 @@ PlayerComponent::PlayerComponent(dae::GameObject& owner, int startRow, int start
 }
 PlayerComponent::~PlayerComponent()
 {
+    std::cout << "[PlayerComponent] Player size before deletion: " << std::to_string(PlayerList().size()) <<  "\n";
     auto& list = PlayerList();
     auto it = std::find(list.begin(), list.end(), this);
     if (it != list.end())
     {
         list.erase(it);
     }
+    std::cout << "[PlayerComponent] Player " << m_PlayerID << " destroyed.\n";
+    std::cout << "[PlayerComponent] Player size after deletion: " << std::to_string(PlayerList().size()) << "\n";
+
 }
 
 void PlayerComponent::Update()

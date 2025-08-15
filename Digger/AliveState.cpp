@@ -5,12 +5,14 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "SubjectComponent.h"
-#include <SDL.h>
 #include "TextureComponent.h"
 #include "MoveCommand.h"
 #include "FireballCommand.h"
 #include "GameModeManager.h"
 #include "SinglePlayerMode.h"
+
+#include <SDL.h>
+
 void AliveState::Enter(PlayerComponent& player)
 {
     auto& input = dae::InputManager::GetInstance();
