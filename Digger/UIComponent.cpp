@@ -68,7 +68,7 @@ void UIComponent::OnNotify(dae::Event event, dae::GameObject*)
     {
         HighscoreEntry entry{ "aaa", m_Score };
         HighscoreManager::GetInstance().AddHighscore(entry);
-        std::cout << "[UIComponent] Game completed, score saved.\n";
+        std::cout << "[UIComponent] Game completed, score: " << entry.score << " saved.";
         break;
     }
     default: break;

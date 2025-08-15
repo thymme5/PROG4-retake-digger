@@ -21,11 +21,12 @@ public:
     void Initialize(int width, int height);
 
     // register/get tiles
-    void RegisterTile(int row, int col, std::shared_ptr<TileComponent> tile);
-    std::shared_ptr<TileComponent> GetTile(int row, int col) const;
-    
-    // boolean to check if tile is valid
+    void RegisterTile(int row, int col, dae::GameObject* tileOwner);
+    TileComponent* GetTile(int row, int col) const;
     bool IsValidTile(int row, int col) const;
+    
+
+
 
     // interactable management
     void RegisterInteractable(int row, int col, dae::GameObject* interactable);
@@ -38,8 +39,9 @@ public:
     const std::vector<dae::GameObject*>& GetEnemiesAt(int row, int col) const;
     std::vector<dae::GameObject*> GetAllEnemies() const;
 
-    //Tile map
-    const std::vector<std::vector<std::shared_ptr<TileComponent>>>& GetTileMap() const { return m_TileMap; }
+    // Tile map (non-owning pointers to tile GameObjects)
+    const std::vector<std::vector<dae::GameObject*>>& GetTileMap() const { return m_TileMap; }
+
 
     int GetWidth() const { return static_cast<int>(m_TileMap.empty() ? 0 : m_TileMap[0].size()); }
     int GetHeight() const { return static_cast<int>(m_TileMap.size()); }
@@ -47,10 +49,10 @@ public:
     void OnNotify(dae::Event event, dae::GameObject* pGameObject) override;
 
 private:
-    std::vector<std::vector<std::shared_ptr<TileComponent>>> m_TileMap;
+    std::vector<std::vector<dae::GameObject*>> m_TileMap;
+
     std::unordered_map<int, std::unordered_map<int, std::vector<dae::GameObject*>>> m_Interactables;
     std::vector<std::vector<std::vector<dae::GameObject*>>> m_Enemies;
-
     int m_TotalEmeralds = 0;
     int m_CollectedEmeralds = 0;
 

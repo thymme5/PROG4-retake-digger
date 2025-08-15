@@ -65,10 +65,9 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
             tileGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
 
             auto tileComp = tileGO->AddComponent<TileComponent>(*tileGO, row, col);
-            tileComp->SetDug(false);
             tileGO->AddComponent<dae::TextureComponent>(*tileGO, "dirt.png", 1.f, 0);
 
-            TileManager::GetInstance().RegisterTile(row, col, std::shared_ptr<TileComponent>(tileComp, [](TileComponent*) {}));
+            TileManager::GetInstance().RegisterTile(row, col, tileComp->GetOwner());
             scene.Add(tileGO);
         }
     }
@@ -170,10 +169,11 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
             auto enemyGO = std::make_shared<dae::GameObject>();
             enemyGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
             enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "nobbin.png", 1.f, 0);
-            enemyGO->AddComponent<EnemyComponent>(*enemyGO, row, col); // AI-controlled
+            enemyGO->AddComponent<EnemyComponent>(*enemyGO, row, col); // computer
             scene.Add(enemyGO);
         }
     }
+
 }
 
 void LevelBuilder::SpawnPlayers(const std::vector<std::vector<int>>& spawns, dae::Scene& scene, UIComponent* ui, const std::string& mode)

@@ -5,18 +5,33 @@
 void TileManager::Initialize(int width, int height)
 {
     // Tilemap
-    m_TileMap.resize(height, std::vector<std::shared_ptr<TileComponent>>(width));
+    m_TileMap.assign(height, std::vector<dae::GameObject*>(width, nullptr));
     
     // Enemies
     m_Enemies.assign(height, std::vector<std::vector<dae::GameObject*>>(width));
 }
 
-void TileManager::RegisterTile(int row, int col, std::shared_ptr<TileComponent> tile)
+void TileManager::RegisterTile(int row, int col, dae::GameObject* tileOwner)
 {
     if (row >= 0 && row < GetHeight() && col >= 0 && col < GetWidth())
     {
-        m_TileMap[row][col] = tile;
+        m_TileMap[row][col] = tileOwner;
     }
+}
+
+TileComponent* TileManager::GetTile(int row, int col) const
+{
+    if (row < 0 || row >= GetHeight() || col < 0 || col >= GetWidth())
+        return nullptr;
+
+    dae::GameObject* owner = m_TileMap[row][col];
+    if (!owner || owner->IsMarkedForDestroy())
+        return nullptr;
+
+    if (!owner->HasComponent<TileComponent>())
+        return nullptr;
+
+    return owner->GetComponent<TileComponent>();
 }
 
 bool TileManager::IsValidTile(int row, int col) const
@@ -24,15 +39,6 @@ bool TileManager::IsValidTile(int row, int col) const
     return row >= 0 && col >= 0 &&
         row < static_cast<int>(m_TileMap.size()) &&
         col < static_cast<int>(m_TileMap[row].size());
-}
-
-std::shared_ptr<TileComponent> TileManager::GetTile(int row, int col) const
-{
-    if (row >= 0 && row < GetHeight() && col >= 0 && col < GetWidth())
-    {
-        return m_TileMap[row][col];
-    }
-    return nullptr;
 }
 
 void TileManager::RegisterInteractable(int row, int col, dae::GameObject* interactable)
