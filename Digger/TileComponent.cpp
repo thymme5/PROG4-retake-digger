@@ -12,6 +12,8 @@ int TileComponent::GetCol() const { return m_Col; }
 
 void TileComponent::SetDug(bool isDug)
 {
+	std::cout << "[TileComponent] SetDug called on tile at (" << m_Row << ", " << m_Col << ")" << std::endl;
+
 	if (m_pOwner->HasComponent<dae::TextureComponent>())
 	{
 		m_pOwner->GetComponent<dae::TextureComponent>()->SetVisible(!isDug);

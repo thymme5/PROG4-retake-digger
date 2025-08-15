@@ -20,8 +20,8 @@
 
 void load()
 {
-	GameModeManager::GetInstance().SetMode(std::make_unique<MainMenu>());
     DiggerSoundLibrary::LoadAllSounds();
+	GameModeManager::GetInstance().SetMode(std::make_unique<MainMenu>());
 }
 
 int main(int, char* argv[])

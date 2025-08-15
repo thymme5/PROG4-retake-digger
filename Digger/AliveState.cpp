@@ -64,14 +64,24 @@ void AliveState::Enter(PlayerComponent& player)
 
 void AliveState::Update(PlayerComponent& player)
 {
-	const int col = player.GetOwner()->GetComponent<PlayerComponent>()->GetCol();
-	const int row = player.GetOwner()->GetComponent<PlayerComponent>()->GetRow();
+    const int col = player.GetOwner()->GetComponent<PlayerComponent>()->GetCol();
+    const int row = player.GetOwner()->GetComponent<PlayerComponent>()->GetRow();
 
-    auto tile = TileManager::GetInstance().GetTile(row, col);
+    const auto& tileManager = TileManager::GetInstance();
+    const int maxRow = tileManager.GetHeight();
+    const int maxCol = tileManager.GetWidth();
+
+    if (row < 0 || row >= maxRow || col < 0 || col >= maxCol)
+    {
+        std::cout << "[AliveState] ERROR: Invalid tile position (" << row << ", " << col << ")" << std::endl;
+        return;
+    }
+
+    auto tile = tileManager.GetTile(row, col);
     if (tile && !tile->IsDug())
     {
         tile->SetDug(true);
-        
+
         if (auto subject = player.GetOwner()->GetComponent<dae::SubjectComponent>())
         {
             subject->Notify(dae::Event::TileDug, tile->GetOwner());

@@ -7,7 +7,12 @@
 #include "PlayerComponent.h"
 #include "NobbinControlState.h"
 
+#include <queue>
+#include <set>
+#include <algorithm>
+
 constexpr int TILE_SIZE = 48;
+static int s_EnemyIDCounter = 0;
 
 // --- tiny registry of all enemies ---
 static std::vector<EnemyComponent*>& EnemyList() {
@@ -18,6 +23,7 @@ static std::vector<EnemyComponent*>& EnemyList() {
 EnemyComponent::EnemyComponent(dae::GameObject& owner, int startRow, int startCol, bool isPlayerControlled)
     : Component(owner), m_Row(startRow), m_Col(startCol), m_IsPlayerControlled(isPlayerControlled)
 {
+    m_EnemyID = s_EnemyIDCounter++;
     EnemyList().push_back(this);
 
     if (m_IsPlayerControlled)
@@ -28,26 +34,46 @@ EnemyComponent::EnemyComponent(dae::GameObject& owner, int startRow, int startCo
     TileManager::GetInstance().RegisterEnemy(m_Row, m_Col, GetOwner());
 }
 
-
 EnemyComponent::~EnemyComponent()
 {
     auto& v = EnemyList();
-    v.clear(); 
+    auto it = std::find(v.begin(), v.end(), this);
+    if (it != v.end()) {
+        v.erase(it);
+    }
+
     TileManager::GetInstance().RemoveEnemy(m_Row, m_Col, GetOwner());
 }
+
 void EnemyComponent::Update()
-{ 
-    //TODO: should this be an event?
-    if (!m_IsPlayerControlled)
+{
+    if (!m_IsPlayerControlled && !m_IsMoving)
     {
+        PlayerComponent* closestPlayer = nullptr;
+        float closestDistance = std::numeric_limits<float>::max();
+
         for (auto* player : PlayerComponent::GetAllPlayers())
         {
-            if (player->IsPositionDirty())
-            {
-                auto [row, col] = player->GetTilePosition();
-                SetTarget(row, col);
-                player->ClearDirtyFlag();
+            if (player->IsInDeadState()) continue;
+
+            auto [playerRow, playerCol] = player->GetTilePosition();
+            float distance = std::abs(playerRow - m_Row) + std::abs(playerCol - m_Col); // Manhattan distance
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestPlayer = player;
             }
+        }
+
+        // Set target to closest player
+        if (closestPlayer) {
+            auto [row, col] = closestPlayer->GetTilePosition();
+            SetTarget(row, col);
+        }
+
+        // Check for collision with any player
+        for (auto* player : PlayerComponent::GetAllPlayers())
+        {
             if (GetTilePosition() == player->GetTilePosition() && !player->IsInDeadState())
             {
                 player->MarkAsDead();
@@ -63,24 +89,40 @@ void EnemyComponent::Update()
         glm::vec2 newPos = currentPos + m_MoveDirection;
 
         bool reached = false;
-        if (m_MoveDirection.x > 0.f && newPos.x >= targetPos.x) reached = true;
-        else if (m_MoveDirection.x < 0.f && newPos.x <= targetPos.x) reached = true;
-        else if (m_MoveDirection.y > 0.f && newPos.y >= targetPos.y) reached = true;
-        else if (m_MoveDirection.y < 0.f && newPos.y <= targetPos.y) reached = true;
+
+        if (std::abs(m_MoveDirection.x) > 0.001f) {
+            if ((m_MoveDirection.x > 0.f && newPos.x >= targetPos.x) ||
+                (m_MoveDirection.x < 0.f && newPos.x <= targetPos.x)) {
+                reached = true;
+                newPos.x = targetPos.x; 
+            }
+        }
+
+        if (std::abs(m_MoveDirection.y) > 0.001f) {
+            if ((m_MoveDirection.y > 0.f && newPos.y >= targetPos.y) ||
+                (m_MoveDirection.y < 0.f && newPos.y <= targetPos.y)) {
+                reached = true;
+                newPos.y = targetPos.y;
+            }
+        }
 
         if (reached)
         {
-            GetOwner()->SetLocalPosition(targetPos.x, targetPos.y);
+            TileManager::GetInstance().RemoveEnemy(m_Row, m_Col, GetOwner());
+
             m_Row = m_TargetRow;
             m_Col = m_TargetCol;
             m_IsMoving = false;
-            SetTile(m_Row, m_Col);
+
+            TileManager::GetInstance().RegisterEnemy(m_Row, m_Col, GetOwner());
+            GetOwner()->SetLocalPosition(targetPos.x, targetPos.y);
         }
         else
         {
             GetOwner()->SetLocalPosition(newPos.x, newPos.y);
         }
     }
+
     if (m_pCurrentState)
         m_pCurrentState->Update(*this);
 }
@@ -92,7 +134,8 @@ void EnemyComponent::SetTile(int row, int col)
     m_Row = row;
     m_Col = col;
 
-    constexpr int TILE_SIZE = 48;
+    m_IsMoving = false;
+
     GetOwner()->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
 
     TileManager::GetInstance().RegisterEnemy(m_Row, m_Col, GetOwner());
@@ -101,17 +144,19 @@ void EnemyComponent::SetTile(int row, int col)
 void EnemyComponent::MoveBy(int dr, int dc)
 {
     if (m_IsMoving) return;
-    
+
     const int newRow = m_Row + dr;
     const int newCol = m_Col + dc;
 
     auto& tileManager = TileManager::GetInstance();
+
     if (newRow < 0 || newRow >= tileManager.GetHeight() ||
         newCol < 0 || newCol >= tileManager.GetWidth())
     {
         std::cerr << "[EnemyComponent] Invalid move: (" << newRow << ", " << newCol << ") out of bounds." << std::endl;
         return;
     }
+
     auto tile = tileManager.GetTile(newRow, newCol);
     if (!tile) return;
 
@@ -119,25 +164,25 @@ void EnemyComponent::MoveBy(int dr, int dc)
     {
         return;
     }
-    std::cout << "[MoveBy] Enemy address: " << this << std::endl;
 
     m_LastDr = dr;
     m_LastDc = dc;
-	std::cout << "[EnemyComponent] moving to << " << newRow << ", " << newCol << std::endl;
-   
+
     m_TargetRow = newRow;
     m_TargetCol = newCol;
+
     m_MoveDirection = glm::vec2{
         static_cast<float>(dc) * m_MoveSpeedPerFrame,
         static_cast<float>(dr) * m_MoveSpeedPerFrame
     };
+
     m_IsMoving = true;
 }
 
-void EnemyComponent::SetTarget(int row, int col) 
-{ 
-    m_TargetRow = row; 
-    m_TargetCol = col; 
+void EnemyComponent::SetTarget(int row, int col)
+{
+    m_TargetRow = row;
+    m_TargetCol = col;
 }
 
 void EnemyComponent::SetState(std::unique_ptr<EnemyState> newState)
@@ -153,66 +198,77 @@ void EnemyComponent::SetState(std::unique_ptr<EnemyState> newState)
 
 std::pair<int, int> EnemyComponent::BestStepTowardTarget(bool tunnelsOnly) const
 {
-    // Directions: down, up, right, left
+    // Already at target position
+    if (m_Row == m_TargetRow && m_Col == m_TargetCol) 
+    {
+        return { 0, 0 };
+    }
+
+    struct Node 
+    {
+        int row, col, dr, dc;
+        int distance;
+    };
+
+    auto compare = [this](const Node& a, const Node& b) {
+        int distA = std::abs(a.row - m_TargetRow) + std::abs(a.col - m_TargetCol);
+        int distB = std::abs(b.row - m_TargetRow) + std::abs(b.col - m_TargetCol);
+        return distA > distB; // Min-heap
+        };
+
+    std::priority_queue<Node, std::vector<Node>, decltype(compare)> pq(compare);
+    std::set<std::pair<int, int>> visited;
+
     static const int dirs[4][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
 
-    int bestDr = 0, bestDc = 0;
-    int bestDist = std::numeric_limits<int>::max();
-    bool foundValid = false;
+    visited.insert({ m_Row, m_Col });
 
     for (const auto& d : dirs)
     {
-        int dr = d[0], dc = d[1];
-        int nr = m_Row + dr;
-        int nc = m_Col + dc;
+        int nr = m_Row + d[0];
+        int nc = m_Col + d[1];
 
-        // Skip backtracking unless it's the only option
-        if (dr == -m_LastDr && dc == -m_LastDc)
-            continue;
+        if (nr < 0 || nc < 0 ||
+            nr >= TileManager::GetInstance().GetHeight() ||
+            nc >= TileManager::GetInstance().GetWidth()) continue;
 
         auto tile = TileManager::GetInstance().GetTile(nr, nc);
-        if (!tile || (tunnelsOnly && !tile->IsDug()))
-            continue;
+        if (!tile || (tunnelsOnly && !tile->IsDug())) continue;
 
-        int dist = std::abs(m_TargetRow - nr) + std::abs(m_TargetCol - nc);
-        if (dist < bestDist)
-        {
-            bestDist = dist;
-            bestDr = dr;
-            bestDc = dc;
-            foundValid = true;
-        }
+        if (visited.count({ nr, nc })) continue;
+
+        int dist = std::abs(nr - m_TargetRow) + std::abs(nc - m_TargetCol);
+        pq.push({ nr, nc, d[0], d[1], dist });
+        visited.insert({ nr, nc });
     }
 
-    // Fallback: allow backtracking if no other move was valid
-    if (!foundValid)
+    while (!pq.empty())
     {
+        auto node = pq.top();
+        pq.pop();
+
+        if (node.row == m_TargetRow && node.col == m_TargetCol)
+            return { node.dr, node.dc };
+
         for (const auto& d : dirs)
         {
-            int dr = d[0], dc = d[1];
-            if (dr != -m_LastDr || dc != -m_LastDc)
-                continue;
+            int nr = node.row + d[0];
+            int nc = node.col + d[1];
 
-            int nr = m_Row + dr;
-            int nc = m_Col + dc;
+            if (nr < 0 || nc < 0 ||
+                nr >= TileManager::GetInstance().GetHeight() ||
+                nc >= TileManager::GetInstance().GetWidth()) continue;
+
+            if (visited.count({ nr, nc })) continue;
 
             auto tile = TileManager::GetInstance().GetTile(nr, nc);
-            if (!tile || (tunnelsOnly && !tile->IsDug()))
-                continue;
+            if (!tile || (tunnelsOnly && !tile->IsDug())) continue;
 
-            return { dr, dc };
+            int dist = std::abs(nr - m_TargetRow) + std::abs(nc - m_TargetCol);
+            pq.push({ nr, nc, node.dr, node.dc, dist });
+            visited.insert({ nr, nc });
         }
     }
 
-    return { bestDr, bestDc };
-}
-
-bool EnemyComponent::ShouldStepThisFrame(int framesPerStep)
-{
-    if (++m_FrameCounter >= framesPerStep)
-    {
-        m_FrameCounter = 0;
-        return true;
-    }
-    return false;
+    return { 0, 0 };
 }

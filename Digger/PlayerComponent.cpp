@@ -202,7 +202,6 @@ void PlayerComponent::DigCurrentTile()
             }
         }
     }
-
 }
 
 void PlayerComponent::ShootFireball()

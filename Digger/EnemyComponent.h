@@ -33,15 +33,15 @@ public:
 
     // Pathfinding helper
     std::pair<int, int> BestStepTowardTarget(bool tunnelsOnly) const;
-
-    // slow down movement
-    bool ShouldStepThisFrame(int framesPerStep);
-
+    
     // Player controlled
     void SetPlayerControlled(bool controlled) { m_IsPlayerControlled = controlled; }
     bool IsPlayerControlled() const { return m_IsPlayerControlled; }
 
+	bool IsMoving() const { return m_IsMoving; }
 private:
+    int m_EnemyID = -1;
+   
     int m_Row{};
     int m_Col{};
 

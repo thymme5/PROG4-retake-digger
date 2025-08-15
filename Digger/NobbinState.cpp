@@ -2,6 +2,8 @@
 #include "HobbinState.h"
 #include "EnemyComponent.h"
 #include "Timer.h"
+#include "TileManager.h"
+#include "PlayerComponent.h"
 
 // FIRST STATE
 class HobbinState;
@@ -16,7 +18,6 @@ void NobbinState::Update(EnemyComponent& enemy)
 {
     const float dt = Timer::GetDeltaTime();
 
-    // evolve countdown
     m_SecondsRemaining -= dt;
     if (m_SecondsRemaining <= 0.0f)
     {
@@ -24,12 +25,27 @@ void NobbinState::Update(EnemyComponent& enemy)
         return;
     }
 
-    // move throttle
     m_MoveCooldown -= dt;
     if (m_MoveCooldown > 0.0f) return;
     m_MoveCooldown = m_MoveInterval;
 
-    // tunnels-only step; if no valid step, stay put
+    if (enemy.IsMoving()) return;
+
     auto [dr, dc] = enemy.BestStepTowardTarget(true);
-    if (dr || dc) enemy.MoveBy(dr, dc);
+    if (dr == 0 && dc == 0) return;
+
+    const int nr = enemy.GetRow() + dr;
+    const int nc = enemy.GetCol() + dc;
+
+    auto tile = TileManager::GetInstance().GetTile(nr, nc);
+    if (!tile || !tile->IsDug()) return;
+
+    for (auto* player : PlayerComponent::GetAllPlayers())
+    {
+        auto [pRow, pCol] = player->GetTilePosition();
+        if (nr == pRow && nc == pCol) return;
+    }
+
+    enemy.MoveBy(dr, dc);
 }
+
