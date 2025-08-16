@@ -12,11 +12,11 @@ dae::Scene& dae::SceneManager::GetActiveScene()
 
 void dae::SceneManager::Update()
 {
+	Cleanup();
 	for(auto& scene : m_scenes)
 	{
 		scene->Update();
 	}
-	Cleanup();
 }
 
 void dae::SceneManager::Render()

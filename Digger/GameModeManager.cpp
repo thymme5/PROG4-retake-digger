@@ -2,13 +2,14 @@
 #include "GameModeManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "PlayerComponent.h"
+
 void GameModeManager::SetMode(std::unique_ptr<GameMode> newMode)
 {
     if (m_CurrentMode)
         m_CurrentMode->Exit();
 
-    // Force scene deletion
-    dae::SceneManager::GetInstance().Cleanup();
+    PlayerComponent::ClearAllPlayers();
 
     m_CurrentMode = std::move(newMode);
 

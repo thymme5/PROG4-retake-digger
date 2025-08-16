@@ -20,6 +20,9 @@ public:
 
     PlayerComponent(dae::GameObject& owner, int startRow, int startCol);
     ~PlayerComponent();
+
+    static void ClearAllPlayers();
+
     void Update() override;
     void Render() const override {}
 

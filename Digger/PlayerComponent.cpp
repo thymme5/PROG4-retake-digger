@@ -47,7 +47,10 @@ PlayerComponent::~PlayerComponent()
     std::cout << "[PlayerComponent] Player size after deletion: " << std::to_string(PlayerList().size()) << "\n";
 
 }
-
+void PlayerComponent::ClearAllPlayers()
+{
+    PlayerList().clear();
+}
 void PlayerComponent::Update()
 {
     if (m_IsMoving)
