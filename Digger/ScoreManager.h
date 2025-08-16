@@ -27,7 +27,7 @@ public:
     void AddEightEmeraldStreakBonus() { m_score += kEightEmeraldsInARow; }
 
     void GainLife(int n = 1) { m_lives += n; }
-    void LoseLife(int n = 1) { m_lives = (m_lives > n) ? (m_lives - n) : 0; }
+    void LoseLife(int n = 1);
 
     void OnNotify(dae::Event event, dae::GameObject* sender) override;
 

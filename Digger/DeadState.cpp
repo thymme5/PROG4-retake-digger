@@ -8,6 +8,8 @@ constexpr int TILE_SIZE = 48;
 
 void DeadState::Enter(PlayerComponent& player)
 {
+    
+
     m_DeathTimer = 0.f;
     m_PulseTimer = 0.f;
     m_IsVisible = true;

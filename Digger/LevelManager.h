@@ -18,6 +18,8 @@ public:
     void ProcessQueuedLoads();
     bool IsLevelQueued() const { return m_queuedNext; }
 
+    void FinishGame();
+
     int GetCurrentLevelIndex() const { return m_CurrentLevelIndex; }
     static bool IsAlive();
 

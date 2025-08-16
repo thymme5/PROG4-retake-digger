@@ -239,12 +239,12 @@ void PlayerComponent::SetState(std::unique_ptr<PlayerState> newState)
 
 void PlayerComponent::MarkAsDead() 
 {
-   /* if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
-    {
+   if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
+   {
 		playerSubj->Notify(dae::Event::PlayerDied, GetOwner());
-    }*/
+   }
 
-	//SetState(std::make_unique<DeadState>());
+	SetState(std::make_unique<DeadState>());
 }
 bool PlayerComponent::IsInDeadState() const
 {

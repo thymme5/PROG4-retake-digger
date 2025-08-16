@@ -48,11 +48,7 @@ void LevelManager::LoadNextLevel()
     }
     else
     {
-        Notify(dae::Event::GameCompleted, nullptr);
-
-        GameModeManager::GetInstance().SetMode(std::make_unique<PostGameEntryMode>());
-
-        m_CurrentLevelIndex = 1;
+        FinishGame();
     }
 }
 
@@ -75,4 +71,13 @@ void LevelManager::HandleLevelCompleted(dae::GameObject*)
 
 void LevelManager::ResetLevelState()
 {
+}
+
+void LevelManager::FinishGame()
+{
+    Notify(dae::Event::GameCompleted, nullptr);
+
+    GameModeManager::GetInstance().SetMode(std::make_unique<PostGameEntryMode>());
+
+    m_CurrentLevelIndex = 1;
 }
