@@ -53,6 +53,7 @@ void PlayerComponent::ClearAllPlayers()
 }
 void PlayerComponent::Update()
 {
+
     if (m_IsMoving)
     {
 

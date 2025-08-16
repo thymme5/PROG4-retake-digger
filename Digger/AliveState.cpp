@@ -52,13 +52,13 @@ void AliveState::Enter(PlayerComponent& player)
         std::cout << "[AliveState] Player 2 controls initialized.\n";
 
         // Controller movement (held)
-        input.BindCommand(1, GamepadButton::DPadUp, KeyState::Held, std::make_shared<MoveCommand>(player, -1, 0));
-        input.BindCommand(1, GamepadButton::DPadDown, KeyState::Held, std::make_shared<MoveCommand>(player, 1, 0));
-        input.BindCommand(1, GamepadButton::DPadLeft, KeyState::Held, std::make_shared<MoveCommand>(player, 0, -1));
-        input.BindCommand(1, GamepadButton::DPadRight, KeyState::Held, std::make_shared<MoveCommand>(player, 0, 1));
+        input.BindCommand(0, GamepadButton::DPadUp, KeyState::Held, std::make_shared<MoveCommand>(player, -1, 0));
+        input.BindCommand(0, GamepadButton::DPadDown, KeyState::Held, std::make_shared<MoveCommand>(player, 1, 0));
+        input.BindCommand(0, GamepadButton::DPadLeft, KeyState::Held, std::make_shared<MoveCommand>(player, 0, -1));
+        input.BindCommand(0, GamepadButton::DPadRight, KeyState::Held, std::make_shared<MoveCommand>(player, 0, 1));
 
         // Controller fireball (just pressed)
-        input.BindCommand(1, GamepadButton::A, KeyState::Pressed, std::make_shared<FireballCommand>(player));
+        input.BindCommand(0, GamepadButton::A, KeyState::Pressed, std::make_shared<FireballCommand>(player));
     }
 }
 
@@ -66,6 +66,7 @@ void AliveState::Enter(PlayerComponent& player)
 
 void AliveState::Update(PlayerComponent& player)
 {
+
     const int col = player.GetOwner()->GetComponent<PlayerComponent>()->GetCol();
     const int row = player.GetOwner()->GetComponent<PlayerComponent>()->GetRow();
 
