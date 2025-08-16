@@ -21,6 +21,7 @@ public:
 	static void CreateSinglePlayerScene(dae::Scene& scene, const std::string& levelPath);
 	static void CreateCoopScene(dae::Scene& scene, const std::string& levelPath);
 	static void CreateVersusScene(dae::Scene& scene, const std::string& levelPath);
+	static void BuildNameEntryScene(dae::Scene& scene);
 
 
 	static void CreateDebugScene(dae::Scene& scene);

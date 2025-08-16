@@ -10,6 +10,8 @@
 #include "CoopMode.h"
 #include "VersusMode.h"
 
+#include "PostGameEntryMode.h"
+
 static bool s_IsAlive = false;
 
 LevelManager::LevelManager() { s_IsAlive = true; }
@@ -48,14 +50,9 @@ void LevelManager::LoadNextLevel()
     {
         Notify(dae::Event::GameCompleted, nullptr);
 
-        HighscoreEntry entry{ "aaa", ScoreManager::GetInstance().Get() };
-		HighscoreManager::GetInstance().AddHighscore(entry);
-        
-        ScoreManager::GetInstance().ResetForNewGame();
+        GameModeManager::GetInstance().SetMode(std::make_unique<PostGameEntryMode>());
 
         m_CurrentLevelIndex = 1;
-        GameModeManager::GetInstance().SetMode(std::make_unique<MainMenu>());
-
     }
 }
 

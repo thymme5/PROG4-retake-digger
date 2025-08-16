@@ -7,9 +7,14 @@
 #include "HighScoreManager.h"
 #include "BackToMenuCommand.h"
 #include "FinishRoundCommand.h"
-#include "InputManager.h"
-#include <sstream>
+#include "ToggleMuteCommand.h"
+#include "ScoreManager.h"
+#include "NameEntryComponent.h"
+#include "ChangeLetterCommand.h"
+#include "MoveCursorCommand.h"
+#include "ConfirmNameCommand.h"
 
+#include <sstream>
 
 void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<dae::Font>& font)
 {
@@ -126,12 +131,64 @@ void DiggerSceneBuilder::BuildHighScoreScene(dae::Scene& scene)
     input.BindCommand(0, GamepadButton::B, KeyState::Pressed, confirmCmd);
 }
 
+void DiggerSceneBuilder::BuildNameEntryScene(dae::Scene& scene)
+{
+    const auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+    const auto smallFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
+    const auto windowWidth = dae::Renderer::GetInstance().GetWindowSize().x;
+
+    // === Title ===
+    auto titleGO = std::make_shared<dae::GameObject>();
+    auto* titleText = titleGO->AddComponent<dae::TextComponent>(*titleGO, "ENTER YOUR INITIALS", font);
+    titleText->Update();
+    float x = (windowWidth - static_cast<float>(titleText->GetTextureSize().x)) / 2.f;
+    titleGO->SetLocalPosition(x, 100.f);
+    scene.Add(titleGO);
+
+    // === Score Display ===
+    int finalScore = ScoreManager::GetInstance().Get();
+    auto scoreGO = std::make_shared<dae::GameObject>();
+    std::stringstream ss;
+    ss << "Your Score: " << finalScore;
+    auto* scoreText = scoreGO->AddComponent<dae::TextComponent>(*scoreGO, ss.str(), font);
+    scoreText->Update();
+    x = (windowWidth - static_cast<float>(scoreText->GetTextureSize().x)) / 2.f;
+    scoreGO->SetLocalPosition(x, 160.f);
+    scene.Add(scoreGO);
+
+    // === Initials Entry ===
+    auto entryGO = std::make_shared<dae::GameObject>();
+    auto* entryComp = entryGO->AddComponent<NameEntryComponent>(*entryGO);
+    scene.Add(entryGO);
+
+    // === Hint ===
+    auto hintGO = std::make_shared<dae::GameObject>();
+    auto* hintText = hintGO->AddComponent<dae::TextComponent>(*hintGO,
+        "UP/DOWN to change letter, LEFT/RIGHT to move, ENTER to confirm"
+        , smallFont);
+    hintText->Update();
+    x = (windowWidth - static_cast<float>(hintText->GetTextureSize().x)) / 2.f;
+    hintGO->SetLocalPosition(x, 400.f);
+    scene.Add(hintGO);
+
+    // === Input ===
+    auto& input = dae::InputManager::GetInstance();
+    input.BindCommand(SDLK_UP, KeyState::Pressed, std::make_shared<ChangeLetterCommand>(entryComp, +1));
+    input.BindCommand(SDLK_DOWN, KeyState::Pressed, std::make_shared<ChangeLetterCommand>(entryComp, -1));
+    input.BindCommand(SDLK_LEFT, KeyState::Pressed, std::make_shared<MoveCursorCommand>(entryComp, -1));
+    input.BindCommand(SDLK_RIGHT, KeyState::Pressed, std::make_shared<MoveCursorCommand>(entryComp, +1));
+    input.BindCommand(SDLK_RETURN, KeyState::Pressed, std::make_shared<ConfirmNameCommand>(entryComp));
+}
+
 void DiggerSceneBuilder::CreateBaseDiggerScene(dae::Scene& scene, const std::string& levelPath)
 {
     auto& inputManager = dae::InputManager::GetInstance();
 
     auto skipRound = std::make_shared<FinishRoundCommand>();
     inputManager.BindCommand(SDLK_F1, KeyState::Pressed, skipRound);
+
+    auto muteToggle = std::make_shared<ToggleMuteCommand>();
+    inputManager.BindCommand(SDLK_F2, KeyState::Pressed, muteToggle);
 
     LevelBuilder::LoadLevelFromFile(levelPath, scene);
 }
@@ -149,7 +206,6 @@ void DiggerSceneBuilder::CreateVersusScene(dae::Scene& scene, const std::string&
 {
     CreateBaseDiggerScene(scene, levelPath);
 }
-
 
 void DiggerSceneBuilder::CreateDebugScene(dae::Scene& scene)
 {

@@ -159,9 +159,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainMenuUIComponent.cpp" />
+    <ClCompile Include="NameEntryComponent.cpp" />
     <ClCompile Include="NobbinControlState.cpp" />
     <ClCompile Include="NobbinState.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="PostGameEntryMode.cpp" />
     <ClCompile Include="ScoreManager.cpp" />
     <ClCompile Include="SinglePlayerMode.cpp" />
     <ClCompile Include="TileComponent.cpp" />
@@ -172,6 +174,8 @@
   <ItemGroup>
     <ClInclude Include="AliveState.h" />
     <ClInclude Include="BackToMenuCommand.h" />
+    <ClInclude Include="ChangeLetterCommand.h" />
+    <ClInclude Include="ConfirmNameCommand.h" />
     <ClInclude Include="CoopMode.h" />
     <ClInclude Include="DeadState.h" />
     <ClInclude Include="DiggerSceneBuilder.h" />
@@ -197,16 +201,20 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MainMenuUIComponent.h" />
     <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="MoveCursorCommand.h" />
     <ClInclude Include="MoveEnemyCommand.h" />
     <ClInclude Include="MoveMenuArrow.h" />
+    <ClInclude Include="NameEntryComponent.h" />
     <ClInclude Include="NobbinControlState.h" />
     <ClInclude Include="NobbinState.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="PostGameEntryMode.h" />
     <ClInclude Include="ScoreManager.h" />
     <ClInclude Include="SinglePlayerMode.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileManager.h" />
+    <ClInclude Include="ToggleMuteCommand.h" />
     <ClInclude Include="UIComponent.h" />
     <ClInclude Include="VersusMode.h" />
   </ItemGroup>

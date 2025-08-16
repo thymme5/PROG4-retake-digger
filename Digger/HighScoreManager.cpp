@@ -24,6 +24,10 @@ void HighscoreManager::AddHighscore(const HighscoreEntry& entry)
 
     SaveHighscores();
 }
+void HighscoreManager::AddHighscore(const std::string& initials, int score)
+{
+    AddHighscore(HighscoreEntry{ initials, score });
+}
 
 void HighscoreManager::LoadHighscores()
 {

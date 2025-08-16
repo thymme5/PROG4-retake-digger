@@ -14,6 +14,7 @@ class HighscoreManager final : public dae::Singleton<HighscoreManager>
 public:
     const std::vector<HighscoreEntry>& GetHighscores() const;
     void AddHighscore(const HighscoreEntry& entry);
+	void AddHighscore(const std::string& initials, int score);
     void LoadHighscores();
     void SaveHighscores() const;
     HighscoreEntry& GetLastAddedEntry();

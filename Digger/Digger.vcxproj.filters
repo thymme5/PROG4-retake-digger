@@ -151,6 +151,15 @@
     <Filter Include="GameDirectorComponent">
       <UniqueIdentifier>{fcc69434-0a70-4785-ab4e-dd71abd1ee60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameMode\PostGameEntry">
+      <UniqueIdentifier>{bcac59ab-7e28-417e-b1d5-ebbd3cf5d674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\PostGameEntry\NameEntryComponent">
+      <UniqueIdentifier>{6ccb716c-fd43-4173-a739-cdb7560ee90c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMode\PostGameEntry\Commands">
+      <UniqueIdentifier>{59c9fb89-1c80-4575-8785-18e9a997efc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -236,6 +245,12 @@
     </ClCompile>
     <ClCompile Include="ScoreManager.cpp">
       <Filter>Scores\ScoreManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PostGameEntryMode.cpp">
+      <Filter>GameMode\PostGameEntry</Filter>
+    </ClCompile>
+    <ClCompile Include="NameEntryComponent.cpp">
+      <Filter>GameMode\PostGameEntry\NameEntryComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +370,24 @@
     </ClInclude>
     <ClInclude Include="GameDirectorComponent.h">
       <Filter>GameDirectorComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ToggleMuteCommand.h">
+      <Filter>GameMode\GameModes\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="PostGameEntryMode.h">
+      <Filter>GameMode\PostGameEntry</Filter>
+    </ClInclude>
+    <ClInclude Include="NameEntryComponent.h">
+      <Filter>GameMode\PostGameEntry\NameEntryComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCursorCommand.h">
+      <Filter>GameMode\PostGameEntry\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeLetterCommand.h">
+      <Filter>GameMode\PostGameEntry\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfirmNameCommand.h">
+      <Filter>GameMode\PostGameEntry\Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
