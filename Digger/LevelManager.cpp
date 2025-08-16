@@ -33,11 +33,11 @@ void LevelManager::LoadLevel(int index)
 
     auto* currentMode = GameModeManager::GetInstance().GetCurrentGameMode();
     if (dynamic_cast<SinglePlayerMode*>(currentMode))
-        GameModeManager::GetInstance().SetMode(std::make_unique<SinglePlayerMode>(m_CurrentLevelIndex));
+        GameModeManager::GetInstance().SetMode(std::make_unique<SinglePlayerMode>(index));
     else if (dynamic_cast<CoopMode*>(currentMode))
-        GameModeManager::GetInstance().SetMode(std::make_unique<CoopMode>(m_CurrentLevelIndex));
+        GameModeManager::GetInstance().SetMode(std::make_unique<CoopMode>(index));
     else if (dynamic_cast<VersusMode*>(currentMode))
-        GameModeManager::GetInstance().SetMode(std::make_unique<VersusMode>(m_CurrentLevelIndex));
+        GameModeManager::GetInstance().SetMode(std::make_unique<VersusMode>(index));
 }
 
 void LevelManager::LoadNextLevel()
