@@ -2,6 +2,7 @@
 #include "DiggerSceneBuilder.h"
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "DiggerSoundLibrary.h"
 #include <sstream>
 #include <filesystem>
 #include <iostream>
@@ -14,6 +15,7 @@ SinglePlayerMode::SinglePlayerMode(int levelIndex)
 void SinglePlayerMode::Enter()
 {
     auto& rm = dae::ResourceManager::GetInstance();
+    DiggerSoundLibrary::Play(SoundID::BackgroundMusic);
 
     std::stringstream ss;
     ss << "Level0" << m_LevelIndex << "Solo.json";

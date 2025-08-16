@@ -3,6 +3,7 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "DiggerSoundLibrary.h"
 
 #include <filesystem>
 #include <sstream>
@@ -16,6 +17,7 @@ CoopMode::CoopMode(int levelIndex)
 void CoopMode::Enter()
 {
     auto& rm = dae::ResourceManager::GetInstance();
+    DiggerSoundLibrary::Play(SoundID::BackgroundMusic);
 
     std::stringstream ss;
     ss << "Level0" << m_LevelIndex << "Coop.json";

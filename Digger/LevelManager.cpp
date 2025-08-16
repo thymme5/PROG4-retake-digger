@@ -11,6 +11,7 @@
 #include "VersusMode.h"
 
 #include "PostGameEntryMode.h"
+#include "DiggerSoundLibrary.h"
 
 static bool s_IsAlive = false;
 
@@ -75,6 +76,7 @@ void LevelManager::ResetLevelState()
 
 void LevelManager::FinishGame()
 {
+
     Notify(dae::Event::GameCompleted, nullptr);
 
     GameModeManager::GetInstance().SetMode(std::make_unique<PostGameEntryMode>());

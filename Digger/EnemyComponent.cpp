@@ -130,8 +130,6 @@ void EnemyComponent::Update()
             GetOwner()->SetLocalPosition(newPos.x, newPos.y);
         }
     }
-
-
     if (m_pCurrentState)
         m_pCurrentState->Update(*this);
 }

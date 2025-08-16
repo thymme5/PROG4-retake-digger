@@ -53,7 +53,6 @@ void PlayerComponent::ClearAllPlayers()
 }
 void PlayerComponent::Update()
 {
-
     if (m_IsMoving)
     {
         glm::vec2 currentPos = GetOwner()->GetWorldPosition();

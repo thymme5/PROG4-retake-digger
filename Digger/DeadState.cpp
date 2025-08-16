@@ -3,12 +3,13 @@
 #include "TextureComponent.h"
 #include "Timer.h"
 #include "AliveState.h"
+#include "DiggerSoundLibrary.h"
 
 constexpr int TILE_SIZE = 48;
 
 void DeadState::Enter(PlayerComponent& player)
 {
-    
+    DiggerSoundLibrary::Play(SoundID::DiggerGameOver);
 
     m_DeathTimer = 0.f;
     m_PulseTimer = 0.f;
@@ -47,4 +48,7 @@ void DeadState::Exit(PlayerComponent& player)
 
     if (auto* tex = player.GetOwner()->GetComponent<dae::TextureComponent>())
         tex->SetVisible(true);
+
+    DiggerSoundLibrary::Stop(SoundID::DiggerGameOver);
+    DiggerSoundLibrary::Play(SoundID::BackgroundMusic);
 }

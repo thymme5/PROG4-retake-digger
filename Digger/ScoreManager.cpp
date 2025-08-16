@@ -3,6 +3,8 @@
 #include "ScoreManager.h"
 #include "SubjectComponent.h"
 #include "LevelManager.h"
+#include "DiggerSoundLibrary.h"
+
 void ScoreManager::OnNotify(dae::Event event, dae::GameObject* obj)
 {
 	std::cout << "[ScoreManager] Received event: " << static_cast<int>(event) << std::endl;
@@ -30,6 +32,8 @@ void ScoreManager::LoseLife(int n)
     if (m_lives == 0)
     {
         // Finis game if player has no lives (obviously)
+        DiggerSoundLibrary::Stop(SoundID::BackgroundMusic);
+		DiggerSoundLibrary::Play(SoundID::DiggerGameOver);
         LevelManager::GetInstance().FinishGame();
     }
 }

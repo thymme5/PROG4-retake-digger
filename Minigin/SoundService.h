@@ -18,6 +18,7 @@ namespace dae
         virtual ~SoundService() = default;
         virtual void PlaySound(const std::string& soundFile) = 0;
         virtual void LoadSound(const std::string& soundFile) = 0;
+        virtual void StopSound(const std::string& soundFile) = 0;
         virtual void StopAllSounds() = 0;
 
         virtual void SetMuted(bool muted) = 0;
@@ -35,6 +36,7 @@ namespace dae
 
         void PlaySound(const std::string& soundFile) override;
         void LoadSound(const std::string& soundFile) override;
+        void StopSound(const std::string& soundFile) override;
         void StopAllSounds() override;
 
         void SetMuted(bool muted) override;

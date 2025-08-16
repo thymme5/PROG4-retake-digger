@@ -86,6 +86,15 @@ namespace dae
         }
         m_CondVar.notify_one();
     }
+    void SDLMixerSoundService::StopSound(const std::string& soundFile)
+    {
+        auto it = m_SoundToChannel.find(soundFile);
+        if (it != m_SoundToChannel.end())
+        {
+            Mix_HaltChannel(it->second);
+        }
+    }
+
     bool SDLMixerSoundService::IsPlaying(const std::string& soundFile)
     {
         const auto it = m_SoundToChannel.find(soundFile);

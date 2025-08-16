@@ -7,7 +7,8 @@ void DiggerSoundLibrary::LoadAllSounds()
 {
     const auto& basePath = dae::ResourceManager::GetInstance().GetDataPath();
 
-    //Register(SoundID::QbertJump, (basePath / "Sounds/QBert Jump.wav").string());
+    Register(SoundID::BackgroundMusic, (basePath / "Sounds/Digger.ogg").string());
+    Register(SoundID::DiggerGameOver, (basePath / "Sounds/game over.ogg").string());
 }
 
 void DiggerSoundLibrary::Play(SoundID id)
@@ -19,6 +20,17 @@ void DiggerSoundLibrary::Play(SoundID id)
     if (it != m_SoundMap.end())
     {
         service->PlaySound(it->second);
+    }
+}
+void DiggerSoundLibrary::Stop(SoundID id)
+{
+    auto* service = dae::ServiceLocator::GetSoundService();
+    if (!service) return;
+
+    const auto it = m_SoundMap.find(id);
+    if (it != m_SoundMap.end())
+    {
+        service->StopSound(it->second);
     }
 }
 
@@ -40,6 +52,5 @@ bool DiggerSoundLibrary::IsPlaying(SoundID id)
     {
         return service->IsPlaying(it->second);
     }
-
     return false;
 }
