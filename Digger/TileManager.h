@@ -54,5 +54,5 @@ private:
     int m_TotalEmeralds = 0;
     int m_CollectedEmeralds = 0;
 
-    void CheckLevelCompletion(dae::GameObject* go);
+    void CheckLevelCompletion();
 };
