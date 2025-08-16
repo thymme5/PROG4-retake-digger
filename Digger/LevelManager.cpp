@@ -6,6 +6,8 @@
 #include "TileManager.h"
 #include "GameModeManager.h"
 
+#include "PlayerComponent.h"
+#include "TileManager.h"
 #include "SinglePlayerMode.h"
 #include "CoopMode.h"
 #include "VersusMode.h"
@@ -72,14 +74,16 @@ void LevelManager::HandleLevelCompleted(dae::GameObject*)
 
 void LevelManager::ResetLevelState()
 {
+    // Clear all players
+    PlayerComponent::ClearAllPlayers();
+
+    // Clear tile data
+    TileManager::GetInstance().Clear();
 }
 
 void LevelManager::FinishGame()
 {
-
     Notify(dae::Event::GameCompleted, nullptr);
-
     GameModeManager::GetInstance().SetMode(std::make_unique<PostGameEntryMode>());
-
     m_CurrentLevelIndex = 1;
 }

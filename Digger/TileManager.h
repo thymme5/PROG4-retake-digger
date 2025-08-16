@@ -45,6 +45,7 @@ public:
 
     void OnNotify(dae::Event event, dae::GameObject* pGameObject) override;
 
+    void Clear();
 private:
     std::vector<std::vector<dae::GameObject*>> m_TileMap;
 

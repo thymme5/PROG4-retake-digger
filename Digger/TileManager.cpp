@@ -216,3 +216,18 @@ void TileManager::CheckLevelCompletion(dae::GameObject* go)
     }
 }
 
+void TileManager::Clear()
+{
+    // Clear tile map
+    m_TileMap.clear();
+
+    // Clear interactables
+    m_Interactables.clear();
+
+    // Clear enemies
+    m_Enemies.clear();
+
+    // Reset emerald counters
+    m_TotalEmeralds = 0;
+    m_CollectedEmeralds = 0;
+}
