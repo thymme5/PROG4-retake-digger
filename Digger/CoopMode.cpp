@@ -38,6 +38,7 @@ void CoopMode::Exit()
 {
     dae::InputManager::GetInstance().ClearAllBindings();
     dae::SceneManager::GetInstance().MarkSceneForDeletion(m_SceneName);
+    DiggerSoundLibrary::Stop(SoundID::BackgroundMusic);
 }
 
 void CoopMode::Update()

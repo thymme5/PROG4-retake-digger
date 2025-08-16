@@ -12,6 +12,6 @@ public:
     void Exit(EnemyComponent& enemy) override {}
 
 private:
-    float m_MoveInterval{ 0.50f };
+    float m_MoveInterval{ 0.1f };
     float m_MoveCooldown{ 0.0f };
 };

@@ -42,7 +42,7 @@ void LevelManager::LoadLevel(int index)
 
 void LevelManager::LoadNextLevel()
 {
-    if (m_CurrentLevelIndex + 1 < m_TotalLevels)
+    if (m_CurrentLevelIndex + 1 <= m_TotalLevels)
     {
         ++m_CurrentLevelIndex;
         LoadLevel(m_CurrentLevelIndex);
