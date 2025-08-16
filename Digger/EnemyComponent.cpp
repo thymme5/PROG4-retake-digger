@@ -70,14 +70,22 @@ void EnemyComponent::Update()
             auto [row, col] = closestPlayer->GetTilePosition();
             SetTarget(row, col);
         }
+    }
 
-        // Check for collision with any player
-        for (auto* player : PlayerComponent::GetAllPlayers())
+    // Check for collision with any player
+    glm::vec2 enemyPos = GetOwner()->GetWorldPosition();
+    const float COLLISION_RADIUS = 24.0f;
+
+    for (auto* player : PlayerComponent::GetAllPlayers())
+    {
+        if (player->IsInDeadState()) continue;
+
+        glm::vec2 playerPos = player->GetOwner()->GetWorldPosition();
+        float dist = glm::length(enemyPos - playerPos);
+
+        if (dist < COLLISION_RADIUS)
         {
-            if (GetTilePosition() == player->GetTilePosition() && !player->IsInDeadState())
-            {
-                player->MarkAsDead();
-            }
+            player->MarkAsDead();
         }
     }
 

@@ -40,12 +40,6 @@ void NobbinState::Update(EnemyComponent& enemy)
     auto tile = TileManager::GetInstance().GetTile(nr, nc);
     if (!tile || !tile->IsDug()) return;
 
-    for (auto* player : PlayerComponent::GetAllPlayers())
-    {
-        auto [pRow, pCol] = player->GetTilePosition();
-        if (nr == pRow && nc == pCol) return;
-    }
-
     enemy.MoveBy(dr, dc);
 }
 
