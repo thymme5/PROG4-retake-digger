@@ -74,11 +74,14 @@ dae::Minigin::Minigin(const std::string &dataPath)
 
 dae::Minigin::~Minigin()
 {
-	Renderer::GetInstance().Destroy();
-	ServiceLocator::Destroy();
+	Mix_CloseAudio();  
+
+	Renderer::GetInstance().Destroy();  
+	ServiceLocator::Destroy();          
+
 	SDL_DestroyWindow(g_window);
-	Mix_CloseAudio();	
 	g_window = nullptr;
+
 	SDL_Quit();
 }
 

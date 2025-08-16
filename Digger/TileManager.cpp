@@ -192,6 +192,7 @@ void TileManager::OnNotify(dae::Event e, dae::GameObject* go)
 
 void TileManager::CheckLevelCompletion(dae::GameObject* go)
 {
+    std::cout << "---------------checking level completion" << std::endl;
     bool allEmeraldsCollected = m_CollectedEmeralds >= m_TotalEmeralds;
     bool allEnemiesGone = true;
 

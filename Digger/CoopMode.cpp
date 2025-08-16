@@ -43,4 +43,5 @@ void CoopMode::Exit()
 
 void CoopMode::Update()
 {
+    LevelManager::GetInstance().ProcessQueuedLoads();
 }

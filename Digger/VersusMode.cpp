@@ -44,4 +44,5 @@ void VersusMode::Exit()
 
 void VersusMode::Update()
 {
+    LevelManager::GetInstance().ProcessQueuedLoads();
 }
