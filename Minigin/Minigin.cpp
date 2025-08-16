@@ -45,11 +45,6 @@ void PrintSDLVersion()
 
 dae::Minigin::Minigin(const std::string &dataPath)
 {
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-	{
-		throw std::runtime_error(std::string("Mix_OpenAudio Error: ") + Mix_GetError());
-	}
-	
 	PrintSDLVersion();
 	
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
@@ -80,6 +75,7 @@ dae::Minigin::Minigin(const std::string &dataPath)
 dae::Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
+	ServiceLocator::Destroy();
 	SDL_DestroyWindow(g_window);
 	Mix_CloseAudio();	
 	g_window = nullptr;

@@ -7,7 +7,11 @@
 
 dae::Texture2D::~Texture2D()
 {
-	SDL_DestroyTexture(m_texture);
+	if (m_texture)
+	{
+		SDL_DestroyTexture(m_texture);
+		m_texture = nullptr;
+	}
 }
 
 glm::ivec2 dae::Texture2D::GetSize() const
