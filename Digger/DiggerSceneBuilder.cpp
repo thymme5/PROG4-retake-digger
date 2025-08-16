@@ -164,7 +164,7 @@ void DiggerSceneBuilder::BuildNameEntryScene(dae::Scene& scene)
     // === Hint ===
     auto hintGO = std::make_shared<dae::GameObject>();
     auto* hintText = hintGO->AddComponent<dae::TextComponent>(*hintGO,
-        "UP/DOWN to change letter, LEFT/RIGHT to move, ENTER to confirm"
+        "UP/DOWN to change letter, LEFT/RIGHT to move, ENTER or A to confirm"
         , smallFont);
     hintText->Update();
     x = (windowWidth - static_cast<float>(hintText->GetTextureSize().x)) / 2.f;
@@ -178,6 +178,12 @@ void DiggerSceneBuilder::BuildNameEntryScene(dae::Scene& scene)
     input.BindCommand(SDLK_LEFT, KeyState::Pressed, std::make_shared<MoveCursorCommand>(entryComp, -1));
     input.BindCommand(SDLK_RIGHT, KeyState::Pressed, std::make_shared<MoveCursorCommand>(entryComp, +1));
     input.BindCommand(SDLK_RETURN, KeyState::Pressed, std::make_shared<ConfirmNameCommand>(entryComp));
+
+    input.BindCommand(0, GamepadButton::DPadUp, KeyState::Pressed, std::make_shared<ChangeLetterCommand>(entryComp, +1));
+    input.BindCommand(0, GamepadButton::DPadDown, KeyState::Pressed, std::make_shared<ChangeLetterCommand>(entryComp, -1));
+    input.BindCommand(0, GamepadButton::DPadLeft, KeyState::Pressed, std::make_shared<MoveCursorCommand>(entryComp, -1));
+    input.BindCommand(0, GamepadButton::DPadRight, KeyState::Pressed, std::make_shared<MoveCursorCommand>(entryComp, +1));
+    input.BindCommand(0, GamepadButton::A, KeyState::Pressed, std::make_shared<ConfirmNameCommand>(entryComp));
 }
 
 void DiggerSceneBuilder::CreateBaseDiggerScene(dae::Scene& scene, const std::string& levelPath)

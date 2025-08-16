@@ -56,7 +56,6 @@ void PlayerComponent::Update()
 
     if (m_IsMoving)
     {
-
         glm::vec2 currentPos = GetOwner()->GetWorldPosition();
         glm::vec2 targetPos = { m_TargetCol * TILE_SIZE, m_TargetRow * TILE_SIZE };
 
