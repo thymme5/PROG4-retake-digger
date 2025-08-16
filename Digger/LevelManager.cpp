@@ -1,11 +1,14 @@
-// LevelManager.cpp
+#include <iostream>
+
+#include "HighScoreManager.h"
+#include "ScoreManager.h"
 #include "LevelManager.h"
 #include "TileManager.h"
 #include "GameModeManager.h"
+
 #include "SinglePlayerMode.h"
 #include "CoopMode.h"
 #include "VersusMode.h"
-#include <iostream>
 
 static bool s_IsAlive = false;
 
@@ -44,8 +47,15 @@ void LevelManager::LoadNextLevel()
     else
     {
         Notify(dae::Event::GameCompleted, nullptr);
+
+        HighscoreEntry entry{ "aaa", ScoreManager::GetInstance().Get() };
+		HighscoreManager::GetInstance().AddHighscore(entry);
+        
+        ScoreManager::GetInstance().ResetForNewGame();
+
         m_CurrentLevelIndex = 1;
         GameModeManager::GetInstance().SetMode(std::make_unique<MainMenu>());
+
     }
 }
 

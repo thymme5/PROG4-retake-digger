@@ -171,6 +171,7 @@ void TileManager::OnNotify(dae::Event e, dae::GameObject* go)
         break;
     case dae::Event::EmeraldCollected:
         ++m_CollectedEmeralds;
+        CheckLevelCompletion(go);
         break;
     case dae::Event::PlayerCollected8Emeralds:
         std::cout << "[TileManager] Event: PlayerCollected8Emeralds\n";
@@ -182,15 +183,13 @@ void TileManager::OnNotify(dae::Event e, dae::GameObject* go)
         std::cout << "[TileManager] Event: LevelCompleted\n";
         break;
     case dae::Event::EnemyKilled:
-        std::cout << "[TileManager] Event: EnemyKilled\n";
+        CheckLevelCompletion(go);
         break;
     default:
         break;
     }
-    CheckLevelCompletion(go);
 }
 
-//TODO: not sure about this implementation in TileManager? Move to LevelManager? 
 void TileManager::CheckLevelCompletion(dae::GameObject* go)
 {
     bool allEmeraldsCollected = m_CollectedEmeralds >= m_TotalEmeralds;
