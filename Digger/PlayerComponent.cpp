@@ -55,11 +55,14 @@ void PlayerComponent::Update()
 {
     if (m_IsMoving)
     {
+
         glm::vec2 currentPos = GetOwner()->GetWorldPosition();
         glm::vec2 targetPos = { m_TargetCol * TILE_SIZE, m_TargetRow * TILE_SIZE };
 
-        glm::vec2 newPos = currentPos + m_MoveDirection;
-
+        float dt = Timer::GetDeltaTime();
+        glm::vec2 step = m_MoveDirection * m_Speed * dt;
+        glm::vec2 newPos = currentPos + step;
+        
         // Overshoot clamp
         bool reached = false;
         if (m_MoveDirection.x > 0.f && newPos.x >= targetPos.x) reached = true;
@@ -147,10 +150,7 @@ void PlayerComponent::Move(int dRow, int dCol)
     // No obstruction or bag was pushed successfully
     m_TargetRow = newRow;
     m_TargetCol = newCol;
-    m_MoveDirection = glm::vec2{
-        static_cast<float>(dCol) * m_MoveSpeedPerFrame,
-        static_cast<float>(dRow) * m_MoveSpeedPerFrame
-    };
+    m_MoveDirection = glm::vec2{ static_cast<float>(dCol), static_cast<float>(dRow) };
     m_IsMoving = true;
 }
 

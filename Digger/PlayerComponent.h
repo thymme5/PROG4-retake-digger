@@ -59,9 +59,8 @@ private:
     // movement related variables
     int m_TargetRow{}, m_TargetCol{};
     glm::vec2 m_MoveDirection{ 0.f, 0.f };
-    float m_Speed{ 100.f }; //pixels per second
+    float m_Speed{ 75.f }; //pixels per second
     bool m_IsMoving{ false };
-    float m_MoveSpeedPerFrame{ .05f };
 
     // last direction in which player moved for fireball's purpose
     int m_LastDirRow{ 0 };

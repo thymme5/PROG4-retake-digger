@@ -58,5 +58,5 @@ private:
     int m_TargetRow{}, m_TargetCol{};
     glm::vec2 m_MoveDirection{ 0.f, 0.f };
     bool m_IsMoving{ false };
-    float m_MoveSpeedPerFrame{ 0.10f };
+    float m_Speed{ 70.f };
 };

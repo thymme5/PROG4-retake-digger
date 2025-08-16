@@ -6,7 +6,7 @@
 #include "NobbinState.h" 
 #include "PlayerComponent.h"
 #include "NobbinControlState.h"
-
+#include "Timer.h"
 #include <queue>
 #include <set>
 #include <algorithm>
@@ -86,23 +86,23 @@ void EnemyComponent::Update()
     {
         glm::vec2 currentPos = GetOwner()->GetWorldPosition();
         glm::vec2 targetPos = { m_TargetCol * TILE_SIZE, m_TargetRow * TILE_SIZE };
-        glm::vec2 newPos = currentPos + m_MoveDirection;
+
+        float dt = Timer::GetDeltaTime();
+        glm::vec2 step = m_MoveDirection * m_Speed * dt;
+        glm::vec2 newPos = currentPos + step;
 
         bool reached = false;
 
-        if (std::abs(m_MoveDirection.x) > 0.001f) {
+        if (m_MoveDirection.x != 0.f) {
             if ((m_MoveDirection.x > 0.f && newPos.x >= targetPos.x) ||
                 (m_MoveDirection.x < 0.f && newPos.x <= targetPos.x)) {
                 reached = true;
-                newPos.x = targetPos.x; 
             }
         }
-
-        if (std::abs(m_MoveDirection.y) > 0.001f) {
+        else if (m_MoveDirection.y != 0.f) {
             if ((m_MoveDirection.y > 0.f && newPos.y >= targetPos.y) ||
                 (m_MoveDirection.y < 0.f && newPos.y <= targetPos.y)) {
                 reached = true;
-                newPos.y = targetPos.y;
             }
         }
 
@@ -122,6 +122,7 @@ void EnemyComponent::Update()
             GetOwner()->SetLocalPosition(newPos.x, newPos.y);
         }
     }
+
 
     if (m_pCurrentState)
         m_pCurrentState->Update(*this);
@@ -171,10 +172,7 @@ void EnemyComponent::MoveBy(int dr, int dc)
     m_TargetRow = newRow;
     m_TargetCol = newCol;
 
-    m_MoveDirection = glm::vec2{
-        static_cast<float>(dc) * m_MoveSpeedPerFrame,
-        static_cast<float>(dr) * m_MoveSpeedPerFrame
-    };
+    m_MoveDirection = glm::vec2{ static_cast<float>(dc), static_cast<float>(dr) };
 
     m_IsMoving = true;
 }
