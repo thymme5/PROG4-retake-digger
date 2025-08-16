@@ -1,8 +1,8 @@
 {
     "width": 20,
     "height": 12,
-    "mode": "Single",
-    "playerSpawns": [[0, 0]],
+    "mode": "Coop",
+    "playerSpawns": [[0, 0], [14, 0]],
     "emeralds": [
       [0, 1], [1, 1], [6, 1], [8, 1],
       [0, 2], [6, 2], [8, 2], [12, 2], [13, 2],
