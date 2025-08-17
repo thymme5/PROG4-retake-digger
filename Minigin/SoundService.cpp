@@ -64,6 +64,17 @@ namespace dae
         std::cout << "muted: " << std::boolalpha << muted << std::endl;
 
         m_IsMuted = muted;
+
+        if (muted)
+        {
+            Mix_Pause(-1);
+            Mix_PauseMusic();
+        }
+        else
+        {
+            Mix_Resume(-1);
+            Mix_ResumeMusic();
+        }
     }
     bool SDLMixerSoundService::IsMuted() const 
     { 
