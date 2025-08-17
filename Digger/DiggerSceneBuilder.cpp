@@ -39,7 +39,6 @@ void DiggerSceneBuilder::BuildMainMenu(dae::Scene& scene, const std::shared_ptr<
         text->Update();
 
         auto width = text->GetTextureSize().x;
-        auto height = text->GetTextureSize().y;
 
         float x = (windowWidth - width) / 2.0f;
         float y = baseY + i * spacing;
@@ -215,7 +214,6 @@ void DiggerSceneBuilder::CreateVersusScene(dae::Scene& scene, const std::string&
 
 void DiggerSceneBuilder::CreateDebugScene(dae::Scene& scene)
 {
-    constexpr int TILE_SIZE = 48;
     constexpr int SCREEN_WIDTH = 960;
     constexpr int SCREEN_HEIGHT = 560;
 
@@ -228,7 +226,11 @@ void DiggerSceneBuilder::CreateDebugScene(dae::Scene& scene)
         {
             std::string texture = (row + col) % 2 == 0 ? "tile_white.png" : "tile_black.png";
             auto tile = std::make_shared<dae::GameObject>();
-            tile->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+            tile->SetLocalPosition(
+                static_cast<float>(col * TILE_SIZE),
+                static_cast<float>(row * TILE_SIZE)
+            );
+
             tile->AddComponent<dae::TextureComponent>(*tile, texture, 1.5f, 0);
             scene.Add(tile);
         }

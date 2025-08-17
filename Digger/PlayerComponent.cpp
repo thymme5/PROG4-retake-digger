@@ -23,7 +23,11 @@ const std::vector<PlayerComponent*>& PlayerComponent::GetAllPlayers()
 PlayerComponent::PlayerComponent(dae::GameObject& owner, int startRow, int startCol)
 	: Component(owner), m_Row{ startRow }, m_Col{ startCol }, m_SpawnCol{ startCol }, m_SpawnRow{ startRow }
 {
-    owner.SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+    owner.SetLocalPosition(
+        static_cast<float>(m_Col * TILE_SIZE),
+        static_cast<float>(m_Row * TILE_SIZE)
+    );
+
     
     // Assign ID based on size of PlayerList 
     m_PlayerID = static_cast<int>(PlayerList().size());
@@ -159,15 +163,17 @@ void PlayerComponent::SetTilePosition(int row, int col)
     m_Col = col;
 
     // Force update because I'm unsure if it will work otherwise
-    GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+    GetOwner()->SetLocalPosition(
+        static_cast<float>(m_Col * TILE_SIZE),
+        static_cast<float>(m_Row * TILE_SIZE)
+    );
+
 }
 
 void PlayerComponent::DigCurrentTile()
 {
     auto tile = TileManager::GetInstance().GetTile(m_Row, m_Col);
     if (!tile) return;
-
-    auto* tileGO = tile->GetGameObject();
 
     if (tile && !tile->IsDug())
     {
@@ -207,7 +213,11 @@ void PlayerComponent::ShootFireball()
     if (!m_HasFireball) return; 
 
     auto fireball = std::make_unique<dae::GameObject>();
-    fireball->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+    fireball->SetLocalPosition(
+        static_cast<float>(m_Col * TILE_SIZE),
+        static_cast<float>(m_Row * TILE_SIZE)
+    );
+
 
     fireball->AddComponent<dae::TextureComponent>(*fireball, "fireball.png", 1.f);
     fireball->AddComponent<FireballComponent>(*fireball, m_Row, m_Col, m_LastDirRow, m_LastDirCol);

@@ -90,7 +90,11 @@ bool GoldBagComponent::TryPush(int targetRow, int targetCol)
 
         m_Row = targetRow;
         m_Col = targetCol;
-        GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+
+        GetOwner()->SetLocalPosition(
+            static_cast<float>(m_Col * TILE_SIZE),
+            static_cast<float>(m_Row * TILE_SIZE)
+        );
 
         TileManager::GetInstance().RegisterInteractable(m_Row, m_Col, GetOwner());
         return true;

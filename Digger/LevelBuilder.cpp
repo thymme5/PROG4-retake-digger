@@ -58,7 +58,7 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
     auto hudGO = std::make_shared<dae::GameObject>();
     hudGO->SetLocalPosition(8.f, 8.f);
     hudGO->AddComponent<dae::TextComponent>(*hudGO, "SCORE 000000  LIVES 4\nLEVEL 1", dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
-    auto* ui = hudGO->AddComponent<UIComponent>(*hudGO);
+    hudGO->AddComponent<UIComponent>(*hudGO);
     scene.Add(hudGO);
 
     // === Tiles ===
@@ -67,7 +67,11 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
         for (int col = 0; col < width; ++col)
         {
             auto tileGO = std::make_shared<dae::GameObject>();
-            tileGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+            tileGO->SetLocalPosition(
+                static_cast<float>(col * TILE_SIZE),
+                static_cast<float>(row * TILE_SIZE)
+            );
+
 
             auto tileComp = tileGO->AddComponent<TileComponent>(*tileGO, row, col);
             tileGO->AddComponent<dae::TextureComponent>(*tileGO, "dirt.png", 1.f, 0);
@@ -106,7 +110,11 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
                 tile->SetHasEmerald(true);
 
                 auto emeraldGO = std::make_shared<dae::GameObject>();
-                emeraldGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+                emeraldGO->SetLocalPosition(
+                    static_cast<float>(col * TILE_SIZE),
+                    static_cast<float>(row * TILE_SIZE)
+                );
+
                 emeraldGO->AddComponent<dae::TextureComponent>(*emeraldGO, "Emerald.png", 1.f, 1);
                 emeraldGO->AddComponent<EmeraldComponent>(*emeraldGO, row, col);
 
@@ -127,7 +135,10 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
             if (auto tile = TileManager::GetInstance().GetTile(row, col))
             {
                 auto goldBagGO = std::make_shared<dae::GameObject>();
-                goldBagGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+				goldBagGO->SetLocalPosition(
+					static_cast<float>(col* TILE_SIZE),
+					static_cast<float>(row* TILE_SIZE)
+				);
                 goldBagGO->AddComponent<dae::TextureComponent>(*goldBagGO, "goldbag.png", 1.f, 1);
                 auto* goldbagComponent = goldBagGO->AddComponent<GoldBagComponent>(*goldBagGO, row, col);
                 goldbagComponent->AddObserver(&ScoreManager::GetInstance());
@@ -140,7 +151,7 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 
     // === Player Spawns ===
     const auto playerSpawns = levelJson.value("playerSpawns", std::vector<std::vector<int>>{});
-    SpawnPlayers(playerSpawns, scene, ui, mode);
+    SpawnPlayers(playerSpawns, scene, mode);
 
     // === Enemies ===
     if (mode == "Versus")
@@ -151,7 +162,10 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
             int row = playerSpawns[1][1];
 
             auto enemyGO = std::make_shared<dae::GameObject>();
-            enemyGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+            enemyGO->SetLocalPosition(
+                static_cast<float>(col * TILE_SIZE),
+                static_cast<float>(row * TILE_SIZE)
+            );
             enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "nobbin.png", 1.f, 0);
             enemyGO->AddComponent<EnemyComponent>(*enemyGO, row, col, true); // player-controlled
             scene.Add(enemyGO);
@@ -169,7 +183,10 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
             if (!TileManager::GetInstance().GetTile(row, col)) continue;
 
             auto enemyGO = std::make_shared<dae::GameObject>();
-            enemyGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+			enemyGO->SetLocalPosition(
+				static_cast<float>(col * TILE_SIZE),
+				static_cast<float>(row * TILE_SIZE)
+			);
             enemyGO->AddComponent<dae::TextureComponent>(*enemyGO, "nobbin.png", 1.f, 0);
             enemyGO->AddComponent<EnemyComponent>(*enemyGO, row, col); // computer
             scene.Add(enemyGO);
@@ -178,7 +195,7 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
 
 }
 
-void LevelBuilder::SpawnPlayers(const std::vector<std::vector<int>>& spawns, dae::Scene& scene, UIComponent* ui, const std::string& mode)
+void LevelBuilder::SpawnPlayers(const std::vector<std::vector<int>>& spawns, dae::Scene& scene, const std::string& mode)
 {
     size_t playerCount = (mode == "Coop") ? 2 : 1;
 
@@ -188,7 +205,10 @@ void LevelBuilder::SpawnPlayers(const std::vector<std::vector<int>>& spawns, dae
         int row = spawns[i][1];
 
         auto playerGO = std::make_shared<dae::GameObject>();
-        playerGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+		playerGO->SetLocalPosition(
+			static_cast<float>(col * TILE_SIZE),
+			static_cast<float>(row * TILE_SIZE)
+		);
 
         std::string texture = (i == 0) ? "digger.png" : "digger2.png";
         playerGO->AddComponent<dae::TextureComponent>(*playerGO, texture, 1.f, 0);

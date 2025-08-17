@@ -75,7 +75,11 @@ void EnemyComponent::Update()
             m_Col = m_SpawnCol;
             m_IsMoving = false;
 
-            GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+            GetOwner()->SetLocalPosition(
+                static_cast<float>(m_Col * TILE_SIZE),
+                static_cast<float>(m_Row * TILE_SIZE)
+            );
+
 
             if (auto* tex = GetOwner()->GetComponent<dae::TextureComponent>())
                 tex->SetVisible(true);
@@ -97,7 +101,11 @@ void EnemyComponent::Update()
             if (player->IsInDeadState()) continue;
 
             auto [playerRow, playerCol] = player->GetTilePosition();
-            float distance = std::abs(playerRow - m_Row) + std::abs(playerCol - m_Col); // Manhattan distance
+            
+            // Manhattan distance
+            float distance = static_cast<float>(
+                std::abs(playerRow - m_Row) + std::abs(playerCol - m_Col)
+                );
 
             if (distance < closestDistance) {
                 closestDistance = distance;
@@ -206,7 +214,11 @@ void EnemyComponent::SetTile(int row, int col)
 
     m_IsMoving = false;
 
-    GetOwner()->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+    GetOwner()->SetLocalPosition(
+        static_cast<float>(col * TILE_SIZE),
+        static_cast<float>(row * TILE_SIZE)
+    );
+
 
     TileManager::GetInstance().RegisterEnemy(m_Row, m_Col, GetOwner());
 }

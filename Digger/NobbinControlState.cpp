@@ -15,7 +15,7 @@ void NobbinControlState::Enter(EnemyComponent& enemy)
     input.BindCommand(0, GamepadButton::DPadRight, KeyState::Held, std::make_shared<MoveEnemyCommand>(enemy, 0, 1));
 }
 
-void NobbinControlState::Update(EnemyComponent& enemy)
+void NobbinControlState::Update(EnemyComponent& /*enemy*/)
 {
 
 }

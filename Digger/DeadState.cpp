@@ -7,7 +7,7 @@
 
 constexpr int TILE_SIZE = 48;
 
-void DeadState::Enter(PlayerComponent& player)
+void DeadState::Enter(PlayerComponent& /*player*/)
 {
     DiggerSoundLibrary::Play(SoundID::DiggerGameOver);
 
@@ -35,7 +35,11 @@ void DeadState::Update(PlayerComponent& player)
         auto [row, col] = player.GetSpawnPosition();
         player.SetTilePosition(row, col);
 
-        player.GetOwner()->SetLocalPosition(player.GetCol() * TILE_SIZE, player.GetRow() * TILE_SIZE);
+        player.GetOwner()->SetLocalPosition(
+            static_cast<float>(player.GetCol() * TILE_SIZE),
+            static_cast<float>(player.GetRow() * TILE_SIZE)
+        );
+
         player.SetState(std::make_unique<AliveState>());
     }
 }

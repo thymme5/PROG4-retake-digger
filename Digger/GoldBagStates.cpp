@@ -4,14 +4,10 @@
 #include "TextureComponent.h"
 #include "TileManager.h"
 
-
 //
 // IdleState
 //
-void IdleState::Enter(GoldBagComponent& goldBag)
-{
-
-}
+void IdleState::Enter(GoldBagComponent& /*goldBag*/) {}
 
 void IdleState::Update(GoldBagComponent& goldBag)
 {
@@ -25,10 +21,7 @@ void IdleState::Update(GoldBagComponent& goldBag)
     }
 }
 
-void IdleState::Exit(GoldBagComponent& goldBag)
-{
-
-}
+void IdleState::Exit(GoldBagComponent& /*goldBag*/) {}
 
 //
 // FallingState
@@ -48,7 +41,6 @@ void FallingState::Update(GoldBagComponent& goldBag)
 
     if (!TileManager::GetInstance().IsValidTile(belowRow, col))
     {
-        // Out of bounds, break
         goldBag.SetState(std::make_unique<BrokenState>());
         return;
     }
@@ -62,7 +54,6 @@ void FallingState::Update(GoldBagComponent& goldBag)
     }
     else
     {
-        // Landed on solid tile — now check fall distance
         if (goldBag.GetFallDistance() >= 2)
         {
             goldBag.SetState(std::make_unique<BrokenState>());
@@ -75,26 +66,16 @@ void FallingState::Update(GoldBagComponent& goldBag)
     }
 }
 
-
-void FallingState::Exit(GoldBagComponent& goldBag)
-{
-
-}
+void FallingState::Exit(GoldBagComponent& /*goldBag*/) {}
 
 //
 // BrokenState
 //
 void BrokenState::Enter(GoldBagComponent& goldBag)
 {
-	goldBag.GetOwner()->GetComponent<dae::TextureComponent>()->SetTexture("gold.png");
+    goldBag.GetOwner()->GetComponent<dae::TextureComponent>()->SetTexture("gold.png");
 }
 
-void BrokenState::Update(GoldBagComponent& goldBag)
-{
-    // Maybe animate or just stay static
-}
+void BrokenState::Update(GoldBagComponent& /*goldBag*/) {}
 
-void BrokenState::Exit(GoldBagComponent& goldBag)
-{
-    // Likely never called unless bag respawns
-}
+void BrokenState::Exit(GoldBagComponent& /*goldBag*/) {}

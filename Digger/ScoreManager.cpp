@@ -4,7 +4,7 @@
 #include "LevelManager.h"
 #include "DiggerSoundLibrary.h"
 
-void ScoreManager::OnNotify(dae::Event event, dae::GameObject* obj)
+void ScoreManager::OnNotify(dae::Event event, dae::GameObject*)
 {
 	std::cout << "[ScoreManager] Received event: " << static_cast<int>(event) << std::endl;
 
