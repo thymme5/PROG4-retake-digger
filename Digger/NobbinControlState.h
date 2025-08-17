@@ -1,6 +1,6 @@
 #pragma once
 #include "EnemyState.h"
-#include <glm/glm.hpp>
+#include "glm.hpp"
 
 class NobbinControlState final : public EnemyState
 {

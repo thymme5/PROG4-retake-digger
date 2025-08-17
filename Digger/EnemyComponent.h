@@ -2,8 +2,7 @@
 #include "Component.h"
 #include <memory>
 #include <utility> 
-#include <glm/vec2.hpp>
-
+#include "glm.hpp"
 class EnemyState; 
 
 class EnemyComponent final : public dae::Component

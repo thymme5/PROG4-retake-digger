@@ -3,7 +3,8 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
-#include <glm/vec3.hpp>
+
+#include "glm.hpp"
 #include "Transform.h"
 #include "Component.h"
 #include "ImGuiComponent.h"

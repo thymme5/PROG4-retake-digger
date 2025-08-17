@@ -6,8 +6,7 @@
 #include "Transform.h"
 #include "Component.h"
 
-#include <glm/vec2.hpp>
-
+#include "glm.hpp"
 
 namespace dae
 {
