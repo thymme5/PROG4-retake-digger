@@ -63,14 +63,7 @@ void FireballComponent::Update()
     else
     {
         // Time to start next movement
-        m_MoveTimer += dt;
-        const float MOVE_INTERVAL = 0.1f; // Slight delay between tile movements
-
-        if (m_MoveTimer >= MOVE_INTERVAL)
-        {
-            m_MoveTimer = 0.0f;
-            StartNextMovement();
-        }
+        StartNextMovement();
     }
 }
 
