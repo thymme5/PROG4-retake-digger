@@ -371,9 +371,6 @@
     <ClInclude Include="GameDirectorComponent.h">
       <Filter>GameDirectorComponent</Filter>
     </ClInclude>
-    <ClInclude Include="ToggleMuteCommand.h">
-      <Filter>GameMode\GameModes\Commands</Filter>
-    </ClInclude>
     <ClInclude Include="PostGameEntryMode.h">
       <Filter>GameMode\GameModes\PostGameEntry</Filter>
     </ClInclude>
