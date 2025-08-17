@@ -144,7 +144,7 @@ std::vector<dae::GameObject*> TileManager::GetAllEnemies() const
 
     return allEnemies;
 }
-void TileManager::OnNotify(dae::Event e, dae::GameObject* go)
+void TileManager::OnNotify(dae::Event e, dae::GameObject* /*go*/)
 {
     switch (e)
     {

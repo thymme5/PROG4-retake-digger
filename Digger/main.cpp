@@ -16,7 +16,7 @@
 #include "DiggerSoundLibrary.h"
 
 // STD library files
-#include <filesystem>v
+#include <filesystem>
 
 void load()
 {

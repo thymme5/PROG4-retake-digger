@@ -14,7 +14,7 @@ constexpr int TILE_SIZE = 48;
 FireballComponent::FireballComponent(dae::GameObject& owner, int row, int col, int dRow, int dCol)
     : Component(owner), m_Row{ row }, m_Col{ col }, m_DirRow{ dRow }, m_DirCol{ dCol }
 {
-    owner.SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+    owner.SetLocalPosition(static_cast<float>(col * TILE_SIZE), static_cast<float>(row * TILE_SIZE));
 
 	AddObserver(&TileManager::GetInstance());
 	AddObserver(&ScoreManager::GetInstance());
