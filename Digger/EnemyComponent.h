@@ -15,6 +15,8 @@ public:
     void Update() override;
     void Render() const override {}
 
+    void HandleDeath();
+
     // Row/Col position in the tile grid
     int GetRow() const { return m_Row; }
     int GetCol() const { return m_Col; }
@@ -38,6 +40,7 @@ public:
     bool IsPlayerControlled() const { return m_IsPlayerControlled; }
 
 	bool IsMoving() const { return m_IsMoving; }
+    
 private:
     int m_EnemyID = -1;
    
@@ -58,4 +61,15 @@ private:
     glm::vec2 m_MoveDirection{ 0.f, 0.f };
     bool m_IsMoving{ false };
     float m_Speed{ 80.f };
+
+    // death variables
+    bool m_IsDead{ false };
+    float m_DeathTimer{ 0.f };
+    float m_PulseTimer{ 0.f };
+    bool m_IsVisible{ true };
+    const float m_RespawnDelay{ 3.f };
+    const float m_PulseInterval{ 0.3f };
+    int m_SpawnRow{}, m_SpawnCol{};
+
+
 };

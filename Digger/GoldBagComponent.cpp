@@ -110,7 +110,7 @@ void GoldBagComponent::Fall()
         {
             if (!go) continue;
             Notify(dae::Event::EnemyKilled, go);
-            go->Destroy();
+			go->GetComponent<EnemyComponent>()->HandleDeath();
         }
 
         TileManager::GetInstance().RemoveInteractable(m_Row, m_Col, GetOwner());

@@ -127,7 +127,7 @@ void FireballComponent::CheckEnemyCollision()
         {
             std::cout << "[Fireball] Hit enemy at distance " << dist << ", both destroyed" << std::endl;
 			Notify(dae::Event::EnemyKilled, nullptr);
-            obj->Destroy();
+            obj->GetComponent<EnemyComponent>()->HandleDeath();
             GetOwner()->Destroy();
             return;
         }

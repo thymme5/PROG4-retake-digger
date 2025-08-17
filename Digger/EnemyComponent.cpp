@@ -7,6 +7,8 @@
 #include "PlayerComponent.h"
 #include "NobbinControlState.h"
 #include "Timer.h"
+#include "TextureComponent.h"
+
 #include <queue>
 #include <set>
 #include <algorithm>
@@ -21,7 +23,7 @@ static std::vector<EnemyComponent*>& EnemyList() {
 }
 
 EnemyComponent::EnemyComponent(dae::GameObject& owner, int startRow, int startCol, bool isPlayerControlled)
-    : Component(owner), m_Row(startRow), m_Col(startCol), m_IsPlayerControlled(isPlayerControlled)
+    : Component(owner), m_Row(startRow), m_Col(startCol), m_IsPlayerControlled(isPlayerControlled), m_SpawnCol(startCol), m_SpawnRow(startRow)
 {
     m_EnemyID = s_EnemyIDCounter++;
     EnemyList().push_back(this);
@@ -47,6 +49,44 @@ EnemyComponent::~EnemyComponent()
 
 void EnemyComponent::Update()
 {
+    // Handle death and respawn
+    if (m_IsDead)
+    {
+        m_DeathTimer += Timer::GetDeltaTime();
+        m_PulseTimer += Timer::GetDeltaTime();
+
+        if (m_PulseTimer >= m_PulseInterval)
+        {
+            m_IsVisible = !m_IsVisible;
+            m_PulseTimer = 0.f;
+
+            if (auto* tex = GetOwner()->GetComponent<dae::TextureComponent>())
+                tex->SetVisible(m_IsVisible);
+        }
+
+        if (m_DeathTimer >= m_RespawnDelay)
+        {
+            m_IsDead = false;
+            m_DeathTimer = 0.f;
+            m_PulseTimer = 0.f;
+            m_IsVisible = true;
+
+            m_Row = m_SpawnRow;
+            m_Col = m_SpawnCol;
+            m_IsMoving = false;
+
+            GetOwner()->SetLocalPosition(m_Col * TILE_SIZE, m_Row * TILE_SIZE);
+
+            if (auto* tex = GetOwner()->GetComponent<dae::TextureComponent>())
+                tex->SetVisible(true);
+
+            SetState(std::make_unique<NobbinControlState>());
+        }
+
+        return;
+    }
+
+    // AI targeting logic
     if (!m_IsPlayerControlled && !m_IsMoving)
     {
         PlayerComponent* closestPlayer = nullptr;
@@ -65,14 +105,13 @@ void EnemyComponent::Update()
             }
         }
 
-        // Set target to closest player
         if (closestPlayer) {
             auto [row, col] = closestPlayer->GetTilePosition();
             SetTarget(row, col);
         }
     }
 
-    // Check for collision with any player
+    // Collision with players
     glm::vec2 enemyPos = GetOwner()->GetWorldPosition();
     const float COLLISION_RADIUS = 24.0f;
 
@@ -130,9 +169,33 @@ void EnemyComponent::Update()
             GetOwner()->SetLocalPosition(newPos.x, newPos.y);
         }
     }
+
+    // State update
     if (m_pCurrentState)
         m_pCurrentState->Update(*this);
 }
+
+
+void EnemyComponent::HandleDeath()
+{
+    if (!m_pCurrentState) return;
+
+    if (dynamic_cast<NobbinControlState*>(m_pCurrentState.get()))
+    {
+        // Versus mode: controlled by player, respawn
+        m_DeathTimer = 0.f;
+        m_IsDead = true;
+
+        if (auto* tex = GetOwner()->GetComponent<dae::TextureComponent>())
+            tex->SetVisible(false);
+    }
+    else
+    {
+		// If not controlled by player, just destroy
+        GetOwner()->Destroy();
+    }
+}
+
 
 void EnemyComponent::SetTile(int row, int col)
 {
