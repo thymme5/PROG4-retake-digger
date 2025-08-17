@@ -9,7 +9,6 @@
 #include "Scene.h"
 #include "TileComponent.h"
 #include "TileManager.h"
-#include "SubjectComponent.h"
 #include "PlayerComponent.h"
 #include "AliveState.h"
 #include "EmeraldComponent.h"

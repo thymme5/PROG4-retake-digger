@@ -2,13 +2,15 @@
 #include "InteractableComponent.h"
 #include "GoldBagStates.h"
 #include "glm.hpp"
+#include "Subject.h"
+
 #include <memory>
 
 class GoldBagState;
 
 constexpr int TILE_SIZE = 48;
 
-class GoldBagComponent final : public InteractableComponent
+class GoldBagComponent final : public InteractableComponent, public dae::Subject
 {
 public:
     GoldBagComponent(dae::GameObject& owner, int row, int col);

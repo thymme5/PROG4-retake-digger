@@ -5,6 +5,8 @@
 #include "TextureComponent.h"
 #include "EnemyComponent.h"
 #include "Timer.h"
+#include "ScoreManager.h"
+
 #include <iostream>
 
 constexpr int TILE_SIZE = 48;
@@ -13,6 +15,9 @@ FireballComponent::FireballComponent(dae::GameObject& owner, int row, int col, i
     : Component(owner), m_Row{ row }, m_Col{ col }, m_DirRow{ dRow }, m_DirCol{ dCol }
 {
     owner.SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
+
+	AddObserver(&TileManager::GetInstance());
+	AddObserver(&ScoreManager::GetInstance());
 
     // Set up movement speed (pixels per second)
     m_MoveSpeed = 200.0f; // Adjust this value for fireball speed
@@ -128,6 +133,7 @@ void FireballComponent::CheckEnemyCollision()
         if (dist < COLLISION_RADIUS)
         {
             std::cout << "[Fireball] Hit enemy at distance " << dist << ", both destroyed" << std::endl;
+			Notify(dae::Event::EnemyKilled, nullptr);
             obj->Destroy();
             GetOwner()->Destroy();
             return;

@@ -223,7 +223,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget)\SDL2.dll" "$(OutputPath
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundService.h" />
     <ClInclude Include="Subject.h" />
-    <ClInclude Include="SubjectComponent.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureComponent.h" />

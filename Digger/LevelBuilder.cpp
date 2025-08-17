@@ -18,6 +18,7 @@
 #include "NobbinState.h"
 #include "ScoreManager.h"
 #include "GameDirectorComponent.h"
+
 using json = nlohmann::json;
 
 void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
@@ -128,10 +129,8 @@ void LevelBuilder::LoadLevelFromFile(const std::string& path, dae::Scene& scene)
                 auto goldBagGO = std::make_shared<dae::GameObject>();
                 goldBagGO->SetLocalPosition(col * TILE_SIZE, row * TILE_SIZE);
                 goldBagGO->AddComponent<dae::TextureComponent>(*goldBagGO, "goldbag.png", 1.f, 1);
-                goldBagGO->AddComponent<GoldBagComponent>(*goldBagGO, row, col);
-                auto* subj = goldBagGO->AddComponent<dae::SubjectComponent>(*goldBagGO);
-
-                subj->AddObserver(&ScoreManager::GetInstance());
+                auto* goldbagComponent = goldBagGO->AddComponent<GoldBagComponent>(*goldBagGO, row, col);
+                goldbagComponent->AddObserver(&ScoreManager::GetInstance());
 
                 TileManager::GetInstance().RegisterInteractable(row, col, goldBagGO.get());
                 scene.Add(goldBagGO);
@@ -193,13 +192,12 @@ void LevelBuilder::SpawnPlayers(const std::vector<std::vector<int>>& spawns, dae
 
         std::string texture = (i == 0) ? "digger.png" : "digger2.png";
         playerGO->AddComponent<dae::TextureComponent>(*playerGO, texture, 1.f, 0);
-        auto* subj = playerGO->AddComponent<dae::SubjectComponent>(*playerGO);
         auto* playerComp = playerGO->AddComponent<PlayerComponent>(*playerGO, row, col);
         playerComp->SetState(std::make_unique<AliveState>());
 
-        scene.Add(playerGO);
+        playerComp->AddObserver(&ScoreManager::GetInstance());
+        playerComp->AddObserver(&TileManager::GetInstance());
 
-        subj->AddObserver(&ScoreManager::GetInstance());
-        subj->AddObserver(&TileManager::GetInstance());
+        scene.Add(playerGO);
     }
 }

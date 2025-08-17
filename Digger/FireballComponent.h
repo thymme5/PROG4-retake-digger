@@ -1,7 +1,8 @@
 #pragma once
 #include "Component.h"
+#include "Subject.h"
 
-class FireballComponent : public dae::Component
+class FireballComponent : public dae::Component, public dae::Subject
 {
 public:
     FireballComponent(dae::GameObject& owner, int row, int col, int dRow, int dCol);

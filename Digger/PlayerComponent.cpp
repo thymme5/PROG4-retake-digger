@@ -172,11 +172,7 @@ void PlayerComponent::DigCurrentTile()
     if (tile && !tile->IsDug())
     {
         tile->SetDug(true);
-
-        if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
-        {
-            playerSubj->Notify(dae::Event::TileDug, GetOwner());
-        }
+		Notify(dae::Event::PlayerDugTile, GetOwner());
     }
 
     auto interactables = TileManager::GetInstance().GetInteractablesAt(m_Row, m_Col);
@@ -195,10 +191,7 @@ void PlayerComponent::DigCurrentTile()
                 {
                     m_EmeraldStreak = 0; // Reset after reaching goal
 
-                    if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
-                    {
-                        playerSubj->Notify(dae::Event::PlayerCollected8Emeralds, GetOwner());
-                    }
+                    Notify(dae::Event::PlayerCollected8Emeralds, GetOwner());
                 }
             }
             else
@@ -218,7 +211,6 @@ void PlayerComponent::ShootFireball()
 
     fireball->AddComponent<dae::TextureComponent>(*fireball, "fireball.png", 1.f);
     fireball->AddComponent<FireballComponent>(*fireball, m_Row, m_Col, m_LastDirRow, m_LastDirCol);
-
     dae::SceneManager::GetInstance().GetActiveScene().Add(std::move(fireball));
 
     m_HasFireball = false;
@@ -238,10 +230,7 @@ void PlayerComponent::SetState(std::unique_ptr<PlayerState> newState)
 
 void PlayerComponent::MarkAsDead() 
 {
-   if (auto* playerSubj = GetOwner()->GetComponent<dae::SubjectComponent>())
-   {
-		playerSubj->Notify(dae::Event::PlayerDied, GetOwner());
-   }
+   Notify(dae::Event::PlayerDied, GetOwner());
 
 	SetState(std::make_unique<DeadState>());
 }

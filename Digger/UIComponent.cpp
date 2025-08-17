@@ -38,7 +38,6 @@ void UIComponent::Update()
         RefreshText();
         m_Dirty = false;
     }
-   
 }
 
 void UIComponent::RefreshText()

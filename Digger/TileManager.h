@@ -9,7 +9,6 @@
 #include "Singleton.h"
 #include "GameObject.h"
 #include "EmeraldComponent.h"
-#include "SubjectComponent.h"
 #include "LevelManager.h"
 
 class TileManager final : public dae::Observer, public dae::Singleton<TileManager>

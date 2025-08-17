@@ -2,8 +2,6 @@
 #include "Observer.h"
 #include "Singleton.h"
 
-namespace dae { class SubjectComponent; }
-
 class ScoreManager final : public dae::Singleton<ScoreManager>, public dae::Observer
 {
 public:
@@ -30,9 +28,6 @@ public:
     void LoseLife(int n = 1);
 
     void OnNotify(dae::Event event, dae::GameObject* sender) override;
-
-    void Subscribe(dae::SubjectComponent& subject);
-    void Unsubscribe(dae::SubjectComponent& subject);
 
     ~ScoreManager() override = default;
 

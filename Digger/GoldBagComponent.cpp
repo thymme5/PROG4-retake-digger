@@ -1,11 +1,11 @@
 #include "GoldBagComponent.h"
 #include "GameObject.h"
-#include "SubjectComponent.h"
 #include "Observer.h"
 #include "TextureComponent.h"
 #include "TileManager.h"
 #include "EnemyComponent.h"
 #include "Timer.h"
+#include "PlayerComponent.h"
 
 GoldBagComponent::GoldBagComponent(dae::GameObject& owner, int row, int col)
     : InteractableComponent(owner), m_Row(row), m_Col(col)
@@ -46,12 +46,10 @@ void GoldBagComponent::Interact(dae::GameObject& interactor)
 {
     if (dynamic_cast<BrokenState*>(m_pCurrentState.get()))
     {
-
-        if (auto* subject = interactor.GetComponent<dae::SubjectComponent>())
+        if (auto* player = interactor.GetComponent<PlayerComponent>())
         {
-            subject->Notify(dae::Event::GoldCollected, &interactor);
+			player->Notify(dae::Event::GoldCollected, &interactor);
         }
-
         TileManager::GetInstance().RemoveInteractable(m_Row, m_Col, GetOwner());
 
         GetOwner()->Destroy();
@@ -111,8 +109,7 @@ void GoldBagComponent::Fall()
         for (auto* go : enemies)
         {
             if (!go) continue;
-            if (auto* subj = GetOwner()->GetComponent<dae::SubjectComponent>())
-                subj->Notify(dae::Event::EnemyKilled, go);
+            Notify(dae::Event::EnemyKilled, go);
             go->Destroy();
         }
 

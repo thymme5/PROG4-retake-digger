@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "ScoreManager.h"
-#include "SubjectComponent.h"
 #include "LevelManager.h"
 #include "DiggerSoundLibrary.h"
 
@@ -36,13 +35,4 @@ void ScoreManager::LoseLife(int n)
 		DiggerSoundLibrary::Play(SoundID::DiggerGameOver);
         LevelManager::GetInstance().FinishGame();
     }
-}
-void ScoreManager::Subscribe(dae::SubjectComponent& subject)
-{
-    subject.AddObserver(this);
-}
-
-void ScoreManager::Unsubscribe(dae::SubjectComponent& subject)
-{
-    subject.RemoveObserver(this);
 }

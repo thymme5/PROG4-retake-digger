@@ -2,7 +2,6 @@
 #include "Component.h"
 #include <memory>
 #include <utility> 
-#include "SubjectComponent.h"
 #include <glm/vec2.hpp>
 
 class EnemyState; 

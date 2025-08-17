@@ -4,7 +4,6 @@
 #include "TileComponent.h"
 #include "GameObject.h"
 #include "InputManager.h"
-#include "SubjectComponent.h"
 #include "TextureComponent.h"
 #include "MoveCommand.h"
 #include "FireballCommand.h"
@@ -84,11 +83,7 @@ void AliveState::Update(PlayerComponent& player)
     if (tile && !tile->IsDug())
     {
         tile->SetDug(true);
-
-        if (auto subject = player.GetOwner()->GetComponent<dae::SubjectComponent>())
-        {
-            subject->Notify(dae::Event::TileDug, tile->GetOwner());
-        }
+		player.Notify(dae::Event::PlayerDugTile, player.GetOwner());
     }
 }
 

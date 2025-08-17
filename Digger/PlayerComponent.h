@@ -6,14 +6,13 @@
 #include "FireballComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
-#include "SubjectComponent.h"
 #include "DeadState.h"
-
+#include "Subject.h"
 #include <memory>
 #include <vector>
 #include <utility>
 
-class PlayerComponent final : public dae::Component
+class PlayerComponent final : public dae::Component, public dae::Subject
 {
 public:
     static const std::vector<PlayerComponent*>& GetAllPlayers();
