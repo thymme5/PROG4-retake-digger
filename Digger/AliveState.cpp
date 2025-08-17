@@ -65,9 +65,8 @@ void AliveState::Enter(PlayerComponent& player)
 
 void AliveState::Update(PlayerComponent& player)
 {
-
-    const int col = player.GetOwner()->GetComponent<PlayerComponent>()->GetCol();
-    const int row = player.GetOwner()->GetComponent<PlayerComponent>()->GetRow();
+    const int col = player.GetCol();
+    const int row = player.GetRow();
 
     const auto& tileManager = TileManager::GetInstance();
     const int maxRow = tileManager.GetHeight();

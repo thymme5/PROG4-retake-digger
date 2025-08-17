@@ -218,7 +218,6 @@ void PlayerComponent::ShootFireball()
         static_cast<float>(m_Row * TILE_SIZE)
     );
 
-
     fireball->AddComponent<dae::TextureComponent>(*fireball, "fireball.png", 1.f);
     fireball->AddComponent<FireballComponent>(*fireball, m_Row, m_Col, m_LastDirRow, m_LastDirCol);
     dae::SceneManager::GetInstance().GetActiveScene().Add(std::move(fireball));

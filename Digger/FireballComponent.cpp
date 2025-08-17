@@ -19,11 +19,6 @@ FireballComponent::FireballComponent(dae::GameObject& owner, int row, int col, i
 	AddObserver(&TileManager::GetInstance());
 	AddObserver(&ScoreManager::GetInstance());
 
-    // Set up movement speed (pixels per second)
-    m_MoveSpeed = 200.0f; // Adjust this value for fireball speed
-    m_IsMoving = false;
-    m_MoveTimer = 0.0f;
-
     std::cout << "[Fireball] Created at (" << row << ", " << col << ") direction (" << dRow << ", " << dCol << ")" << std::endl;
 }
 
